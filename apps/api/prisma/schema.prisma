@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// A Uniswap v4 hook contract observed on a supported chain.
+model Hook {
+  id              String   @id @default(cuid())
+  address         String
+  chainId         Int
+  creator         String
+  deploymentBlock BigInt
+  verifiedSource  Boolean  @default(false)
+  riskScore       Int?
+  createdAt       DateTime @default(now())
+
+  findings Finding[]
+  pools    Pool[]
+
+  @@unique([address, chainId])
+  @@index([chainId])
+  @@index([riskScore])
+  @@map("hooks")
+}
+
+/// A Uniswap v4 pool that references a hook.
+model Pool {
+  id           String @id @default(cuid())
+  poolId       String
+  chainId      Int
+  hookAddress  String
+  token0       String
+  token1       String
+  fee          Int
+  tickSpacing  Int
+  createdBlock BigInt
+
+  hook Hook @relation(fields: [hookAddress, chainId], references: [address, chainId], onDelete: Restrict)
+
+  @@unique([poolId, chainId])
+  @@index([hookAddress, chainId])
+  @@map("pools")
+}
+
+/// Raw contract artifact for a hook or related address.
+model Contract {
+  address         String
+  chainId         Int
+  bytecode        String  @db.Text
+  sourceCode      String? @db.Text
+  compilerVersion String?
+
+  @@id([address, chainId])
+  @@map("contracts")
+}
+
+/// A structured security observation about a hook. Empty until analysis runs.
+model Finding {
+  id          String   @id @default(cuid())
+  hookId      String
+  category    String
+  severity    String
+  description String   @db.Text
+  createdAt   DateTime @default(now())
+
+  hook Hook @relation(fields: [hookId], references: [id], onDelete: Cascade)
+
+  @@index([hookId])
+  @@index([severity])
+  @@map("findings")
+}

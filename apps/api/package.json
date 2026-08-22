@@ -1,0 +1,32 @@
+{
+  "name": "@hookguard/api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "prisma generate && tsc -p tsconfig.json",
+    "postinstall": "prisma generate",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "db:generate": "prisma generate",
+    "db:validate": "prisma validate",
+    "db:migrate": "prisma migrate dev",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.0.1",
+    "@hookguard/blockchain": "0.0.1",
+    "@hookguard/config": "0.0.1",
+    "@hookguard/types": "0.0.1",
+    "@prisma/client": "^6.13.0",
+    "dotenv": "^16.5.0",
+    "fastify": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "prisma": "^6.13.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
