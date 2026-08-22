@@ -124,10 +124,10 @@ export default function LandingPage() {
           <Card className="overflow-hidden">
             <CardContent className="flex flex-col items-start justify-between gap-6 p-8 sm:flex-row sm:items-center">
               <div>
-                <h2 className="text-xl font-semibold">The registry is live. Indexing is next.</h2>
+                <h2 className="text-xl font-semibold">The hook registry is live.</h2>
                 <p className="mt-1 max-w-lg text-sm text-muted-foreground">
-                  Phase 0 is the foundation: schema, API, and dashboard. Hooks
-                  will appear here as they are indexed — never as mock findings.
+                  Discover Uniswap v4 hooks from PoolManager events. Security
+                  analysis is not enabled yet — the explorer never invents scores.
                 </p>
               </div>
               <Button asChild>

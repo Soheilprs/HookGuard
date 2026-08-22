@@ -18,4 +18,6 @@ export interface ChainDefinition {
   blockExplorerName: string;
   /** Uniswap v4 PoolManager singleton for this chain. */
   poolManager: `0x${string}`;
+  /** First block to scan when no indexer checkpoint exists. */
+  poolManagerStartBlock: bigint;
 }

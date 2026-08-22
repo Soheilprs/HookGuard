@@ -12,6 +12,8 @@
     "db:generate": "prisma generate",
     "db:validate": "prisma validate",
     "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "index:v4": "tsx src/cli/index-v4.ts",
     "clean": "rm -rf dist"
   },
   "dependencies": {
@@ -21,7 +23,8 @@
     "@hookguard/types": "0.0.1",
     "@prisma/client": "^6.13.0",
     "dotenv": "^16.5.0",
-    "fastify": "^5.4.0"
+    "fastify": "^5.4.0",
+    "viem": "^2.31.0"
   },
   "devDependencies": {
     "@types/node": "^22.15.30",

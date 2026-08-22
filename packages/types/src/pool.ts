@@ -11,4 +11,10 @@ export interface Pool {
   fee: number;
   tickSpacing: number;
   createdBlock: bigint;
+  token0Address: Address;
+  token1Address: Address;
+  token0Symbol: string | null;
+  token1Symbol: string | null;
+  createdAtBlock: bigint;
+  currencyPair: string;
 }

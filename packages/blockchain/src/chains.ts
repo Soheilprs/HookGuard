@@ -6,8 +6,9 @@ import type { ChainDefinition, ChainSlug } from '@hookguard/types';
  * PoolManager addresses are Uniswap v4 official deployments:
  * https://docs.uniswap.org/contracts/v4/deployments
  *
- * Indexing is not implemented in Phase 0 — these values are the
- * registry the indexer and analyzer will consume later.
+ * Start blocks are the PoolManager deployment (Ethereum) or chain
+ * genesis for preinstalled managers (Unichain). The indexer uses them
+ * only when no checkpoint exists.
  */
 export const CHAINS = {
   ethereum: {
@@ -21,6 +22,7 @@ export const CHAINS = {
     blockExplorerUrl: 'https://etherscan.io',
     blockExplorerName: 'Etherscan',
     poolManager: '0x000000000004444c5dc75cB358380D2e3dE08A90',
+    poolManagerStartBlock: 21689047n,
   },
   unichain: {
     id: 130,
@@ -33,6 +35,7 @@ export const CHAINS = {
     blockExplorerUrl: 'https://uniscan.xyz',
     blockExplorerName: 'Uniscan',
     poolManager: '0x1f98400000000000000000000000000000000004',
+    poolManagerStartBlock: 1n,
   },
 } as const satisfies Record<ChainSlug, ChainDefinition>;
 

@@ -8,7 +8,7 @@ import {
 } from './chains.js';
 
 describe('chain configuration', () => {
-  it('supports Ethereum and Unichain only in Phase 0', () => {
+  it('supports Ethereum and Unichain', () => {
     const chains = listSupportedChains();
     expect(chains.map((c) => c.slug).sort()).toEqual(['ethereum', 'unichain']);
     expect(CHAINS.ethereum.id).toBe(1);
@@ -34,5 +34,10 @@ describe('chain configuration', () => {
   it('declares RPC env keys without embedding secrets', () => {
     expect(CHAINS.ethereum.rpcEnvKey).toBe('RPC_URL_ETHEREUM');
     expect(CHAINS.unichain.rpcEnvKey).toBe('RPC_URL_UNICHAIN');
+  });
+
+  it('declares PoolManager start blocks for resume-less runs', () => {
+    expect(CHAINS.ethereum.poolManagerStartBlock).toBe(21689047n);
+    expect(CHAINS.unichain.poolManagerStartBlock).toBe(1n);
   });
 });

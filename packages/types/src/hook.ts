@@ -10,6 +10,10 @@ export interface Hook {
   /** Null until the risk engine has scored the hook. Range 0–100 when present. */
   riskScore: number | null;
   createdAt: Date;
+  firstSeenBlock: bigint;
+  lastSeenBlock: bigint;
+  poolCount: number;
+  lastIndexedAt: Date | null;
 }
 
 export interface HookSummary {
@@ -19,4 +23,6 @@ export interface HookSummary {
   creator: Address;
   verifiedSource: boolean;
   riskScore: number | null;
+  poolCount: number;
+  lastIndexedAt: Date | null;
 }

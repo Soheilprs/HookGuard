@@ -17,6 +17,10 @@ const requiredModels: Record<string, string[]> = {
     'verifiedSource',
     'riskScore',
     'createdAt',
+    'firstSeenBlock',
+    'lastSeenBlock',
+    'poolCount',
+    'lastIndexedAt',
   ],
   Pool: [
     'id',
@@ -28,9 +32,22 @@ const requiredModels: Record<string, string[]> = {
     'fee',
     'tickSpacing',
     'createdBlock',
+    'token0Address',
+    'token1Address',
+    'token0Symbol',
+    'token1Symbol',
+    'createdAtBlock',
+    'currencyPair',
   ],
   Contract: ['address', 'chainId', 'bytecode', 'sourceCode', 'compilerVersion'],
   Finding: ['id', 'hookId', 'category', 'severity', 'description', 'createdAt'],
+  IndexerCheckpoint: [
+    'id',
+    'chainId',
+    'contractAddress',
+    'lastProcessedBlock',
+    'updatedAt',
+  ],
 };
 
 function parseModels(schema: string): Record<string, string[]> {
@@ -57,9 +74,9 @@ describe('database schema', () => {
   const schema = readFileSync(schemaPath, 'utf8');
   const models = parseModels(schema);
 
-  it('defines Hook, Pool, Contract, and Finding', () => {
+  it('defines Hook, Pool, Contract, Finding, and IndexerCheckpoint', () => {
     expect(Object.keys(models).sort()).toEqual(
-      ['Contract', 'Finding', 'Hook', 'Pool'].sort(),
+      ['Contract', 'Finding', 'Hook', 'IndexerCheckpoint', 'Pool'].sort(),
     );
   });
 

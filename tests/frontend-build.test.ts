@@ -39,11 +39,19 @@ describe('frontend foundation', () => {
 
   it('does not ship fake security results', () => {
     const explorer = readFileSync(join(web, 'src/app/hooks/page.tsx'), 'utf8');
-    const dashboard = readFileSync(join(web, 'src/app/dashboard/page.tsx'), 'utf8');
-    const registry = readFileSync(join(web, 'src/lib/registry.ts'), 'utf8');
+    const table = readFileSync(join(web, 'src/components/hooks-table.tsx'), 'utf8');
+    const detail = readFileSync(
+      join(web, 'src/app/hooks/[address]/page.tsx'),
+      'utf8',
+    );
+    const pending = readFileSync(
+      join(web, 'src/components/analysis-pending.tsx'),
+      'utf8',
+    );
 
-    expect(registry).toMatch(/return \[\]/);
-    expect(explorer + dashboard).toMatch(/No hooks indexed yet/);
+    expect(explorer + table).toMatch(/No hooks indexed yet/);
+    expect(pending).toMatch(/Security analysis pending/);
+    expect(detail).not.toMatch(/riskScore:\s*[1-9]/);
   });
 
   it('is configured as a Next.js app that can build', () => {

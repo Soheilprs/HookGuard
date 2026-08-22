@@ -1,15 +1,27 @@
 import { listSupportedChains } from '@hookguard/blockchain';
+import Link from 'next/link';
 import { AppShell } from '@/components/layout/app-shell';
 import { HooksTable } from '@/components/hooks-table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { listHooks } from '@/lib/registry';
+import { fetchHooksSafe } from '@/lib/api';
+import { cn } from '@/lib/utils';
 
 export const metadata = {
   title: 'Hook Explorer',
 };
 
-export default function HookExplorerPage() {
-  const hooks = listHooks();
+export const dynamic = 'force-dynamic';
+
+export default async function HookExplorerPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ chainId?: string; chain?: string }>;
+}) {
+  const params = await searchParams;
+  const chainId = params.chainId ? Number(params.chainId) : undefined;
+  const { hooks, total } = await fetchHooksSafe(
+    Number.isInteger(chainId) ? chainId : undefined,
+  );
   const chains = listSupportedChains();
 
   return (
@@ -18,29 +30,43 @@ export default function HookExplorerPage() {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Hook Explorer</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Browse indexed Uniswap v4 hooks across {chains.map((c) => c.name).join(' and ')}.
+            Uniswap v4 hooks discovered from PoolManager Initialize events.
           </p>
         </div>
       </div>
 
       <div className="mb-4 flex flex-wrap gap-2">
-        <span className="rounded-full border border-border bg-muted px-3 py-1 text-xs text-muted-foreground">
+        <Link
+          href="/hooks"
+          className={cn(
+            'rounded-full border px-3 py-1 text-xs',
+            chainId === undefined
+              ? 'border-border bg-muted text-foreground'
+              : 'border-border text-muted-foreground hover:text-foreground',
+          )}
+        >
           All chains
-        </span>
+        </Link>
         {chains.map((chain) => (
-          <span
+          <Link
             key={chain.id}
-            className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground"
+            href={`/hooks?chainId=${chain.id}`}
+            className={cn(
+              'rounded-full border px-3 py-1 text-xs',
+              chainId === chain.id
+                ? 'border-border bg-muted text-foreground'
+                : 'border-border text-muted-foreground hover:text-foreground',
+            )}
           >
             {chain.name}
-          </span>
+          </Link>
         ))}
       </div>
 
       <Card>
         <CardHeader>
           <CardTitle className="text-sm font-medium text-muted-foreground">
-            {hooks.length} indexed
+            {total} indexed
           </CardTitle>
         </CardHeader>
         <CardContent className="p-0">

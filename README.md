@@ -52,6 +52,13 @@ npm run dev:api    # http://localhost:3001/health
 npm run dev:web    # http://localhost:3000
 ```
 
+Index Uniswap v4 hooks (read-only, no keys):
+
+```bash
+npm run db:migrate:deploy -w @hookguard/api
+npm run index:v4 -- --chain=ethereum --max-blocks=5000
+```
+
 Copy `.env.example` values into `.env` files. **Never commit secrets.**
 
 ## Scripts
@@ -64,6 +71,7 @@ Copy `.env.example` values into `.env` files. **Never commit secrets.**
 | `npm run format` | Prettier |
 | `npm run db:generate` | Prisma client |
 | `npm run db:validate` | Prisma schema check |
+| `npm run index:v4` | Discover Uniswap v4 hooks (read-only) |
 
 ## Tech stack
 

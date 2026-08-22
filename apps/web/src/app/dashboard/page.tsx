@@ -1,17 +1,20 @@
 import { Layers, Search, ShieldAlert, Sigma } from 'lucide-react';
 import { AppShell } from '@/components/layout/app-shell';
 import { EmptyState } from '@/components/empty-state';
+import { HooksTable } from '@/components/hooks-table';
 import { ScoreBadge } from '@/components/score-badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { dashboardStats, listHooks } from '@/lib/registry';
+import { fetchHooksSafe, fetchStatsSafe } from '@/lib/api';
 
 export const metadata = {
   title: 'Dashboard',
 };
 
-export default function DashboardPage() {
-  const stats = dashboardStats();
-  const hooks = listHooks();
+export const dynamic = 'force-dynamic';
+
+export default async function DashboardPage() {
+  const [stats, list] = await Promise.all([fetchStatsSafe(), fetchHooksSafe()]);
+  const recent = list.hooks.slice(0, 8);
 
   const cards = [
     { label: 'Hooks indexed', value: String(stats.hooksIndexed), icon: Layers },
@@ -25,7 +28,7 @@ export default function DashboardPage() {
       <div className="mb-8">
         <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Live snapshot of the HookGuard registry. Empty until indexing begins.
+          Live snapshot of the HookGuard registry. Risk scoring is not enabled yet.
         </p>
       </div>
 
@@ -54,13 +57,15 @@ export default function DashboardPage() {
           <CardTitle>Recent hooks</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
-          {hooks.length === 0 ? (
+          {recent.length === 0 ? (
             <EmptyState
               icon={<Layers className="h-5 w-5" />}
               title="No hooks indexed yet"
-              description="Newly discovered Uniswap v4 hooks will appear here after the indexer is enabled."
+              description="Newly discovered Uniswap v4 hooks will appear here after you run the indexer."
             />
-          ) : null}
+          ) : (
+            <HooksTable hooks={recent} />
+          )}
         </CardContent>
       </Card>
     </AppShell>

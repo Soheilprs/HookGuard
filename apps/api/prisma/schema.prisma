@@ -9,14 +9,18 @@ datasource db {
 
 /// A Uniswap v4 hook contract observed on a supported chain.
 model Hook {
-  id              String   @id @default(cuid())
+  id              String    @id @default(cuid())
   address         String
   chainId         Int
   creator         String
   deploymentBlock BigInt
-  verifiedSource  Boolean  @default(false)
+  verifiedSource  Boolean   @default(false)
   riskScore       Int?
-  createdAt       DateTime @default(now())
+  createdAt       DateTime  @default(now())
+  firstSeenBlock  BigInt
+  lastSeenBlock   BigInt
+  poolCount       Int       @default(0)
+  lastIndexedAt   DateTime?
 
   findings Finding[]
   pools    Pool[]
@@ -24,20 +28,27 @@ model Hook {
   @@unique([address, chainId])
   @@index([chainId])
   @@index([riskScore])
+  @@index([lastIndexedAt])
   @@map("hooks")
 }
 
 /// A Uniswap v4 pool that references a hook.
 model Pool {
-  id           String @id @default(cuid())
-  poolId       String
-  chainId      Int
-  hookAddress  String
-  token0       String
-  token1       String
-  fee          Int
-  tickSpacing  Int
-  createdBlock BigInt
+  id            String @id @default(cuid())
+  poolId        String
+  chainId       Int
+  hookAddress   String
+  token0        String
+  token1        String
+  fee           Int
+  tickSpacing   Int
+  createdBlock  BigInt
+  token0Address String
+  token1Address String
+  token0Symbol  String?
+  token1Symbol  String?
+  createdAtBlock BigInt
+  currencyPair  String
 
   hook Hook @relation(fields: [hookAddress, chainId], references: [address, chainId], onDelete: Restrict)
 
@@ -72,4 +83,17 @@ model Finding {
   @@index([hookId])
   @@index([severity])
   @@map("findings")
+}
+
+/// Resume cursor for a (chain, contract) log scan.
+model IndexerCheckpoint {
+  id                 String   @id @default(cuid())
+  chainId            Int
+  contractAddress    String
+  lastProcessedBlock BigInt
+  updatedAt          DateTime @updatedAt
+
+  @@unique([chainId, contractAddress])
+  @@index([chainId])
+  @@map("indexer_checkpoints")
 }
