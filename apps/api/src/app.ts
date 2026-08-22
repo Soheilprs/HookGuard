@@ -3,9 +3,15 @@ import Fastify, { type FastifyInstance } from 'fastify';
 import { healthRoutes } from './routes/health.js';
 import { hookController } from './modules/hooks/hook.controller.js';
 import { createHookService, type HookService } from './modules/hooks/hook.service.js';
+import { contractController } from './modules/contracts/contract.controller.js';
+import {
+  createContractService,
+  type ContractService,
+} from './modules/contracts/contract.service.js';
 
 export interface AppDeps {
   hookService?: HookService;
+  contractService?: ContractService;
 }
 
 export async function buildApp(deps: AppDeps = {}): Promise<FastifyInstance> {
@@ -21,6 +27,11 @@ export async function buildApp(deps: AppDeps = {}): Promise<FastifyInstance> {
 
   const hookService = deps.hookService ?? createHookService();
   await app.register(async (instance) => hookController(instance, { service: hookService }));
+
+  const contractService = deps.contractService ?? createContractService();
+  await app.register(async (instance) =>
+    contractController(instance, { service: contractService }),
+  );
 
   return app;
 }

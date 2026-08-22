@@ -1,6 +1,6 @@
 export type { Address, Hook, HookSummary } from './hook.js';
 export type { Pool } from './pool.js';
-export type { Contract } from './contract.js';
+export type { Contract, ContractFunction, ContractPermission } from './contract.js';
 export type {
   Finding,
   FindingCategory,
@@ -17,4 +17,8 @@ export type {
   HookListResponse,
   PoolListItem,
   RegistryStats,
+  ContractFunctionItem,
+  ContractPermissionItem,
+  ContractIntelligence,
+  HookContractResponse,
 } from './api.js';

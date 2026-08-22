@@ -1,4 +1,5 @@
 import type {
+  HookContractResponse,
   HookDetailResponse,
   HookListResponse,
   RegistryStats,
@@ -61,6 +62,37 @@ export async function fetchStatsSafe(): Promise<RegistryStats> {
       findings: 0,
       averageRisk: null,
     };
+  }
+}
+
+export async function fetchHookContract(
+  address: string,
+  chainId?: number,
+): Promise<HookContractResponse> {
+  const params = new URLSearchParams();
+  if (chainId !== undefined) params.set('chainId', String(chainId));
+  const query = params.toString();
+  return getJson<HookContractResponse>(
+    `/hooks/${encodeURIComponent(address)}/contract${query ? `?${query}` : ''}`,
+  );
+}
+
+export async function fetchHookContractSafe(
+  address: string,
+  chainId?: number,
+): Promise<HookContractResponse | null> {
+  try {
+    return await fetchHookContract(address, chainId);
+  } catch (error) {
+    if (
+      error &&
+      typeof error === 'object' &&
+      'status' in error &&
+      error.status === 404
+    ) {
+      return { deployments: [] };
+    }
+    return null;
   }
 }
 

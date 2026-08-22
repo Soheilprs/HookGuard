@@ -4,7 +4,7 @@ Open-source **security intelligence** for [Uniswap v4](https://docs.uniswap.org/
 
 HookGuard is a registry, analysis engine, and risk dashboard — not an AI auditor and not a generic smart-contract scanner. It exists so developers, liquidity providers, researchers, and protocols can understand hook security risk before capital is at stake.
 
-Phase 0 is the foundation: monorepo, API, schema, chain configuration, and UI. Indexing and analysis are not implemented yet.
+The registry and contract intelligence layers are live. Security analysis and scoring are not implemented.
 
 ## Product
 
@@ -57,6 +57,7 @@ Index Uniswap v4 hooks (read-only, no keys):
 ```bash
 npm run db:migrate:deploy -w @hookguard/api
 npm run index:v4 -- --chain=ethereum --max-blocks=5000
+npm run inspect:contracts -- --chain=ethereum
 ```
 
 Copy `.env.example` values into `.env` files. **Never commit secrets.**
@@ -72,6 +73,7 @@ Copy `.env.example` values into `.env` files. **Never commit secrets.**
 | `npm run db:generate` | Prisma client |
 | `npm run db:validate` | Prisma schema check |
 | `npm run index:v4` | Discover Uniswap v4 hooks (read-only) |
+| `npm run inspect:contracts` | Collect hook bytecode / source / proxy facts |
 
 ## Tech stack
 
@@ -87,7 +89,7 @@ Copy `.env.example` values into `.env` files. **Never commit secrets.**
 
 ## Status
 
-**Phase 0 — foundation.** The explorer will show *No hooks indexed yet* until Phase 1.
+**Phase 2A — contract intelligence.** Hooks are discovered from PoolManager events. Bytecode, source, proxy, and permission facts are collected. No scores.
 
 ## License
 

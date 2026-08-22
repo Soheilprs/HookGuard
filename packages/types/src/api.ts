@@ -55,3 +55,40 @@ export interface RegistryStats {
   findings: number;
   averageRisk: number | null;
 }
+
+export interface ContractFunctionItem {
+  name: string;
+  selector: string;
+  visibility: string;
+  stateMutability: string;
+}
+
+export interface ContractPermissionItem {
+  type: string;
+  address: Address;
+  source: string;
+}
+
+export interface ContractIntelligence {
+  address: Address;
+  chainId: number;
+  bytecodeHash: string;
+  bytecodeSize: number;
+  sourceVerified: boolean;
+  sourceUrl: string | null;
+  compilerVersion: string | null;
+  isProxy: boolean;
+  implementationAddress: Address | null;
+  adminAddress: Address | null;
+  lastCheckedAt: string | null;
+  functions: ContractFunctionItem[];
+  permissions: ContractPermissionItem[];
+}
+
+export interface HookContractResponse {
+  deployments: Array<{
+    hook: HookListItem;
+    contract: ContractIntelligence | null;
+    analysisStatus: 'pending';
+  }>;
+}

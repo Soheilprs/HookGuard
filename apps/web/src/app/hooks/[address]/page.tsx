@@ -3,12 +3,13 @@ import { isAddress } from 'viem';
 import { ShieldOff } from 'lucide-react';
 import Link from 'next/link';
 import { AnalysisPending } from '@/components/analysis-pending';
+import { ContractIntelligencePanel } from '@/components/contract-intelligence';
 import { AppShell } from '@/components/layout/app-shell';
 import { EmptyState } from '@/components/empty-state';
 import { PoolsTable } from '@/components/pools-table';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { fetchHookSafe } from '@/lib/api';
+import { fetchHookContractSafe, fetchHookSafe } from '@/lib/api';
 import { formatBlock, formatIndexedAt } from '@/lib/format';
 import { truncateAddress } from '@/lib/utils';
 import type { ReactNode } from 'react';
@@ -31,10 +32,17 @@ export default async function HookDetailPage({
   const decoded = decodeURIComponent(address);
   const valid = isAddress(decoded, { strict: false });
   const chainId = query.chainId ? Number(query.chainId) : undefined;
-  const payload = valid
-    ? await fetchHookSafe(decoded, Number.isInteger(chainId) ? chainId : undefined)
-    : null;
+  const filterChain = Number.isInteger(chainId) ? chainId : undefined;
+  const [payload, contractPayload] = valid
+    ? await Promise.all([
+        fetchHookSafe(decoded, filterChain),
+        fetchHookContractSafe(decoded, filterChain),
+      ])
+    : [null, null];
   const deployments = payload?.deployments ?? [];
+  const contractsByChain = new Map(
+    (contractPayload?.deployments ?? []).map((row) => [row.hook.chainId, row.contract]),
+  );
 
   return (
     <AppShell>
@@ -142,6 +150,10 @@ export default async function HookDetailPage({
                     </CardContent>
                   </Card>
                 </div>
+
+                <ContractIntelligencePanel
+                  contract={contractsByChain.get(deployment.hook.chainId) ?? null}
+                />
               </div>
             );
           })}

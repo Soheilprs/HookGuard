@@ -39,7 +39,31 @@ const requiredModels: Record<string, string[]> = {
     'createdAtBlock',
     'currencyPair',
   ],
-  Contract: ['address', 'chainId', 'bytecode', 'sourceCode', 'compilerVersion'],
+  Contract: [
+    'id',
+    'address',
+    'chainId',
+    'bytecode',
+    'sourceCode',
+    'compilerVersion',
+    'bytecodeHash',
+    'sourceVerified',
+    'sourceUrl',
+    'abiJson',
+    'isProxy',
+    'implementationAddress',
+    'adminAddress',
+    'lastCheckedAt',
+  ],
+  ContractFunction: [
+    'id',
+    'contractId',
+    'name',
+    'selector',
+    'visibility',
+    'stateMutability',
+  ],
+  ContractPermission: ['id', 'contractId', 'type', 'address', 'source'],
   Finding: ['id', 'hookId', 'category', 'severity', 'description', 'createdAt'],
   IndexerCheckpoint: [
     'id',
@@ -74,9 +98,17 @@ describe('database schema', () => {
   const schema = readFileSync(schemaPath, 'utf8');
   const models = parseModels(schema);
 
-  it('defines Hook, Pool, Contract, Finding, and IndexerCheckpoint', () => {
+  it('defines registry, intelligence, and checkpoint models', () => {
     expect(Object.keys(models).sort()).toEqual(
-      ['Contract', 'Finding', 'Hook', 'IndexerCheckpoint', 'Pool'].sort(),
+      [
+        'Contract',
+        'ContractFunction',
+        'ContractPermission',
+        'Finding',
+        'Hook',
+        'IndexerCheckpoint',
+        'Pool',
+      ].sort(),
     );
   });
 

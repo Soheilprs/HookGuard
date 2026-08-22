@@ -22,6 +22,7 @@ const components = [
   'src/components/risk-badge.tsx',
   'src/components/empty-state.tsx',
   'src/components/loading-state.tsx',
+  'src/components/contract-intelligence.tsx',
 ];
 
 describe('frontend foundation', () => {
@@ -48,9 +49,16 @@ describe('frontend foundation', () => {
       join(web, 'src/components/analysis-pending.tsx'),
       'utf8',
     );
+    const intelligence = readFileSync(
+      join(web, 'src/components/contract-intelligence.tsx'),
+      'utf8',
+    );
 
     expect(explorer + table).toMatch(/No hooks indexed yet/);
     expect(pending).toMatch(/Security analysis pending/);
+    expect(intelligence).toMatch(/Contract Intelligence/);
+    expect(intelligence).toMatch(/Functions/);
+    expect(intelligence).toMatch(/Permissions/);
     expect(detail).not.toMatch(/riskScore:\s*[1-9]/);
   });
 

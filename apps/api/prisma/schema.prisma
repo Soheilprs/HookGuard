@@ -34,21 +34,21 @@ model Hook {
 
 /// A Uniswap v4 pool that references a hook.
 model Pool {
-  id            String @id @default(cuid())
-  poolId        String
-  chainId       Int
-  hookAddress   String
-  token0        String
-  token1        String
-  fee           Int
-  tickSpacing   Int
-  createdBlock  BigInt
-  token0Address String
-  token1Address String
-  token0Symbol  String?
-  token1Symbol  String?
+  id             String  @id @default(cuid())
+  poolId         String
+  chainId        Int
+  hookAddress    String
+  token0         String
+  token1         String
+  fee            Int
+  tickSpacing    Int
+  createdBlock   BigInt
+  token0Address  String
+  token1Address  String
+  token0Symbol   String?
+  token1Symbol   String?
   createdAtBlock BigInt
-  currencyPair  String
+  currencyPair   String
 
   hook Hook @relation(fields: [hookAddress, chainId], references: [address, chainId], onDelete: Restrict)
 
@@ -59,14 +59,57 @@ model Pool {
 
 /// Raw contract artifact for a hook or related address.
 model Contract {
-  address         String
-  chainId         Int
-  bytecode        String  @db.Text
-  sourceCode      String? @db.Text
-  compilerVersion String?
+  id                    String    @id @default(cuid())
+  address               String
+  chainId               Int
+  bytecode              String    @db.Text
+  sourceCode            String?   @db.Text
+  compilerVersion       String?
+  bytecodeHash          String
+  sourceVerified        Boolean   @default(false)
+  sourceUrl             String?
+  abiJson               String?   @db.Text
+  isProxy               Boolean   @default(false)
+  implementationAddress String?
+  adminAddress          String?
+  lastCheckedAt         DateTime?
 
-  @@id([address, chainId])
+  functions    ContractFunction[]
+  permissions  ContractPermission[]
+
+  @@unique([address, chainId])
+  @@index([chainId])
   @@map("contracts")
+}
+
+/// ABI-visible or bytecode-observed function of a contract.
+model ContractFunction {
+  id              String @id @default(cuid())
+  contractId      String
+  name            String
+  selector        String
+  visibility      String
+  stateMutability String
+
+  contract Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  @@unique([contractId, selector])
+  @@index([contractId])
+  @@map("contract_functions")
+}
+
+/// Observed permission fact (owner, admin, role). Not a risk judgment.
+model ContractPermission {
+  id         String @id @default(cuid())
+  contractId String
+  type       String
+  address    String
+  source     String
+
+  contract Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+
+  @@index([contractId])
+  @@map("contract_permissions")
 }
 
 /// A structured security observation about a hook. Empty until analysis runs.

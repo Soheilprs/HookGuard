@@ -51,3 +51,41 @@ export type {
   ReadOnlyClient,
   TokenMetadataProvider,
 } from './uniswap-v4/index.js';
+
+export {
+  fetchBytecode,
+  inspectBytecode,
+  normalizeBytecode,
+  byteLength,
+  extractSelectors,
+  bytecodeContainsSelector,
+  parseAbiJson,
+  functionsFromAbi,
+  functionsFromBytecode,
+  mergeFunctions,
+  EIP1967_IMPLEMENTATION_SLOT,
+  EIP1967_ADMIN_SLOT,
+  detectProxy,
+  addressFromStorage,
+  EMPTY_SOURCE,
+  StaticSourceProvider,
+  SourcifySourceProvider,
+  EtherscanSourceProvider,
+  CompositeSourceProvider,
+  createDefaultSourceProvider,
+  explorerApiUrl,
+  DEFAULT_ADMIN_ROLE,
+  detectPermissions,
+  collectContractIntelligence,
+} from './contract/index.js';
+
+export type {
+  BytecodeSnapshot,
+  ParsedFunction,
+  ProxyFacts,
+  ProxyKind,
+  VerifiedSource,
+  SourceProvider,
+  PermissionFact,
+  ContractIntelligenceFacts,
+} from './contract/index.js';

@@ -80,6 +80,11 @@ export interface HookRepository {
     contractAddress: string,
     lastProcessedBlock: bigint,
   ): Promise<void>;
+  setVerifiedSource(
+    address: string,
+    chainId: number,
+    verified: boolean,
+  ): Promise<void>;
 }
 
 const UNKNOWN_CREATOR = '0x0000000000000000000000000000000000000000';
@@ -239,6 +244,17 @@ export class InMemoryHookRepository implements HookRepository {
       lastProcessedBlock,
       updatedAt: new Date(),
     });
+  }
+
+  async setVerifiedSource(
+    address: string,
+    chainId: number,
+    verified: boolean,
+  ): Promise<void> {
+    const hook = this.hooks.get(this.hookKey(chainId, address));
+    if (hook) {
+      hook.verifiedSource = verified;
+    }
   }
 }
 
@@ -401,6 +417,17 @@ export class PrismaHookRepository implements HookRepository {
         lastProcessedBlock,
       },
       update: { lastProcessedBlock },
+    });
+  }
+
+  async setVerifiedSource(
+    address: string,
+    chainId: number,
+    verified: boolean,
+  ): Promise<void> {
+    await this.prisma.hook.updateMany({
+      where: { address: normalize(address), chainId },
+      data: { verifiedSource: verified },
     });
   }
 }

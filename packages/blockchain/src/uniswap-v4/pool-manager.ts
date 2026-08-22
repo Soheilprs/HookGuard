@@ -35,7 +35,13 @@ export interface ReadOnlyClient {
     address: Address;
     abi: readonly unknown[];
     functionName: string;
+    args?: readonly unknown[];
   }): Promise<unknown>;
+  getBytecode(args: { address: Address }): Promise<`0x${string}` | undefined>;
+  getStorageAt(args: {
+    address: Address;
+    slot: `0x${string}`;
+  }): Promise<`0x${string}` | undefined>;
 }
 
 export function createReadOnlyClient(
