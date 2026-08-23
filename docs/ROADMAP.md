@@ -1,57 +1,39 @@
 # Roadmap
 
-HookGuard is built in phases. The repository currently implements product Phases 0–4 (foundation through public monitoring and alerts). Numerical risk scoring is still not implemented.
+HookGuard is built in numbered product phases. **Phases 0–4 are implemented in this repository.** Phase 5 is documentation and launch readiness. Numerical risk scoring is **not** implemented and is not a launch requirement.
 
-## Phase 0 — Foundation (current)
+HookGuard does not replace a professional smart-contract audit.
 
-- Monorepo (`apps/web`, `apps/api`, `packages/*`)
-- Fastify API with `GET /health`
-- PostgreSQL + Prisma schema (`Hook`, `Pool`, `Contract`, `Finding`)
-- Environment-based configuration
-- Chain module for Ethereum and Unichain
-- Interfaces for indexer, analyzer, and risk engine
-- Landing, dashboard, explorer, hook detail
-- Empty states — no fake findings
-- Docs, Vitest, Prettier
+## Done
 
-## Phase 1 — Hook indexing
+| Phase | Name | What shipped |
+| --- | --- | --- |
+| 0 | Foundation | Monorepo, Fastify health, Prisma schema, Next.js empty states |
+| 1 | Discovery | PoolManager `Initialize` indexer, explorer |
+| 2A | Intelligence | Bytecode, optional verified source, proxy, ABI, permissions |
+| 2B | Findings | Evidence-based rules (proxy, ownership, lifecycle, calls, privileged) |
+| 2C | Validation | Confidence, detection source, real Ethereum + Unichain corpus, methodology UI |
+| 3 | Monitoring | Snapshots and security events |
+| 4 | Public product | Public pages, watchlists, optional Telegram alerts |
+| 5 | Launch docs | README, architecture, methodology, validation, grant draft, deployment |
 
-- Implement `HookIndexer` against Uniswap v4 `PoolManager`
-- Persist hooks and pools from `Initialize` and related events
-- Backfill from `deploymentBlock`
-- Explorer lists real addresses
+## Next (not built)
 
-## Phase 2 — Contract ingestion
+- Additional canonical v4 chains
+- Archive RPC so Ethereum indexing can finish at tip
+- Explorer keys so verified-source rates are measurable on mainnet
+- Operator scheduling for `monitor:hooks` / `alerts:retry`
+- Account-backed watchlists (today: client identifier)
 
-- Fetch bytecode via viem
-- Attach verified source when a provider is configured
-- Populate `Contract` rows
-- Surface verification status in the UI
+## Explicitly not in launch
 
-## Phase 3 — Hook-specific analysis
-
-- Implement `ContractAnalyzer` for v4 hooks only
-- Permission flags (`beforeSwap`, `afterSwap`, `beforeAddLiquidity`, …)
-- Access control, delta accounting, hook address mining, fee behavior
-- Write `Finding` rows with category and severity
-
-## Phase 4 — Risk engine and dashboard
-
-- Implement `RiskEngine` as published, deterministic rules
-- Fill `Hook.riskScore`
-- Dashboard charts and finding filters
-- Still no invented scores: unknown remains unknown
-
-## Phase 5 — Ecosystem features
-
-- Additional chains
-- Alerts for newly deployed hooks
-- Public API for protocols
-- LP-oriented pool ↔ hook views
+- Numerical `riskScore`
+- AI-written findings
+- Transaction execution, custody, or hook deployment
+- Generic Solidity scanning as the product
 
 ## Non-goals (all phases)
 
-- AI-generated audits
-- Generic Solidity scanners (Slither-as-a-product)
 - Silent mock data in production UI
-- Custody, trading, or hook deployment as a service
+- Claiming users or TVL the repo cannot show
+- Treating `NEEDS_CONTEXT` as confirmed to dress up metrics

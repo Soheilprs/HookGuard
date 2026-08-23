@@ -20,8 +20,11 @@ copy_env "$root/apps/web/.env.example" "$root/apps/web/.env.local"
 
 echo
 echo "Next:"
-echo "  1. docker compose up -d"
+echo "  1. docker compose up -d          # Postgres on localhost:5434"
 echo "  2. npm install"
 echo "  3. npm run db:generate"
-echo "  4. npm run dev:api   # terminal 1"
-echo "  5. npm run dev:web   # terminal 2"
+echo "  4. npm run db:migrate:deploy -w @hookguard/api"
+echo "  5. npm run dev:api               # http://localhost:3001/health"
+echo "  6. npm run dev:web               # http://localhost:3000"
+echo
+echo "Docs: docs/DEPLOYMENT.md"

@@ -4,6 +4,8 @@ Manual review of HookGuard findings on **real** Uniswap v4 deployments.
 
 Dataset: `data/validation/dataset.json`
 
+HookGuard does not replace a professional smart-contract audit. Validation improves trustworthiness of **existing** rules. It is not a count of “vulns found.”
+
 HookGuard never auto-marks findings `CONFIRMED`. Reviews are applied with `npm run validate:apply`.
 
 ## Statuses

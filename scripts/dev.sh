@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Convenience launcher for local Phase 0 development.
+# Convenience launcher for local API + web.
 # Run API and web separately if you prefer npm run dev:api / dev:web.
 
 root="$(cd "$(dirname "$0")/.." && pwd)"

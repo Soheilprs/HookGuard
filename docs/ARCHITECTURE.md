@@ -1,146 +1,182 @@
 # Architecture
 
-HookGuard is a TypeScript monorepo. Phase 0 establishes module boundaries so later phases can add indexing and analysis without rewriting the product.
+HookGuard is a TypeScript monorepo: a Fastify API, a Next.js UI, and a blockchain package that talks to Uniswap v4 **read-only**.
 
-## Vision
+HookGuard does not replace a professional smart-contract audit. It does not fill `Hook.riskScore`.
 
-Help Uniswap v4 developers, LPs, researchers, and protocols understand **hook** risk.
-
-Three product surfaces:
-
-1. **Hook Registry** — what hooks exist, where they are deployed, which pools use them.
-2. **Security Analysis Engine** — v4-specific, deterministic inspection of hook contracts.
-3. **Risk Dashboard** — scores and findings presented without invented data.
-
-## System context
+## System
 
 ```mermaid
 flowchart LR
   subgraph clients [Clients]
-    Web[Next.js dashboard]
-    Devs[Developers / LPs / researchers]
+    Web[Next.js]
+    Ops[Operators / CLIs]
   end
 
   subgraph platform [HookGuard]
     API[Fastify API]
     DB[(PostgreSQL)]
-    Indexer[HookIndexer]
-    Analyzer[ContractAnalyzer]
-    Risk[RiskEngine]
+    Idx[Indexer]
+    Ins[Inspector]
+    An[Analyzer]
+    Mon[Monitor]
+    Al[Alerts]
   end
 
-  subgraph chains [Supported chains]
-    ETH[Ethereum]
-    UNI[Unichain]
+  subgraph chains [Chains]
+    ETH[Ethereum PoolManager]
+    UNI[Unichain PoolManager]
   end
 
-  Devs --> Web
   Web --> API
+  Ops --> Idx
+  Ops --> Ins
+  Ops --> An
+  Ops --> Mon
   API --> DB
-  Indexer --> ETH
-  Indexer --> UNI
-  Indexer --> DB
-  Analyzer --> DB
-  Risk --> DB
+  Idx --> ETH
+  Idx --> UNI
+  Idx --> DB
+  Ins --> ETH
+  Ins --> UNI
+  Ins --> DB
+  An --> DB
+  Mon --> ETH
+  Mon --> UNI
+  Mon --> DB
+  Mon --> Al
+  Al --> DB
 ```
 
-Phase 0 ships `Web`, `API`, `DB` schema, and the **interfaces** for Indexer / Analyzer / Risk. Implementations are later phases.
+All chain arrows are `eth_getLogs`, `eth_call`, `eth_getCode`, and `eth_getStorageAt`.
 
 ## Monorepo
 
 | Path | Responsibility |
 | --- | --- |
-| `apps/api` | HTTP API, Prisma schema, health endpoint |
-| `apps/web` | Landing, dashboard, explorer, hook detail |
-| `packages/types` | Domain types shared by API and web |
-| `packages/config` | Environment-based configuration. No secrets in git. |
-| `packages/blockchain` | Chain registry; `HookIndexer`, `ContractAnalyzer`, `RiskEngine` interfaces |
-| `docs` | Product and security documentation |
-| `tests` | Cross-package checks (schema, frontend foundation) |
+| `apps/api` | HTTP, Prisma, CLIs (`index:v4`, `inspect:contracts`, `analyze:hooks`, `monitor:hooks`, `alerts:retry`) |
+| `apps/web` | Landing, dashboard, explorer, public hook pages, watchlist, methodology |
+| `packages/types` | Domain types (hooks, findings, events, alerts) |
+| `packages/config` | Environment loading. No secrets in git. |
+| `packages/blockchain` | Chain registry, log fetch, contract intelligence, analysis rules, snapshot comparison |
+| `docs` | Product, methodology, validation, grant, deployment |
+| `data/validation` | Ground-truth review fixture |
 
-**Why this split**
+`apps/*` are deployable. Chain knowledge lives only in `packages/blockchain`.
 
-- `apps/*` are deployable. `packages/*` are libraries.
-- Chain knowledge lives in `packages/blockchain`, not in the API or UI, so both can stay chain-agnostic.
-- Config is a package so API and web validate env the same way.
-- UI primitives stay in `apps/web`. Extracting them to `packages/ui` would add a build graph for components that only Next.js uses.
+## Indexing pipeline
 
-## Backend
+```mermaid
+flowchart TD
+  A[PoolManager Initialize logs] --> B[Decode pool key + hook]
+  B --> C{hook = address 0?}
+  C -->|yes| D[Skip]
+  C -->|no| E[Upsert Hook + Pool]
+  E --> F[Checkpoint lastProcessedBlock]
+```
 
-Fastify app (`apps/api`):
+- CLI: `npm run index:v4 -- --chain=ethereum`
+- Source: Uniswap v4 `Initialize` topic on the canonical PoolManager
+- Resume: `indexer_checkpoints`
+- Oversized RPC ranges are split; a single crashing block can be skipped so the backfill continues
 
-- `GET /health` — liveness plus the configured chain list.
-- Config via `loadApiConfigFromEnv()` (`@hookguard/config`).
-- Prisma client is wired (`src/lib/prisma.ts`) but unused by health. No indexer connection in Phase 0.
+## Analysis pipeline
 
-Process entry: `src/index.ts`. Tests use `buildApp()` and Fastify `inject`, so the health test does not bind a port.
+```mermaid
+flowchart TD
+  H[Indexed Hook] --> I[eth_getCode + storage slots]
+  I --> J[Optional Sourcify / Etherscan]
+  J --> K[Contract + functions + permissions]
+  K --> L[Published rules]
+  L --> M[Finding with evidence, confidence, detectionSource]
+```
+
+- Inspect: `npm run inspect:contracts`
+- Analyze: `npm run analyze:hooks`
+- Findings always include evidence JSON. Re-analyze preserves validation reviews.
+- Confidence (`HIGH` / `MEDIUM` / `LOW`) is not severity.
+
+## Monitoring pipeline
+
+```mermaid
+flowchart TD
+  S1[Previous HookSnapshot] --> C[compareSnapshots]
+  S2[Current live snapshot] --> C
+  C --> E{delta?}
+  E -->|no| N[Store snapshot only]
+  E -->|yes| V[SecurityEvent + evidence]
+```
+
+- CLI: `npm run monitor:hooks`
+- Snapshot fields: implementation, admin, owner, bytecode hash, functions hash, permissions hash, block number
+- First snapshot is a baseline (no events)
+- Duplicate unresolved fingerprints are not inserted
+
+## Alert pipeline
+
+```mermaid
+flowchart TD
+  V[New SecurityEvent] --> W[Watchlists for that hook]
+  W --> P{preference enabled?}
+  P -->|no| X[Skip]
+  P -->|yes| D[AlertDelivery unique event+watch]
+  D --> T{Telegram env set?}
+  T -->|no| Pend[PENDING]
+  T -->|yes| Send[sendMessage]
+  Send -->|ok| Sent[SENT]
+  Send -->|fail| Fail[FAILED then retry]
+```
+
+- Identifier-based watches (no accounts)
+- Telegram via `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID`
+- `npm run alerts:retry` for `PENDING` / `FAILED` with `attempts < 5`
+
+## HTTP surface (selected)
+
+| Method | Path |
+| --- | --- |
+| GET | `/health` |
+| GET | `/corpus` |
+| GET | `/hooks`, `/hooks/:address` |
+| GET | `/hooks/:address/contract` |
+| GET | `/hooks/:address/findings` |
+| GET | `/hooks/:address/events` |
+| GET | `/hooks/:address/monitoring` |
+| GET | `/public/hooks/:address` |
+| POST/DELETE/GET | `/hooks/:address/watch` |
+| GET | `/events/recent`, `/alerts/recent`, `/watchlist` |
+
+No `riskScore` on public JSON.
 
 ## Database
 
-PostgreSQL. Prisma schema in `apps/api/prisma/schema.prisma`.
+PostgreSQL. Prisma schema: `apps/api/prisma/schema.prisma`.
 
-| Model | Role |
-| --- | --- |
-| `Hook` | One row per `(address, chainId)` |
-| `Pool` | Uniswap v4 pool that references a hook |
-| `Contract` | Bytecode / optional verified source |
-| `Finding` | Structured observation attached to a hook |
+Core models: `Hook`, `Pool`, `Contract`, `Finding`, `HookSnapshot`, `SecurityEvent`, `Watchlist`, `AlertPreference`, `AlertDelivery`, `IndexerCheckpoint`.
 
-Relations:
-
-- `Finding.hookId → Hook.id` (cascade delete)
-- `Pool.(hookAddress, chainId) → Hook.(address, chainId)`
-
-`riskScore` is nullable. Unscored hooks must not display a fabricated number.
+`Hook.riskScore` remains nullable and unused.
 
 ## Frontend
-
-Next.js App Router, Tailwind, shadcn-style primitives, wagmi + RainbowKit.
 
 | Route | Page |
 | --- | --- |
 | `/` | Landing |
-| `/dashboard` | Registry snapshot (empty state) |
-| `/hooks` | Explorer table (empty state) |
-| `/hooks/[address]` | Detail placeholder |
+| `/dashboard` | Corpus + recent events/alerts |
+| `/hooks` | Explorer |
+| `/hooks/[address]` | In-app security page |
+| `/public/hooks/[address]` | Shareable public page |
+| `/watchlist` | Client identifier watches |
+| `/methodology` | Fact vs finding, live counts |
 
-Data access is `src/lib/registry.ts`. It returns empty collections on purpose.
+## Chains
 
-## Blockchain module
+| Chain | ID | PoolManager | Default start block |
+| --- | --- | --- | --- |
+| Ethereum | 1 | `0x000000000004444c5dc75cB358380D2e3dE08A90` | 21689047 |
+| Unichain | 130 | `0x1f98400000000000000000000000000000000004` | 1 (indexer may override) |
 
-`packages/blockchain` is the only place that knows Uniswap v4 deployment addresses.
+RPC from `RPC_URL_ETHEREUM` / `RPC_URL_UNICHAIN`.
 
-Phase 0 chains:
+## Configuration and ops
 
-| Chain | ID | PoolManager |
-| --- | --- | --- |
-| Ethereum | 1 | `0x000000000004444c5dc75cB358380D2e3dE08A90` |
-| Unichain | 130 | `0x1f98400000000000000000000000000000000004` |
-
-RPC URLs come from `RPC_URL_ETHEREUM` and `RPC_URL_UNICHAIN`. Public defaults exist for local development; production must supply its own endpoints.
-
-Interfaces (not implemented):
-
-```ts
-interface HookIndexer { start(); stop(); getHook(); getIndexedHookCount(); }
-interface ContractAnalyzer { analyze(request); }
-interface RiskEngine { score(request); }
-```
-
-## Configuration
-
-- Root `.env.example`, `apps/api/.env.example`, `apps/web/.env.example`
-- Required in production API: `DATABASE_URL`
-- Optional: RPC URLs, `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`
-- `.env` is gitignored
-
-Local Postgres: `docker compose up -d`.
-
-## Testing and build
-
-```
-npm run test    # Vitest
-npm run build   # packages → API → Next.js
-```
-
-Health is tested with Fastify inject. Schema tests parse Prisma and run `prisma validate`. Frontend tests assert pages, components, and empty states. `npm run build` is the real Next.js production compile.
+See [DEPLOYMENT.md](./DEPLOYMENT.md). Local Postgres is `docker compose` on host port **5434**.

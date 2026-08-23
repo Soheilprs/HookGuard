@@ -120,6 +120,15 @@ describe('frontend foundation', () => {
       'utf8',
     );
     expect(watchButton).toMatch(/Watch hook/);
+    const landing = readFileSync(join(web, 'src/app/page.tsx'), 'utf8');
+    expect(landing).toMatch(/Evidence-backed security intelligence/);
+    expect(landing).toMatch(/Problem/);
+    expect(landing).toMatch(/How it works/);
+    expect(landing).toMatch(/Coverage metrics/);
+    expect(landing).toMatch(/Methodology/);
+    expect(landing).toMatch(/Roadmap/);
+    expect(landing).toMatch(/does not replace a professional smart-contract audit/);
+    expect(landing).not.toMatch(/riskScore/);
   });
 
   it('is configured as a Next.js app that can build', () => {

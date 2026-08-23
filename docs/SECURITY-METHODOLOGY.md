@@ -2,34 +2,39 @@
 
 HookGuard publishes **evidence-backed security intelligence** for deployed Uniswap v4 hooks.
 
-HookGuard does not replace a professional smart-contract audit.
+**HookGuard does not replace a professional smart-contract audit.**
 
-## Product
-
-HookGuard is not primarily a hook registry, generic v4 analytics, a generic Solidity scanner, or an AI auditor. Those surfaces exist only to support evidence about **this** hook on **this** chain.
+It is not a generic scanner, not an AI auditor, and not a risk-scoring product. Those surfaces, when they exist in the UI, only exist to show evidence about **this** hook on **this** chain.
 
 ## Fact vs finding
 
 | | Meaning |
 | --- | --- |
-| Fact | Observed on-chain or from verified metadata (storage word, `eth_call` result, ABI item, opcode at a program counter, hook-address flag bits). |
-| Finding | A published rule applied to facts. It always has `ruleId`, severity, confidence, `detectionSource`, description, and evidence JSON. |
+| **Fact** | Observed on-chain or from verified metadata: a storage word, `eth_call` result, ABI item, opcode at a program counter, hook-address flag bits. |
+| **Finding** | A published rule applied to facts. Always has `ruleId`, severity, confidence, `detectionSource`, description, and evidence JSON. |
 
-No finding is stored without evidence.
+No finding is stored without evidence. The UI must not invent observations.
 
 ## Severity vs confidence
 
-**Severity** is how serious the observation would be if taken in operational context (e.g. an EOA that can upgrade implementation).
+**Severity** is how serious the observation would be *if* the evidence is interpreted in operational context (for example an EOA that can call `upgradeTo`).
 
-**Confidence** is how directly the evidence supports the observation.
+**Confidence** is how directly the evidence supports that observation.
 
-`HIGH` severity with `LOW` confidence is not the same as `HIGH` severity with `HIGH` confidence. Bytecode-only CALL is never described as “external call in the swap path.”
+They are independent:
+
+- HIGH severity / HIGH confidence ≠ HIGH severity / LOW confidence
+- Bytecode-only `CALL` is **never** described as “external call in the swap path”
+
+Allowed confidence values: `HIGH`, `MEDIUM`, `LOW`.
 
 ## Detection sources
 
+Every finding records how it was derived. Heuristic origin is not hidden.
+
 | Source | Meaning |
 | --- | --- |
-| `EIP1967_STORAGE` | Implementation/admin slots |
+| `EIP1967_STORAGE` | Implementation / admin slots |
 | `ONCHAIN_CALL` | `owner()` / `admin()` |
 | `ACCESS_CONTROL_ENUMERATION` | `getRoleMember` |
 | `HOOK_ADDRESS_FLAGS` | Low 14 bits of the hook address |
@@ -40,18 +45,41 @@ No finding is stored without evidence.
 
 ## Deterministic vs heuristic
 
-- **Tier 1** — storage slots, flag bits, successful view calls.
-- **Tier 2** — ABI names, correlated EOA + mutators.
-- **Tier 3** — raw opcodes and unnamed selectors. The UI labels these LOW CONFIDENCE / bytecode heuristic.
+| Tier | Kind | Examples | UI |
+| --- | --- | --- | --- |
+| 1 | Deterministic | EIP-1967 slots, hook-address flags, successful `owner()` | Solid card, high confidence when the slot/call succeeded |
+| 2 | Contextual | EOA owner *with* discovered mutators; named privileged setters | Needs the correlation, not the EOA alone |
+| 3 | Heuristic | Raw CALL/DELEGATECALL/STATICCALL; unnamed selectors | Dashed card, **LOW CONFIDENCE**, “Bytecode heuristic” |
 
-## Known limitations
+An EOA owner with **no** discovered privileged mutators is recorded as a fact (lower severity), not “critical risk.”
 
-- Opcode findings do not prove control-flow reachability from `beforeSwap` / `afterSwap` unless verified source binds the call to that function.
+An extra implemented callback that is **not** flagged on the hook address is **not** automatically a vulnerability: `PoolManager` will not call it.
+
+UUPS is **not** claimed merely because an implementation slot is set.
+
+## Validation process
+
+1. Index real PoolManager `Initialize` events.
+2. Inspect and analyze.
+3. Select a mix of real hooks (see [VALIDATION.md](./VALIDATION.md)).
+4. Review each finding: `CONFIRMED`, `FALSE_POSITIVE`, or `NEEDS_CONTEXT`.
+5. Apply with `npm run validate:apply`. The engine **never** auto-marks `CONFIRMED`.
+
+Precision = `confirmed / (confirmed + false positives)`. `NEEDS_CONTEXT` is excluded on purpose. Reviewers must not convert heuristics into confirmed vulns to improve the number.
+
+Phase 2C reviewed **20** real hooks and **135** findings: 80 confirmed, 0 false positive, 55 needs context.
+
+## Limitations
+
+- Opcode findings do not prove reachability from `beforeSwap` / `afterSwap` unless verified source binds the call to that function.
 - Unverified bytecode can omit names and hide behavior.
-- Extra implemented callbacks that are **not** flagged on the hook address are not automatically vulnerabilities (PoolManager will not invoke them).
-- An EOA owner without discovered privileged mutators is a fact, not “critical risk.”
-- HookGuard does not produce a numerical hook risk score in this phase.
+- Verified source improves confidence; it does not prove safety. The Phase 2C corpus had **zero** verified-source hooks without explorer API keys.
+- Absence of findings is not a clean bill of health.
+- Confirmed findings are not exploit proofs. Always read the evidence.
+- HookGuard does not produce a numerical hook risk score.
 
 ## What HookGuard does not guarantee
 
-Absence of findings is not a clean audit. Confirmed findings are not an exploit proof. Always read the evidence.
+HookGuard does not replace a professional smart-contract audit.
+
+It does not guarantee that a hook is safe, that a finding is exploitable, or that an empty list means the contract was fully understood.

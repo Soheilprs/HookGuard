@@ -18,7 +18,7 @@ Users are expected to make their own decisions. HookGuard is not a guarantee, in
 
 - **Not an AI auditor.** Models may assist documentation later; they must not be the source of findings or scores.
 - **Not a generic scanner.** A reentrancy heuristic that ignores `PoolManager.unlock` and hook permissions is out of scope.
-- **Not a substitute for review.** A low score is not “safe.” An empty finding list means “not yet analyzed,” not “clean.”
+- **Not a substitute for review.** HookGuard does not replace a professional smart-contract audit. An empty finding list is not “clean.”
 
 ## Trust boundaries
 
@@ -41,7 +41,7 @@ Wallet user / LP
 | Fact | address, chainId, bytecode, pool fee, deployment block | Persist only what was observed |
 | Judgment | severity, riskScore, category | Produced by published rules; nullable until run |
 
-The UI must not invent judgments. Unscored hooks must not display a fabricated number. Phase 2C does not fill `Hook.riskScore`.
+The UI must not invent judgments. Unscored hooks must not display a fabricated number. Launch does **not** fill `Hook.riskScore`.
 
 ## Uniswap v4 threat focus
 
@@ -59,19 +59,9 @@ Generic bytecode metrics (instruction counts, “complexity”) are not risk.
 
 ## Scoring
 
-- Range **0–100**, higher is riskier.
-- `null` until `RiskEngine` has run.
-- Mapping (shared type `riskLevelFromScore`):
+**Not implemented.** `Hook.riskScore` stays null. The public product shows findings, confidence, and events — not a 0–100 number.
 
-  | Score | Level |
-  | --- | --- |
-  | `null` | unknown |
-  | 0–34 | low |
-  | 35–59 | medium |
-  | 60–79 | high |
-  | 80–100 | critical |
-
-- The function from findings → score must be deterministic and documented when implemented.
+A future deterministic mapping, if any, must be documented before it is displayed. Until then the UI must not invent scores.
 
 ## Operational security
 

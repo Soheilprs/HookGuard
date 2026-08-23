@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: '%s · HookGuard',
   },
   description:
-    'Open-source security intelligence for Uniswap v4 hooks. Registry, analysis, and risk for developers, LPs, and researchers.',
+    'Evidence-backed security intelligence for deployed Uniswap v4 hooks. Not an audit. Not a risk score.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -2,36 +2,89 @@
 
 Open-source **evidence-backed security intelligence** for [Uniswap v4](https://docs.uniswap.org/contracts/v4/overview) hooks.
 
-HookGuard is not primarily another hook registry, a generic v4 analytics product, a generic smart-contract scanner, or an AI auditor. It exists so developers, liquidity providers, researchers, and protocols can inspect **deployed** hooks with published evidence.
+HookGuard is not another hook directory, not generic v4 analytics, not a Solidity scanner, and not an AI auditor. It exists so developers, liquidity providers, researchers, and protocols can inspect **deployed** hooks with published evidence — then watch those hooks for on-chain changes.
 
-HookGuard does not replace a professional smart-contract audit. It does not produce a numerical hook risk score.
+**HookGuard does not replace a professional smart-contract audit.** It does not produce a numerical hook risk score. It does not send transactions or hold keys.
 
-## Product
+## Why Uniswap v4 security matters
 
-| Surface | Purpose |
+A v4 pool can attach a hook. That contract runs *inside* the pool lifecycle: initialize, swap, modify liquidity, donate. The hook address itself encodes which callbacks the `PoolManager` will invoke (low 14 bits). The implementation can still be a proxy, an EOA-owned setter farm, or unverified bytecode.
+
+LPs who treat “it is a Uniswap pool” as sufficient due diligence are looking at the wrong contract. HookGuard’s job is to make the hook inspectable.
+
+## Features
+
+| Surface | What you get |
 | --- | --- |
-| Hook Registry | Canonical catalog of v4 hooks and the pools that use them |
-| Security Analysis Engine | Evidence-based, hook-specific findings (permissions, lifecycle, proxy, external calls) |
-| Findings UI | Severity, confidence, detection source, and evidence — not a risk score |
+| Registry | Hooks and pools from PoolManager `Initialize` events |
+| Contract intelligence | Bytecode hash, proxy slots, ABI/selectors, `owner()` / roles, optional verified source |
+| Findings | Severity, **confidence**, detection source, evidence JSON |
+| Validation | Manual reviews (`CONFIRMED` / `FALSE_POSITIVE` / `NEEDS_CONTEXT`) — never auto-confirmed |
+| Monitoring | Snapshots of implementation, admin, owner, bytecode, privileged selectors |
+| Public pages | Shareable `/public/hooks/:address` without a risk number |
+| Watch + alerts | Identifier-based watchlist; Telegram optional (`PENDING` if unset) |
 
-Supported chains in Phase 0 configuration: **Ethereum** (`1`) and **Unichain** (`130`).
+## Supported networks
+
+| Chain | ID | PoolManager |
+| --- | --- | --- |
+| Ethereum | 1 | `0x000000000004444c5dc75cB358380D2e3dE08A90` |
+| Unichain | 130 | `0x1f98400000000000000000000000000000000004` |
+
+## Published corpus (real deployments)
+
+Indexed from live PoolManager logs during Phase 2C (2026-08-23). Not a user-count. Details in [docs/VALIDATION.md](docs/VALIDATION.md).
+
+| | Ethereum | Unichain | Total |
+| --- | ---: | ---: | ---: |
+| Unique hooks | 865 | 15 | **880** |
+| Pools | 2,757 | 48 | **2,805** |
+| Inspected | 865 | 15 | **880** |
+| Verified source | 0 | 0 | **0** |
+| Findings | 4,138 | 94 | **4,232** |
+
+20 real hooks were reviewed by hand (135 findings: 80 confirmed, 0 false positive, 55 needs context). Ethereum was short of chain tip; Unichain used a recent start block. Verified source was unavailable without explorer API keys.
+
+## Architecture
+
+```
+Uniswap v4 PoolManager (Ethereum, Unichain)
+        │  eth_getLogs / eth_call / getCode / getStorage  (read-only)
+        ▼
+   Fastify API  ── PostgreSQL
+        ▲
+   Next.js web (explorer, public pages, dashboard, methodology)
+```
+
+Pipelines (all CLI-driven, no production cron required):
+
+1. **Index** `Initialize` → `Hook` + `Pool`
+2. **Inspect** bytecode / source / proxy / permissions → `Contract`
+3. **Analyze** published rules → `Finding`
+4. **Monitor** consecutive snapshots → `SecurityEvent`
+5. **Alert** watchlists → `AlertDelivery` (Telegram or pending)
+
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+## Limitations
+
+- Absence of findings is not “safe.”
+- Bytecode `CALL`/`DELEGATECALL`/`STATICCALL` means the opcode exists, not that it sits on `beforeSwap`.
+- Extra unimplemented-flag callbacks are not automatically vulnerabilities.
+- An EOA owner without discovered mutators is a fact, not critical risk.
+- Watchlists use a browser identifier, not accounts.
+- Historical indexing depends on archive RPC quality.
 
 ## Repository
 
 ```
-apps/
-  api/             Fastify + Prisma
-  web/             Next.js dashboard
-packages/
-  types/           Shared domain types
-  config/          Environment-based configuration
-  blockchain/      Chain registry + indexer/analyzer/risk interfaces
-docs/              Architecture, roadmap, security model
-scripts/           Local setup helpers
-tests/             Workspace-level schema and frontend tests
+apps/api          Fastify + Prisma
+apps/web          Next.js (landing, dashboard, explorer, public pages)
+packages/types    Shared domain types
+packages/config   Environment configuration
+packages/blockchain  Chains, indexer, analysis, monitoring
+docs/             Architecture, methodology, validation, grant draft, deployment
 ```
-
-Shared UI stays in `apps/web` (shadcn-style primitives). There is no `packages/ui` because those components are Next.js-specific.
 
 ## Quick start
 
@@ -40,63 +93,54 @@ git clone <repo>
 cd uniswap-hook-guard
 chmod +x scripts/setup.sh
 ./scripts/setup.sh
-docker compose up -d
+docker compose up -d          # Postgres on localhost:5434
 npm install
 npm run db:generate
+npm run db:migrate:deploy -w @hookguard/api
 ```
-
-Then, in two terminals:
 
 ```bash
 npm run dev:api    # http://localhost:3001/health
 npm run dev:web    # http://localhost:3000
 ```
 
-Index Uniswap v4 hooks (read-only, no keys):
+Read-only indexing (no keys):
 
 ```bash
-npm run db:migrate:deploy -w @hookguard/api
 npm run index:v4 -- --chain=ethereum --max-blocks=5000
 npm run inspect:contracts -- --chain=ethereum
 npm run analyze:hooks -- --chain=ethereum
+npm run monitor:hooks -- --chain=ethereum
 ```
 
-Copy `.env.example` values into `.env` files. **Never commit secrets.**
+Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## Scripts
 
 | Command | What it does |
 | --- | --- |
-| `npm install` | Install workspace dependencies |
-| `npm run test` | Vitest (API health, schema, frontend foundation) |
-| `npm run build` | Build packages, API, and Next.js app |
-| `npm run format` | Prettier |
-| `npm run db:generate` | Prisma client |
-| `npm run db:validate` | Prisma schema check |
-| `npm run index:v4` | Discover Uniswap v4 hooks (read-only) |
-| `npm run inspect:contracts` | Collect hook bytecode / source / proxy facts |
-| `npm run analyze:hooks` | Run evidence-based security rules (no scores) |
-| `npm run monitor:hooks` | Snapshot hook security state and persist change events |
-| `npm run alerts:retry` | Retry pending or failed Telegram alert deliveries |
-| `npm run validate:apply` | Apply manual validation reviews from `data/validation/dataset.json` |
-
-## Tech stack
-
-**Backend:** TypeScript, Node.js, Fastify, PostgreSQL, Prisma, viem  
-**Frontend:** Next.js, TypeScript, Tailwind CSS, shadcn/ui, wagmi, RainbowKit  
-**Test / format:** Vitest, Prettier
+| `npm run test` | Vitest |
+| `npm run build` | Packages, API, Next.js |
+| `npm run index:v4` | Discover hooks (read-only) |
+| `npm run inspect:contracts` | Bytecode / source / proxy facts |
+| `npm run analyze:hooks` | Evidence-based rules (no scores) |
+| `npm run monitor:hooks` | Snapshots and security events |
+| `npm run alerts:retry` | Retry pending/failed Telegram deliveries |
+| `npm run validate:apply` | Apply `data/validation/dataset.json` reviews |
 
 ## Documentation
 
 - [Architecture](docs/ARCHITECTURE.md)
-- [Roadmap](docs/ROADMAP.md)
-- [Security model](docs/SECURITY-MODEL.md)
 - [Security methodology](docs/SECURITY-METHODOLOGY.md)
 - [Validation](docs/VALIDATION.md)
+- [Deployment](docs/DEPLOYMENT.md)
+- [Roadmap](docs/ROADMAP.md)
+- [Grant draft](docs/GRANT.md)
+- [Security model](docs/SECURITY-MODEL.md)
 
 ## Status
 
-**Phase 4 — public monitoring and alerts.** Public hook security pages, watchlists, and optional Telegram deliveries for security events. No numerical risk scores.
+**Phase 5 — public launch documentation.** Product phases 0–4 are implemented in this repository. Numerical risk scoring is not.
 
 ## License
 
