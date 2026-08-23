@@ -7,6 +7,8 @@ export interface ApiConfig {
   databaseUrl: string;
   telegramBotToken: string;
   telegramChatId: string;
+  /** `true` reflects the request origin. Otherwise an allow-list. */
+  corsOrigin: true | string[];
 }
 
 export interface WebConfig {
@@ -55,7 +57,32 @@ export function loadApiConfigFromEnv(
     databaseUrl,
     telegramBotToken: source.TELEGRAM_BOT_TOKEN ?? '',
     telegramChatId: source.TELEGRAM_CHAT_ID ?? '',
+    corsOrigin: parseCorsOrigin(source.CORS_ORIGIN ?? source.CORS_ORIGINS, env),
   };
+}
+
+/**
+ * Development reflects any origin. Production should set CORS_ORIGIN to the
+ * public web origin(s), comma-separated. `*` is allowed only outside production.
+ */
+export function parseCorsOrigin(
+  raw: string | undefined,
+  env: AppEnv,
+): true | string[] {
+  const value = raw?.trim();
+  if (!value) {
+    return env === 'production' ? [] : true;
+  }
+  if (value === '*') {
+    if (env === 'production') {
+      throw new Error('CORS_ORIGIN=* is not allowed when NODE_ENV=production');
+    }
+    return true;
+  }
+  return value
+    .split(',')
+    .map((part) => part.trim())
+    .filter((part) => part.length > 0);
 }
 
 export function loadWebConfig(source: NodeJS.ProcessEnv = process.env): WebConfig {

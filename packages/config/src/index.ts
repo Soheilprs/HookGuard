@@ -1,6 +1,7 @@
 export {
   loadApiConfigFromEnv,
   loadWebConfig,
+  parseCorsOrigin,
   rpcUrlForChain,
   type ApiConfig,
   type AppEnv,

@@ -179,4 +179,4 @@ RPC from `RPC_URL_ETHEREUM` / `RPC_URL_UNICHAIN`.
 
 ## Configuration and ops
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md). Local Postgres is `docker compose` on host port **5434**.
+See [DEPLOYMENT.md](./DEPLOYMENT.md) and [OPERATOR.md](./OPERATOR.md). Local Postgres is `docker compose` on host port **5434**. Demo tour: [DEMO.md](./DEMO.md).

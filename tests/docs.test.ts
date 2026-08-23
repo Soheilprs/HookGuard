@@ -13,6 +13,12 @@ const required = [
   'docs/ROADMAP.md',
   'docs/GRANT.md',
   'docs/DEPLOYMENT.md',
+  'docs/OPERATOR.md',
+  'docs/DEMO.md',
+  'docs/screenshots/homepage.jpg',
+  'docs/screenshots/explorer.jpg',
+  'docs/screenshots/findings.jpg',
+  'docs/screenshots/monitoring.jpg',
 ];
 
 describe('launch documentation', () => {
@@ -31,7 +37,16 @@ describe('launch documentation', () => {
     expect(method).toMatch(/does not replace a professional smart-contract audit/i);
     expect(grant).toMatch(/880/);
     expect(grant).toMatch(/does not claim users/i);
+    expect(grant).toMatch(/Project summary/);
+    expect(grant).toMatch(/TVL/);
     expect(deploy).toMatch(/GET \/health/);
+    expect(deploy).toMatch(/GET \/ready/);
+    expect(readme).toMatch(/badge\/license-MIT/);
     expect(readme).not.toMatch(/monthly active users/i);
+    const demo = readFileSync(join(root, 'docs/DEMO.md'), 'utf8');
+    expect(demo).toMatch(/Homepage walkthrough/);
+    expect(demo).toMatch(/Hook exploration/);
+    expect(demo).toMatch(/Findings walkthrough/);
+    expect(demo).toMatch(/Monitoring walkthrough/);
   });
 });

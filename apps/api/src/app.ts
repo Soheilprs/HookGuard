@@ -1,6 +1,7 @@
 import cors from '@fastify/cors';
 import Fastify, { type FastifyInstance } from 'fastify';
-import { healthRoutes } from './routes/health.js';
+import { loadApiConfigFromEnv } from '@hookguard/config';
+import { healthRoutes, type DatabasePing } from './routes/health.js';
 import { hookController } from './modules/hooks/hook.controller.js';
 import { createHookService, type HookService } from './modules/hooks/hook.service.js';
 import { contractController } from './modules/contracts/contract.controller.js';
@@ -40,18 +41,47 @@ export interface AppDeps {
   watchlistService?: WatchlistService;
   alertService?: AlertService;
   publicHookService?: PublicHookService;
+  databasePing?: DatabasePing;
 }
 
 export async function buildApp(deps: AppDeps = {}): Promise<FastifyInstance> {
+  const config = loadApiConfigFromEnv();
   const app = Fastify({
     logger: process.env.NODE_ENV !== 'test',
   });
 
+  const corsOrigin =
+    config.corsOrigin === true
+      ? true
+      : config.corsOrigin.length === 0
+        ? false
+        : config.corsOrigin;
+
   await app.register(cors, {
-    origin: true,
+    origin: corsOrigin,
   });
 
-  await app.register(healthRoutes);
+  app.setErrorHandler((error, request, reply) => {
+    const status =
+      error && typeof error === 'object' && 'statusCode' in error
+        ? Number(error.statusCode) || 500
+        : 500;
+    request.log.error(error);
+    const hide = config.env === 'production' && status >= 500;
+    return reply.status(status).send({
+      error: hide
+        ? 'Internal error'
+        : error instanceof Error
+          ? error.message
+          : 'Request failed',
+    });
+  });
+
+  app.setNotFoundHandler((_request, reply) => {
+    return reply.status(404).send({ error: 'Not found' });
+  });
+
+  await healthRoutes(app, { ping: deps.databasePing });
   await app.register(statsController);
 
   const hookService = deps.hookService ?? createHookService();

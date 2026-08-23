@@ -1,58 +1,59 @@
 # HookGuard — grant draft
 
-This is a **draft** for Uniswap ecosystem / tooling grant reviewers. It describes the software as it exists in this repository. It does not claim users, TVL, or a hosted public deployment.
+**Status:** software in this repository, not a hosted product with users.
+
+This draft is for Uniswap ecosystem / tooling reviewers. It uses only metrics produced by the indexer, inspector, analyzer, and a 20-hook manual review. It does not claim users, adoption, TVL, partnerships, or a public production deployment.
 
 HookGuard does not replace professional smart-contract audits.
 
-## Problem
+## Project summary
 
-Uniswap v4 lets anyone attach a **hook** to a pool. The hook runs inside the pool lifecycle (`beforeSwap`, `afterSwap`, liquidity callbacks, and related `IHooks` entry points). Those callbacks can change fees, call other contracts, upgrade implementation, or settle deltas with the singleton `PoolManager`.
+HookGuard is open-source **evidence-backed security intelligence for deployed Uniswap v4 hooks**.
 
-That is a new security surface:
+It discovers hooks from PoolManager `Initialize` events on Ethereum and Unichain, inspects bytecode and permissions, publishes findings with confidence and evidence, validates a real-deployment sample, snapshots security-relevant state over time, and exposes public pages plus optional Telegram alerts.
 
-- Liquidity providers cannot read a hook the way they read a Uniswap v3 pool.
-- A hook address encodes permission flags in its low bits; the implementation may not match those flags.
-- Many hooks will be unverified, proxied, or owner-controlled.
-- Audits (including Uniswap Foundation Security Fund subsidies) are point-in-time. Deployed hooks can change after listing.
+It is **read-only**. It does not score hooks, write AI audits, send transactions, or hold keys.
 
-Existing tools are a poor fit:
+## Ecosystem problem
 
+Uniswap v4 lets a pool attach a hook that runs inside initialize, swap, and liquidity callbacks. Permission bits live in the hook address; the implementation can still be a proxy, EOA-owned, or unverified.
+
+That is a new surface for LPs and integrators:
+
+- You cannot treat “it is a Uniswap pool” as sufficient due diligence.
+- Audits (including Uniswap Foundation Security Fund subsidies) are point-in-time; implementation slots and owners can change afterward.
 - A generic Solidity scanner does not know `PoolManager.unlock` or hook-address flags.
-- A hook *registry* without evidence is a directory, not security intelligence.
-- An AI auditor cannot be the source of findings if the product must be reviewable.
+- A hook directory without evidence is not security intelligence.
+- An AI auditor cannot be the source of findings if the output must be reviewable.
 
 ## Solution
 
-HookGuard is **evidence-backed security intelligence for deployed Uniswap v4 hooks**.
+| Capability | What ships in this repo |
+| --- | --- |
+| Discover | `Initialize` logs → `Hook` + `Pool` |
+| Inspect | Bytecode, EIP-1967, `owner()` / roles, optional verified source |
+| Findings | Severity, confidence, detection source, evidence JSON |
+| Validation | Manual `CONFIRMED` / `FALSE_POSITIVE` / `NEEDS_CONTEXT`; never auto-confirmed |
+| Monitor | Snapshots of implementation, admin, owner, bytecode, privileged selectors |
+| Public API / UI | `/public/hooks/:address`, watchlists, optional Telegram |
 
-It is read-only. It does not score hooks numerically, generate AI audits, send transactions, or custody keys.
-
-What it does:
-
-1. **Discover** hooks from PoolManager `Initialize` events on Ethereum and Unichain.
-2. **Inspect** bytecode, optional verified source, EIP-1967 proxy slots, and `owner()` / role facts.
-3. **Publish findings** with severity, confidence, detection source, and evidence JSON.
-4. **Validate** a real-deployment sample so heuristic rules are not presented as facts.
-5. **Monitor** consecutive snapshots (implementation, admin, owner, bytecode, privileged selectors).
-6. **Expose** public hook pages, watchlists, and optional Telegram alerts.
-
-Users are expected to read the evidence and decide for themselves.
+Users are expected to read the evidence.
 
 ## Uniswap ecosystem benefit
 
 | Audience | Benefit |
 | --- | --- |
-| Hook developers | See how a deployment looks to outsiders: flags, proxy slots, privileged selectors. |
+| Hook developers | See flags, proxy slots, and privileged selectors the way an outsider does. |
 | LPs and integrators | Inspect the hook attached to a pool before committing capital. |
-| Researchers | A reproducible corpus of real v4 hooks and published rules. |
-| Protocols | A public JSON API (`GET /public/hooks/:address`, `/events/recent`, `/health`) without running a scanner themselves. |
-| Audit programs | Complementary to point-in-time audits: continuous facts after deploy, not a substitute for UFSF-subsidized reviews. |
+| Researchers | A reproducible corpus and published rules. |
+| Protocols | JSON (`GET /public/hooks/:address`, `/events/recent`, `/health`, `/ready`) without running a scanner. |
+| Audit programs | Complementary to point-in-time audits — not a substitute for UFSF-subsidized reviews. |
 
-HookGuard is scoped to **v4 hooks**, not arbitrary contracts. That keeps the rule set honest.
+Scoped to **v4 hooks**, not arbitrary contracts.
 
 ## Verified metrics (this repository)
 
-From the Phase 2C run against **real** Uniswap v4 PoolManager logs. See [VALIDATION.md](./VALIDATION.md). These are indexer/analyzer outputs, not product usage metrics.
+From the Phase 2C run against **real** PoolManager logs. [VALIDATION.md](./VALIDATION.md). Indexer/analyzer output, **not** product usage.
 
 | Metric | Value |
 | --- | ---: |
@@ -68,36 +69,36 @@ From the Phase 2C run against **real** Uniswap v4 PoolManager logs. See [VALIDAT
 | Supported chains in code | Ethereum (`1`), Unichain (`130`) |
 | License | MIT |
 
-Not claimed: monthly active users, production uptime, Telegram subscribers, or that the Ethereum index reached chain tip.
+**Not claimed:** monthly active users, production uptime, Telegram subscribers, partnerships, TVL, or that the Ethereum index reached chain tip.
 
-## Milestones (completed in this repo)
+## Milestones and completed work
 
 | Phase | Outcome |
 | --- | --- |
-| 0 | Monorepo, Fastify + Prisma, Next.js UI, health, empty states |
+| 0 | Monorepo, Fastify + Prisma, Next.js, `/health`, empty states |
 | 1 | PoolManager `Initialize` indexer, explorer |
-| 2A | Contract intelligence (bytecode, source, proxy, ABI, permissions) |
-| 2B | Evidence-based finding engine (no scores) |
-| 2C | Confidence, detection source, validation on real Ethereum + Unichain hooks |
-| 3 | Snapshot comparison and security events |
+| 2A | Contract intelligence |
+| 2B | Evidence-based findings (no scores) |
+| 2C | Confidence, detection source, real Ethereum + Unichain validation |
+| 3 | Snapshots and security events |
 | 4 | Public pages, watchlists, Telegram-optional alerts |
-| 5 | Launch documentation, grant draft, deployment notes |
+| 5 | Launch docs, grant draft, deployment notes |
+| 6 | `/ready`, CORS production rules, operator runbook, demo walkthrough |
 
 ## Future roadmap (not built)
 
-- Additional v4 chains once PoolManager deployments are canonical.
-- Verified-source coverage when explorer keys are available (empirical, not unit-test-only).
-- Finish historical Ethereum indexing with a reliable archive RPC.
-- Operator-grade scheduling for `monitor:hooks` (still a manual CLI today).
-- Account-backed watchlists (today: client identifier, no auth).
-- **Not planned for launch:** numerical risk scores, AI-written findings, transaction execution.
+- Additional canonical v4 chains
+- Verified-source coverage when explorer keys exist
+- Finish historical Ethereum indexing with archive RPC
+- Operator scheduling for `monitor:hooks` (still a manual CLI)
+- Account-backed watchlists (today: client identifier)
+
+**Not planned for launch:** numerical risk scores, AI-written findings, transaction execution.
 
 ## Ask (draft)
 
-Funding would go to:
-
 1. Archive RPC and explorer APIs so the public corpus is complete and verified-source rates are measurable.
-2. A hosted read-only instance (API + web + Postgres) with documented health checks.
-3. Continued validation of existing rules on new deployments — not a flood of speculative detectors.
+2. A hosted **read-only** instance (web + API + Postgres) with `/health` and `/ready`.
+3. Continued validation of **existing** rules on new deployments — not speculative detectors.
 
-Success looks like **published evidence about real hooks**, not a count of “vulnerabilities found.”
+Success is **published evidence about real hooks**, not a count of “vulnerabilities found.”

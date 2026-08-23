@@ -148,7 +148,7 @@ export default async function LandingPage() {
 
         <section className="border-y border-border bg-muted/40">
           <div className="container py-20">
-            <h2 className="text-2xl font-semibold tracking-tight">How it works</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">How HookGuard Works</h2>
             <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {steps.map((item) => (
                 <div key={item.step}>
@@ -163,7 +163,7 @@ export default async function LandingPage() {
 
         <section className="container py-20">
           <div className="mb-8 max-w-2xl">
-            <h2 className="text-2xl font-semibold tracking-tight">Coverage metrics</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">Coverage Metrics</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               {live
                 ? 'Live counts from this HookGuard API.'

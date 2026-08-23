@@ -1,3 +1,5 @@
+# Local PostgreSQL only. Host 5434 → container 5432.
+# API, web, and workers run on the host via npm (see docs/DEPLOYMENT.md).
 services:
   postgres:
     image: postgres:16-alpine

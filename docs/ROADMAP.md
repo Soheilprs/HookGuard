@@ -1,6 +1,6 @@
 # Roadmap
 
-HookGuard is built in numbered product phases. **Phases 0–4 are implemented in this repository.** Phase 5 is documentation and launch readiness. Numerical risk scoring is **not** implemented and is not a launch requirement.
+HookGuard is built in numbered product phases. **Phases 0–4 are implemented in this repository.** Phases 5–6 are documentation, production readiness, and grant material. Numerical risk scoring is **not** implemented and is not a launch requirement.
 
 HookGuard does not replace a professional smart-contract audit.
 
@@ -16,6 +16,7 @@ HookGuard does not replace a professional smart-contract audit.
 | 3 | Monitoring | Snapshots and security events |
 | 4 | Public product | Public pages, watchlists, optional Telegram alerts |
 | 5 | Launch docs | README, architecture, methodology, validation, grant draft, deployment |
+| 6 | Launch / grant prep | `/ready`, CORS, operator runbook, demo walkthrough |
 
 ## Next (not built)
 

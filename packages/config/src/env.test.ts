@@ -10,6 +10,7 @@ describe('loadApiConfigFromEnv', () => {
     expect(config.databaseUrl).toContain('postgresql://');
     expect(config.telegramBotToken).toBe('');
     expect(config.telegramChatId).toBe('');
+    expect(config.corsOrigin).toBe(true);
   });
 
   it('throws in production when DATABASE_URL is missing', () => {
@@ -28,6 +29,30 @@ describe('loadApiConfigFromEnv', () => {
     expect(config.host).toBe('127.0.0.1');
     expect(config.port).toBe(4000);
     expect(config.databaseUrl).toContain('hookguard');
+  });
+});
+
+describe('parseCorsOrigin', () => {
+  it('allows an explicit production allow-list', () => {
+    const config = loadApiConfigFromEnv({
+      NODE_ENV: 'production',
+      DATABASE_URL: 'postgresql://user:pass@localhost:5432/hookguard',
+      CORS_ORIGIN: 'https://hookguard.example,https://www.hookguard.example',
+    });
+    expect(config.corsOrigin).toEqual([
+      'https://hookguard.example',
+      'https://www.hookguard.example',
+    ]);
+  });
+
+  it('rejects wildcard CORS in production', () => {
+    expect(() =>
+      loadApiConfigFromEnv({
+        NODE_ENV: 'production',
+        DATABASE_URL: 'postgresql://user:pass@localhost:5432/hookguard',
+        CORS_ORIGIN: '*',
+      }),
+    ).toThrow(/CORS_ORIGIN/);
   });
 });
 

@@ -1,5 +1,10 @@
 # HookGuard
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-pink.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6.svg)](https://www.typescriptlang.org/)
+[![Uniswap v4](https://img.shields.io/badge/Uniswap-v4-FF007A.svg)](https://docs.uniswap.org/contracts/v4/overview)
+[![Chain access](https://img.shields.io/badge/chain-read--only-222.svg)](docs/DEPLOYMENT.md)
+
 Open-source **evidence-backed security intelligence** for [Uniswap v4](https://docs.uniswap.org/contracts/v4/overview) hooks.
 
 HookGuard is not another hook directory, not generic v4 analytics, not a Solidity scanner, and not an AI auditor. It exists so developers, liquidity providers, researchers, and protocols can inspect **deployed** hooks with published evidence — then watch those hooks for on-chain changes.
@@ -64,16 +69,20 @@ Pipelines (all CLI-driven, no production cron required):
 4. **Monitor** consecutive snapshots → `SecurityEvent`
 5. **Alert** watchlists → `AlertDelivery` (Telegram or pending)
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Diagrams (system, index, analyze, monitor, alert): [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).  
+Operators (frontend / API / database / workers / RPC): [docs/OPERATOR.md](docs/OPERATOR.md).  
+Local tour: [docs/DEMO.md](docs/DEMO.md).
 
 ## Limitations
 
+- HookGuard does not replace a professional smart-contract audit.
 - Absence of findings is not “safe.”
 - Bytecode `CALL`/`DELEGATECALL`/`STATICCALL` means the opcode exists, not that it sits on `beforeSwap`.
 - Extra unimplemented-flag callbacks are not automatically vulnerabilities.
 - An EOA owner without discovered mutators is a fact, not critical risk.
 - Watchlists use a browser identifier, not accounts.
 - Historical indexing depends on archive RPC quality.
+- This repository does not imply a hosted public instance, users, or TVL.
 
 ## Repository
 
@@ -100,9 +109,12 @@ npm run db:migrate:deploy -w @hookguard/api
 ```
 
 ```bash
-npm run dev:api    # http://localhost:3001/health
+npm run dev:api    # http://localhost:3001/health  (liveness)
+                   # http://localhost:3001/ready   (Postgres)
 npm run dev:web    # http://localhost:3000
 ```
+
+Walkthrough: [docs/DEMO.md](docs/DEMO.md).
 
 Read-only indexing (no keys):
 
@@ -134,13 +146,15 @@ Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [doc
 - [Security methodology](docs/SECURITY-METHODOLOGY.md)
 - [Validation](docs/VALIDATION.md)
 - [Deployment](docs/DEPLOYMENT.md)
+- [Operator runbook](docs/OPERATOR.md)
+- [Demo walkthrough](docs/DEMO.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Grant draft](docs/GRANT.md)
 - [Security model](docs/SECURITY-MODEL.md)
 
 ## Status
 
-**Phase 5 — public launch documentation.** Product phases 0–4 are implemented in this repository. Numerical risk scoring is not.
+**Phase 6 — public launch and grant submission prep.** Product phases 0–4 are implemented. Numerical risk scoring is not.
 
 ## License
 
