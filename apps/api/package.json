@@ -18,6 +18,7 @@
     "analyze:hooks": "tsx src/cli/analyze-hooks.ts",
     "analyze:hooks:research": "tsx src/cli/analyze-hooks-research.ts",
     "analyze:bytecode": "tsx src/cli/analyze-bytecode.ts",
+    "analyze:interactions": "tsx src/cli/analyze-interactions.ts",
     "monitor:hooks": "tsx src/cli/monitor-hooks.ts",
     "alerts:retry": "tsx src/cli/retry-alerts.ts",
     "validate:apply": "tsx src/cli/apply-validation.ts",

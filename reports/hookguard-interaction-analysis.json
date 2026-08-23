@@ -1,0 +1,4763 @@
+{
+  "generatedAt": "2026-08-23T13:30:26.091Z",
+  "disclaimer": "HookGuard reports security-relevant execution patterns requiring review. Target recovery is bytecode-CFG based and under-approximate. These are not confirmed exploits. HookGuard does not replace a professional smart-contract audit.",
+  "metrics": {
+    "hooksIndexed": 880,
+    "hooksAnalyzed": 880,
+    "callbackExternalCalls": 39,
+    "erc20Interactions": 19,
+    "unknownTargets": 39,
+    "userControlled": 4,
+    "knownProtocols": 0,
+    "detectors": {
+      "UNKNOWN_EXTERNAL_TARGET": {
+        "hooksAffected": 39,
+        "findings": 39
+      },
+      "TOKEN_MOVEMENT_IN_CALLBACK": {
+        "hooksAffected": 19,
+        "findings": 19
+      },
+      "USER_CONTROLLED_EXTERNAL_EXECUTION": {
+        "hooksAffected": 4,
+        "findings": 4
+      },
+      "PROTOCOL_INTERACTION": {
+        "hooksAffected": 0,
+        "findings": 0
+      }
+    }
+  },
+  "findings": [
+    {
+      "id": "cmt5uh1e101c3unh65n5axfsi",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x00bbc6fc07342cf80d14b60695cf0e1aa8de00cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 3395,
+        "path": [
+          3534,
+          3540,
+          3553,
+          4567,
+          4588,
+          1198,
+          5451,
+          5469,
+          3362,
+          3380,
+          3388
+        ],
+        "calls": [
+          {
+            "pc": 3395,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 3395,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 3534,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 11,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 3395,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh56j03sdunh6b4x0nfi4",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x0c055c6fe9090c30800ca107f0c04346b5e5b0c0",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 657,
+        "path": [
+          2466,
+          2472,
+          2485,
+          3226,
+          3247,
+          527,
+          598,
+          604,
+          621,
+          636,
+          646
+        ],
+        "calls": [
+          {
+            "pc": 657,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 657,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2466,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0x8da5cb5b",
+        "pathLength": 11,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "STORAGE",
+        "targetSource": "STORAGE",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x8da5cb5b",
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 657,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh61904jvunh6zsb3zdg2",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x157628bf3f556a0e5b23c70f28c2dc04d8caa844",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 397,
+        "path": [
+          1169,
+          1175,
+          1188,
+          1471,
+          1492,
+          297,
+          319,
+          346
+        ],
+        "calls": [
+          {
+            "pc": 397,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 397,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1169,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 397,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5uh61e04k5unh6zr6vtgmz",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x157628bf3f556a0e5b23c70f28c2dc04d8caa844",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 397,
+        "path": [
+          1169,
+          1175,
+          1188,
+          1471,
+          1492,
+          297,
+          319,
+          346
+        ],
+        "calls": [
+          {
+            "pc": 397,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 397,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1169,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0xa9059cbb",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 397,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh52403plunh6v9mu5ix4",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x1add0f8faf3516240c73180649134e504b7f40c4",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 532,
+        "path": [
+          1993,
+          1999,
+          2012,
+          2273,
+          2294,
+          429,
+          478,
+          484,
+          2707,
+          2719,
+          493,
+          524
+        ],
+        "calls": [
+          {
+            "pc": 532,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 532,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1993,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 12,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "CONSTANT",
+        "targetSource": "CONSTANT",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 532,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh5zw04ilunh6ra7wi10n",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x1af99dde2e80bbcb108570deb8f70b29301aa8cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 397,
+        "path": [
+          1167,
+          1173,
+          1186,
+          1500,
+          1521,
+          297,
+          319,
+          346
+        ],
+        "calls": [
+          {
+            "pc": 397,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 397,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1167,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 397,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5uh60204ivunh600gxo2gd",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x1af99dde2e80bbcb108570deb8f70b29301aa8cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 397,
+        "path": [
+          1167,
+          1173,
+          1186,
+          1500,
+          1521,
+          297,
+          319,
+          346
+        ],
+        "calls": [
+          {
+            "pc": 397,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 397,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1167,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0xa9059cbb",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 397,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh84b05vvunh6utdu3epe",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x1b9f3544dc4915e0c08882d1c3f39b6e464e4844",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 4504,
+        "path": [
+          4983,
+          4989,
+          5002,
+          6421,
+          6442,
+          494,
+          7388,
+          7406,
+          4393,
+          4414
+        ],
+        "calls": [
+          {
+            "pc": 4504,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 4504,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 4983,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 10,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "STORAGE",
+        "targetSource": "STORAGE",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 4504,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5ugznl00f5unh6ev0rnh6q",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x1e4eb8d32c762dcffef8211e4c01da77aa1190cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 3678,
+        "path": [
+          3222,
+          3228,
+          3241,
+          4204,
+          4225,
+          2001,
+          4934,
+          4957,
+          3552,
+          3559,
+          3614,
+          3620,
+          3628
+        ],
+        "calls": [
+          {
+            "pc": 3678,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+          },
+          {
+            "pc": 6096,
+            "callback": "beforeSwap",
+            "selector": "0x095ea7b3",
+            "selectorName": "approve",
+            "targetAddress": null
+          },
+          {
+            "pc": 3678,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+          },
+          {
+            "pc": 6096,
+            "callback": "afterSwap",
+            "selector": "0x095ea7b3",
+            "selectorName": "approve",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 3222,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 13,
+        "targetType": "TOKEN_CONTRACT",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "CONSTANT",
+        "targetSource": "CONSTANT",
+        "targetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+      },
+      "callback": "beforeSwap",
+      "targetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+      "targetType": "TOKEN_CONTRACT",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 3678,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5ugzns00fjunh6ey2g6mnq",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x1e4eb8d32c762dcffef8211e4c01da77aa1190cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 6096,
+        "path": [
+          3222,
+          3228,
+          3241,
+          4204,
+          4225,
+          2001,
+          4934,
+          4957,
+          2012,
+          2042,
+          4850,
+          4862,
+          2064,
+          6056
+        ],
+        "calls": [
+          {
+            "pc": 6096,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 6096,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 3222,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0x095ea7b3",
+        "pathLength": 14,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "approve",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x095ea7b3",
+      "selectorName": "approve",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 6096,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5ugzi300bfunh6fpb1tkxg",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x25df2794898408249cfd0a02b4450a4625e86888",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 5841,
+        "path": [
+          4698,
+          4704,
+          4717,
+          6206,
+          6227,
+          5548,
+          5571,
+          5806
+        ],
+        "calls": [
+          {
+            "pc": 5841,
+            "callback": "beforeSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          },
+          {
+            "pc": 7663,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 5841,
+            "callback": "afterSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          },
+          {
+            "pc": 7663,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 4698,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0x23b872dd",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transferFrom",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x23b872dd",
+      "selectorName": "transferFrom",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 5841,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5ugzib00btunh6fogjb78g",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x25df2794898408249cfd0a02b4450a4625e86888",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 5841,
+        "path": [
+          4698,
+          4704,
+          4717,
+          6206,
+          6227,
+          5548,
+          5571,
+          5806
+        ],
+        "calls": [
+          {
+            "pc": 5841,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 3978,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7503,
+            "callback": "beforeSwap",
+            "targetType": "UNKNOWN_CONTRACT",
+            "targetAddress": "0x0000000000000000000000000000000000000040"
+          },
+          {
+            "pc": 7663,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 5841,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 3978,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7503,
+            "callback": "afterSwap",
+            "targetType": "UNKNOWN_CONTRACT",
+            "targetAddress": "0x0000000000000000000000000000000000000040"
+          },
+          {
+            "pc": 7663,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 4698,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0x23b872dd",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transferFrom",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x23b872dd",
+      "selectorName": "transferFrom",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 5841,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh55q03rvunh64kj15uil",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x2c30c279c9643451041536bc8fd76a496d82b0c0",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 690,
+        "path": [
+          2534,
+          2540,
+          2553,
+          3291,
+          3312,
+          560,
+          631,
+          637,
+          654,
+          669,
+          679
+        ],
+        "calls": [
+          {
+            "pc": 690,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 690,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2534,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0x8da5cb5b",
+        "pathLength": 11,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "STORAGE",
+        "targetSource": "STORAGE",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x8da5cb5b",
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 690,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh2s8026funh660rmtvw6",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x3945228aca54c0138d460096c36c1e5dadd8c0cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 1395,
+        "path": [
+          4111,
+          4118,
+          4131,
+          5889,
+          5910,
+          1347,
+          1370,
+          1387
+        ],
+        "calls": [
+          {
+            "pc": 1395,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 1395,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 4111,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 1395,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh2qn025dunh6z9e4fpaf",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x3ba779bad405d9b68a7a7a86ff6916c806a200cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 1395,
+        "path": [
+          4111,
+          4118,
+          4131,
+          5889,
+          5910,
+          1347,
+          1370,
+          1387
+        ],
+        "calls": [
+          {
+            "pc": 1395,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 1395,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 4111,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 1395,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh6tb0529unh6teyeu71c",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x3bb2b5f1587c029ceb224193067917d13a7904c4",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 7374,
+        "path": [
+          597,
+          2234,
+          2240,
+          2042,
+          2055,
+          985,
+          965,
+          953,
+          942,
+          962,
+          5554,
+          5626,
+          1270,
+          7370
+        ],
+        "calls": [
+          {
+            "pc": 7374,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7587,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7374,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7587,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7374,
+            "callback": "beforeAddLiquidity",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7587,
+            "callback": "beforeAddLiquidity",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7374,
+            "callback": "afterAddLiquidity",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7587,
+            "callback": "afterAddLiquidity",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7374,
+            "callback": "beforeRemoveLiquidity",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7587,
+            "callback": "beforeRemoveLiquidity",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7374,
+            "callback": "afterRemoveLiquidity",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7587,
+            "callback": "afterRemoveLiquidity",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7374,
+            "callback": "beforeDonate",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7587,
+            "callback": "beforeDonate",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7374,
+            "callback": "afterDonate",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7587,
+            "callback": "afterDonate",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 597,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0xade5da5f",
+        "pathLength": 14,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xade5da5f",
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 7374,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5ugzl700dhunh6qxg77jcj",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x4536f9d988b8a7d8f1cdfae6d399749e11e1d0cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 2910,
+        "path": [
+          2280,
+          2286,
+          2299,
+          3175,
+          3196,
+          502,
+          3731,
+          3749,
+          2868
+        ],
+        "calls": [
+          {
+            "pc": 2910,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 2910,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2280,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 9,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 2910,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5ugzlf00dvunh6u8y8gbwx",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x4536f9d988b8a7d8f1cdfae6d399749e11e1d0cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 2910,
+        "path": [
+          2280,
+          2286,
+          2299,
+          3175,
+          3196,
+          502,
+          3731,
+          3749,
+          2868
+        ],
+        "calls": [
+          {
+            "pc": 2910,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2910,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2280,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0xa9059cbb",
+        "pathLength": 9,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 2910,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5ugzl900djunh64isc1h6o",
+      "detector": "USER_CONTROLLED_EXTERNAL_EXECUTION",
+      "hookAddress": "0x4536f9d988b8a7d8f1cdfae6d399749e11e1d0cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 3028,
+        "path": [
+          2280,
+          2286,
+          2299,
+          3175,
+          3196,
+          502,
+          3731,
+          3749,
+          3022
+        ],
+        "calls": [
+          {
+            "pc": 3028,
+            "origin": "CALLDATA",
+            "callback": "beforeSwap"
+          },
+          {
+            "pc": 3028,
+            "origin": "CALLDATA",
+            "callback": "afterSwap"
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2280,
+        "callback": "beforeSwap",
+        "detector": "USER_CONTROLLED_EXTERNAL_EXECUTION",
+        "selector": null,
+        "pathLength": 9,
+        "targetType": "USER_CONTROLLED",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "CALLDATA",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "USER_CONTROLLED",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 3028,
+      "whyItMatters": "The CALL target appears to come from calldata. The callback may call a dynamically selected contract. This is not a vulnerability by itself. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which calldata word becomes the address?",
+        "Is there a whitelist before CALL?",
+        "Is the target the swap sender or an arbitrary contract?"
+      ]
+    },
+    {
+      "id": "cmt5uh2tf027bunh6dpz3a43y",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x4b6ed7c1b1fa2abe85cd4fc3de0d456fd2d000cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 1395,
+        "path": [
+          4111,
+          4118,
+          4131,
+          5889,
+          5910,
+          1347,
+          1370,
+          1387
+        ],
+        "calls": [
+          {
+            "pc": 1395,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 1395,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 4111,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 1395,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5ugzk900ctunh6zqpieoec",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x4d8a70b3a3376653e70456385d3aad882bf46888",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 6003,
+        "path": [
+          3601,
+          3607,
+          3620,
+          5122,
+          5143,
+          2670,
+          2690,
+          2707,
+          3189,
+          3281,
+          5701,
+          5716,
+          3291,
+          3297,
+          5814,
+          5956
+        ],
+        "calls": [
+          {
+            "pc": 6003,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 6003,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 3601,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 16,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 6003,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5ugzke00d7unh6nhgxhiv9",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x4d8a70b3a3376653e70456385d3aad882bf46888",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 3229,
+        "path": [
+          3601,
+          3607,
+          3620,
+          5122,
+          5143,
+          2670,
+          2690,
+          2707,
+          3189,
+          3205,
+          3212,
+          3220
+        ],
+        "calls": [
+          {
+            "pc": 3229,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 5843,
+            "callback": "beforeSwap",
+            "targetType": "UNKNOWN_CONTRACT",
+            "targetAddress": "0x0000000000000000000000000000000000000040"
+          },
+          {
+            "pc": 6003,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 3229,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 5843,
+            "callback": "afterSwap",
+            "targetType": "UNKNOWN_CONTRACT",
+            "targetAddress": "0x0000000000000000000000000000000000000040"
+          },
+          {
+            "pc": 6003,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 3601,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 12,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "CONSTANT",
+        "targetSource": "CONSTANT",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 3229,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uhbqc08cfunh6nbh6ft4s",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x5e5bf8b6643e9c0e957b66b86d316926b4146088",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 7431,
+        "path": [
+          5204,
+          5211,
+          5254,
+          8772,
+          8806,
+          7131,
+          7182,
+          7243,
+          10056,
+          10089,
+          519,
+          10197,
+          10213,
+          532,
+          9871,
+          10797,
+          9806,
+          9867,
+          10864,
+          7325,
+          7366
+        ],
+        "calls": [
+          {
+            "pc": 7431,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7431,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 5204,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 21,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "STORAGE",
+        "targetSource": "STORAGE",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 7431,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh63504ldunh64p6juq3f",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x6182028295dc8e4b75a8551f0a8b8c4f0baf2844",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 386,
+        "path": [
+          1124,
+          1130,
+          1143,
+          1426,
+          1447,
+          286,
+          308,
+          335
+        ],
+        "calls": [
+          {
+            "pc": 386,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 386,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1124,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 386,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5uh63d04lnunh6yksoqika",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x6182028295dc8e4b75a8551f0a8b8c4f0baf2844",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 386,
+        "path": [
+          1124,
+          1130,
+          1143,
+          1426,
+          1447,
+          286,
+          308,
+          335
+        ],
+        "calls": [
+          {
+            "pc": 386,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 386,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1124,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0xa9059cbb",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 386,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh61w04kdunh6a4w9d4eo",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x66b8a49a08db65f3182db6ab0e51a1d1e9bc2844",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 397,
+        "path": [
+          1169,
+          1175,
+          1188,
+          1471,
+          1492,
+          297,
+          319,
+          346
+        ],
+        "calls": [
+          {
+            "pc": 397,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 397,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1169,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 397,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5uh62404knunh6gljgvnxy",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x66b8a49a08db65f3182db6ab0e51a1d1e9bc2844",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 397,
+        "path": [
+          1169,
+          1175,
+          1188,
+          1471,
+          1492,
+          297,
+          319,
+          346
+        ],
+        "calls": [
+          {
+            "pc": 397,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 397,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1169,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0xa9059cbb",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 397,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh1t901klunh6a6i5hlie",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x6e1babe41d708f6d46a89cda1ae46de95458e444",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 5342,
+        "path": [
+          3777,
+          3783,
+          3796,
+          4398,
+          4419,
+          3991,
+          4011,
+          4059,
+          5245,
+          5279
+        ],
+        "calls": [
+          {
+            "pc": 5342,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 5342,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 3777,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0x16e9885f",
+        "pathLength": 10,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x16e9885f",
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 5342,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5ugzol00fvunh6oom8l2ui",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x74e556c2b388fd1590fafae1a0b5642fde99d0cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 3678,
+        "path": [
+          3222,
+          3228,
+          3241,
+          4204,
+          4225,
+          2001,
+          4934,
+          4957,
+          3552,
+          3559,
+          3614,
+          3620,
+          3628
+        ],
+        "calls": [
+          {
+            "pc": 3678,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+          },
+          {
+            "pc": 6096,
+            "callback": "beforeSwap",
+            "selector": "0x095ea7b3",
+            "selectorName": "approve",
+            "targetAddress": null
+          },
+          {
+            "pc": 3678,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+          },
+          {
+            "pc": 6096,
+            "callback": "afterSwap",
+            "selector": "0x095ea7b3",
+            "selectorName": "approve",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 3222,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 13,
+        "targetType": "TOKEN_CONTRACT",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "CONSTANT",
+        "targetSource": "CONSTANT",
+        "targetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+      },
+      "callback": "beforeSwap",
+      "targetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+      "targetType": "TOKEN_CONTRACT",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 3678,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5ugzot00g9unh6sv1roqdb",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x74e556c2b388fd1590fafae1a0b5642fde99d0cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 6096,
+        "path": [
+          3222,
+          3228,
+          3241,
+          4204,
+          4225,
+          2001,
+          4934,
+          4957,
+          2012,
+          2042,
+          4850,
+          4862,
+          2064,
+          6056
+        ],
+        "calls": [
+          {
+            "pc": 6096,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 6096,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 3222,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0x095ea7b3",
+        "pathLength": 14,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "approve",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x095ea7b3",
+      "selectorName": "approve",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 6096,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh8ny065hunh6xvhlcf4l",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x7cdaffdad7035a85a7c7ed6ac78dd87cd29318c8",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 8848,
+        "path": [
+          8432,
+          8438,
+          8451,
+          9347,
+          9368,
+          617,
+          10365,
+          10383,
+          8778,
+          8812
+        ],
+        "calls": [
+          {
+            "pc": 8848,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 2084,
+            "callback": "beforeSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          },
+          {
+            "pc": 2134,
+            "callback": "beforeSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          },
+          {
+            "pc": 8848,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 2084,
+            "callback": "afterSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          },
+          {
+            "pc": 2134,
+            "callback": "afterSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 8432,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 10,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 8848,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5uh8ob065vunh6ag96a4mw",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x7cdaffdad7035a85a7c7ed6ac78dd87cd29318c8",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 8803,
+        "path": [
+          8432,
+          8438,
+          8451,
+          9347,
+          9368,
+          617,
+          10365,
+          10383,
+          8778,
+          8796
+        ],
+        "calls": [
+          {
+            "pc": 8803,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 8848,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2084,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2134,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 8803,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 8848,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2084,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2134,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 8432,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 10,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "CONSTANT",
+        "targetSource": "CONSTANT",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 8803,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5ugzja00c3unh6qskuitsr",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x7e430621a9144bf0733173d83cc8fb85c57090cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 2910,
+        "path": [
+          2280,
+          2286,
+          2299,
+          3175,
+          3196,
+          502,
+          3731,
+          3749,
+          2868
+        ],
+        "calls": [
+          {
+            "pc": 2910,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 2910,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2280,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 9,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 2910,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5ugzjh00cjunh6gh11v38j",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x7e430621a9144bf0733173d83cc8fb85c57090cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 2910,
+        "path": [
+          2280,
+          2286,
+          2299,
+          3175,
+          3196,
+          502,
+          3731,
+          3749,
+          2868
+        ],
+        "calls": [
+          {
+            "pc": 2910,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2910,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2280,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0xa9059cbb",
+        "pathLength": 9,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 2910,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5ugzjc00c5unh6y5uyliue",
+      "detector": "USER_CONTROLLED_EXTERNAL_EXECUTION",
+      "hookAddress": "0x7e430621a9144bf0733173d83cc8fb85c57090cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 3028,
+        "path": [
+          2280,
+          2286,
+          2299,
+          3175,
+          3196,
+          502,
+          3731,
+          3749,
+          3022
+        ],
+        "calls": [
+          {
+            "pc": 3028,
+            "origin": "CALLDATA",
+            "callback": "beforeSwap"
+          },
+          {
+            "pc": 3028,
+            "origin": "CALLDATA",
+            "callback": "afterSwap"
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2280,
+        "callback": "beforeSwap",
+        "detector": "USER_CONTROLLED_EXTERNAL_EXECUTION",
+        "selector": null,
+        "pathLength": 9,
+        "targetType": "USER_CONTROLLED",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "CALLDATA",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "USER_CONTROLLED",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 3028,
+      "whyItMatters": "The CALL target appears to come from calldata. The callback may call a dynamically selected contract. This is not a vulnerability by itself. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which calldata word becomes the address?",
+        "Is there a whitelist before CALL?",
+        "Is the target the swap sender or an arbitrary contract?"
+      ]
+    },
+    {
+      "id": "cmt5uh48s039bunh6pzymjsp7",
+      "detector": "USER_CONTROLLED_EXTERNAL_EXECUTION",
+      "hookAddress": "0x87853b0979c0d45ceac57675c4254f054a77a8c4",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 3166,
+        "path": [
+          1758,
+          1765,
+          1778,
+          2560,
+          2581,
+          2518,
+          2532,
+          3135
+        ],
+        "calls": [
+          {
+            "pc": 3166,
+            "origin": "CALLDATA",
+            "callback": "beforeSwap"
+          },
+          {
+            "pc": 3166,
+            "origin": "CALLDATA",
+            "callback": "afterSwap"
+          }
+        ],
+        "opcode": "STATICCALL",
+        "entryPc": 1758,
+        "callback": "beforeSwap",
+        "detector": "USER_CONTROLLED_EXTERNAL_EXECUTION",
+        "selector": "0xddca3f43",
+        "pathLength": 8,
+        "targetType": "USER_CONTROLLED",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "CALLDATA",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "USER_CONTROLLED",
+      "selector": "0xddca3f43",
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "STATICCALL",
+      "pc": 3166,
+      "whyItMatters": "The CALL target appears to come from calldata. The callback may call a dynamically selected contract. This is not a vulnerability by itself. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which calldata word becomes the address?",
+        "Is there a whitelist before CALL?",
+        "Is the target the swap sender or an arbitrary contract?"
+      ]
+    },
+    {
+      "id": "cmt5uh53i03qdunh6hukuv9zu",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x9190878d8ff99d6775619b5763d05a0d36177044",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 565,
+        "path": [
+          2056,
+          2062,
+          2075,
+          2345,
+          2366,
+          437,
+          508,
+          514,
+          531,
+          546,
+          555
+        ],
+        "calls": [
+          {
+            "pc": 565,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 565,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2056,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0x8da5cb5b",
+        "pathLength": 11,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "STORAGE",
+        "targetSource": "STORAGE",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x8da5cb5b",
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 565,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh60i04j3unh6gzk3zia0",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x9303467e32a759ff0b3772ae5d80c66586c868cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 397,
+        "path": [
+          1167,
+          1173,
+          1186,
+          1500,
+          1521,
+          297,
+          319,
+          346
+        ],
+        "calls": [
+          {
+            "pc": 397,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 397,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1167,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 397,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5uh60n04jdunh67f9za3tu",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x9303467e32a759ff0b3772ae5d80c66586c868cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 397,
+        "path": [
+          1167,
+          1173,
+          1186,
+          1500,
+          1521,
+          297,
+          319,
+          346
+        ],
+        "calls": [
+          {
+            "pc": 397,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 397,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1167,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0xa9059cbb",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 397,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh2u2027tunh6d9uh6lq4",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x9423d364c1552827606bb54aa107356e22af00cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 1395,
+        "path": [
+          4111,
+          4118,
+          4131,
+          5889,
+          5910,
+          1347,
+          1370,
+          1387
+        ],
+        "calls": [
+          {
+            "pc": 1395,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 1395,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 4111,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 1395,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uhat807obunh6wmmyhfvq",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x94976497b43174c37d038f414861923578d2a844",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 368,
+        "path": [
+          2277,
+          2283,
+          2296,
+          2711,
+          2732,
+          226,
+          246,
+          316,
+          322,
+          339
+        ],
+        "calls": [
+          {
+            "pc": 368,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 368,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2277,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 10,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 368,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5uhatd07olunh6vrba31ci",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x94976497b43174c37d038f414861923578d2a844",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 368,
+        "path": [
+          2277,
+          2283,
+          2296,
+          2711,
+          2732,
+          226,
+          246,
+          316,
+          322,
+          339
+        ],
+        "calls": [
+          {
+            "pc": 368,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 368,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2277,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0xa9059cbb",
+        "pathLength": 10,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 368,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh8i3062runh61dksbcsj",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x962d16f023113fdf1477b985e98b4a3859a440c0",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 8849,
+        "path": [
+          8429,
+          8435,
+          8448,
+          9143,
+          9164,
+          617,
+          9862,
+          9880,
+          8779,
+          8813
+        ],
+        "calls": [
+          {
+            "pc": 8849,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 2042,
+            "callback": "beforeSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          },
+          {
+            "pc": 2092,
+            "callback": "beforeSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          },
+          {
+            "pc": 8849,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 2042,
+            "callback": "afterSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          },
+          {
+            "pc": 2092,
+            "callback": "afterSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 8429,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 10,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 8849,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5uh8im0635unh6m0gw5n1p",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x962d16f023113fdf1477b985e98b4a3859a440c0",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 8804,
+        "path": [
+          8429,
+          8435,
+          8448,
+          9143,
+          9164,
+          617,
+          9862,
+          9880,
+          8779,
+          8797
+        ],
+        "calls": [
+          {
+            "pc": 8804,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 8849,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2042,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2092,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 8804,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 8849,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2042,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2092,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 8429,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 10,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "CONSTANT",
+        "targetSource": "CONSTANT",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 8804,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh62k04kvunh6ypaxeacb",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x986c1dc5d116e460d3098b72093fbb2301fe2840",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 397,
+        "path": [
+          1168,
+          1174,
+          1187,
+          1470,
+          1491,
+          297,
+          319,
+          346
+        ],
+        "calls": [
+          {
+            "pc": 397,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 397,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1168,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 397,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5uh62p04l5unh6s8essn0j",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x986c1dc5d116e460d3098b72093fbb2301fe2840",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 397,
+        "path": [
+          1168,
+          1174,
+          1187,
+          1470,
+          1491,
+          297,
+          319,
+          346
+        ],
+        "calls": [
+          {
+            "pc": 397,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 397,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1168,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0xa9059cbb",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 397,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5ugzbg007funh6p3qxjz77",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x9c69a54216a4ee5a189c800340bf3a31f1ba6888",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 6007,
+        "path": [
+          4747,
+          4753,
+          4766,
+          6425,
+          6446,
+          5714,
+          5737,
+          5972
+        ],
+        "calls": [
+          {
+            "pc": 6007,
+            "callback": "beforeSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          },
+          {
+            "pc": 7882,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 6007,
+            "callback": "afterSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          },
+          {
+            "pc": 7882,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 4747,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0x23b872dd",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transferFrom",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x23b872dd",
+      "selectorName": "transferFrom",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 6007,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5ugzbr007tunh6kibhlxhn",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x9c69a54216a4ee5a189c800340bf3a31f1ba6888",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 6007,
+        "path": [
+          4747,
+          4753,
+          4766,
+          6425,
+          6446,
+          5714,
+          5737,
+          5972
+        ],
+        "calls": [
+          {
+            "pc": 6007,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 4061,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7722,
+            "callback": "beforeSwap",
+            "targetType": "UNKNOWN_CONTRACT",
+            "targetAddress": "0x0000000000000000000000000000000000000040"
+          },
+          {
+            "pc": 7882,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 6007,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 4061,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 7722,
+            "callback": "afterSwap",
+            "targetType": "UNKNOWN_CONTRACT",
+            "targetAddress": "0x0000000000000000000000000000000000000040"
+          },
+          {
+            "pc": 7882,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 4747,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0x23b872dd",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transferFrom",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x23b872dd",
+      "selectorName": "transferFrom",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 6007,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh7xf05rfunh6h0lvr20x",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0xac84280778e723e0c6d54cd8d56e2edf2d2840cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 1552,
+        "path": [
+          3835,
+          3841,
+          3884,
+          4873,
+          4907,
+          480,
+          5958,
+          5989,
+          1520
+        ],
+        "calls": [
+          {
+            "pc": 1552,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 6068,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 1552,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 6068,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 3835,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 9,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "STORAGE",
+        "targetSource": "STORAGE",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 1552,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh54z03rdunh6vddbvnn2",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0xbcf7510b8d78faa3f6885ccdc7b6792dd9f830c8",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 690,
+        "path": [
+          2543,
+          2549,
+          2562,
+          2914,
+          2935,
+          560,
+          631,
+          637,
+          654,
+          669,
+          679
+        ],
+        "calls": [
+          {
+            "pc": 690,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 690,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2543,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0x8da5cb5b",
+        "pathLength": 11,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "STORAGE",
+        "targetSource": "STORAGE",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x8da5cb5b",
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 690,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5ugzd7008lunh6witcerbd",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0xc88cf8fc7d00921d244b7f18b2de54d0f39e10cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 3136,
+        "path": [
+          2534,
+          2540,
+          2553,
+          3262,
+          3283,
+          535,
+          4000,
+          4018,
+          3094
+        ],
+        "calls": [
+          {
+            "pc": 3136,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 3136,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2534,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 9,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 3136,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5ugzdg0091unh640q3hr58",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0xc88cf8fc7d00921d244b7f18b2de54d0f39e10cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 3136,
+        "path": [
+          2534,
+          2540,
+          2553,
+          3262,
+          3283,
+          535,
+          4000,
+          4018,
+          3094
+        ],
+        "calls": [
+          {
+            "pc": 3136,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2991,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 3136,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2991,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2534,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0xa9059cbb",
+        "pathLength": 9,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 3136,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5ugzd8008nunh6mkv15u0z",
+      "detector": "USER_CONTROLLED_EXTERNAL_EXECUTION",
+      "hookAddress": "0xc88cf8fc7d00921d244b7f18b2de54d0f39e10cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 3254,
+        "path": [
+          2534,
+          2540,
+          2553,
+          3262,
+          3283,
+          535,
+          4000,
+          4018,
+          3248
+        ],
+        "calls": [
+          {
+            "pc": 3254,
+            "origin": "CALLDATA",
+            "callback": "beforeSwap"
+          },
+          {
+            "pc": 3254,
+            "origin": "CALLDATA",
+            "callback": "afterSwap"
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2534,
+        "callback": "beforeSwap",
+        "detector": "USER_CONTROLLED_EXTERNAL_EXECUTION",
+        "selector": null,
+        "pathLength": 9,
+        "targetType": "USER_CONTROLLED",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "CALLDATA",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "USER_CONTROLLED",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 3254,
+      "whyItMatters": "The CALL target appears to come from calldata. The callback may call a dynamically selected contract. This is not a vulnerability by itself. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which calldata word becomes the address?",
+        "Is there a whitelist before CALL?",
+        "Is the target the swap sender or an arbitrary contract?"
+      ]
+    },
+    {
+      "id": "cmt5uh5a503ubunh676e3n0ki",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0xcb4eb75352423cb931a8f02fc28078b4bd68b0c0",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 657,
+        "path": [
+          2476,
+          2482,
+          2495,
+          2830,
+          2851,
+          527,
+          598,
+          604,
+          621,
+          636,
+          646
+        ],
+        "calls": [
+          {
+            "pc": 657,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 657,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2476,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0x8da5cb5b",
+        "pathLength": 11,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "STORAGE",
+        "targetSource": "STORAGE",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x8da5cb5b",
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 657,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh8jn063hunh6nj6xvkg9",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0xd88ae36f95d76625b8bff0476694cc0e68d380c0",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 8845,
+        "path": [
+          8429,
+          8435,
+          8448,
+          9139,
+          9160,
+          617,
+          9989,
+          10007,
+          8775,
+          8809
+        ],
+        "calls": [
+          {
+            "pc": 8845,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 2081,
+            "callback": "beforeSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          },
+          {
+            "pc": 2131,
+            "callback": "beforeSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          },
+          {
+            "pc": 8845,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 2081,
+            "callback": "afterSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          },
+          {
+            "pc": 2131,
+            "callback": "afterSwap",
+            "selector": "0x23b872dd",
+            "selectorName": "transferFrom",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 8429,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 10,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 8845,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5uh8k1063vunh6zv5m013e",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0xd88ae36f95d76625b8bff0476694cc0e68d380c0",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 8800,
+        "path": [
+          8429,
+          8435,
+          8448,
+          9139,
+          9160,
+          617,
+          9989,
+          10007,
+          8775,
+          8793
+        ],
+        "calls": [
+          {
+            "pc": 8800,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 8845,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2081,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2131,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 8800,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 8845,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2081,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 2131,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 8429,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 10,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "CONSTANT",
+        "targetSource": "CONSTANT",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 8800,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh1gw01d5unh6mg63o509",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0xe63d4b6732f5def02e629edd5d74ebc231c000cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 3395,
+        "path": [
+          3534,
+          3540,
+          3553,
+          4567,
+          4588,
+          1198,
+          5451,
+          5469,
+          3362,
+          3380,
+          3388
+        ],
+        "calls": [
+          {
+            "pc": 3395,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 3395,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 3534,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 11,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 3395,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh54803qvunh6zmeybzkq",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0xe910caf3ef3b70da60118f61640c8543dedab0c8",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 690,
+        "path": [
+          2543,
+          2549,
+          2562,
+          2914,
+          2935,
+          560,
+          631,
+          637,
+          654,
+          669,
+          679
+        ],
+        "calls": [
+          {
+            "pc": 690,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 690,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2543,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0x8da5cb5b",
+        "pathLength": 11,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "STORAGE",
+        "targetSource": "STORAGE",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x8da5cb5b",
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 690,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5ugzmm00efunh6bqmgevyp",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0xecdf36d09c9f2608c14b62e65cd59a629c1410cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 3678,
+        "path": [
+          3222,
+          3228,
+          3241,
+          4204,
+          4225,
+          2001,
+          4934,
+          4957,
+          3552,
+          3559,
+          3614,
+          3620,
+          3628
+        ],
+        "calls": [
+          {
+            "pc": 3678,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+          },
+          {
+            "pc": 6096,
+            "callback": "beforeSwap",
+            "selector": "0x095ea7b3",
+            "selectorName": "approve",
+            "targetAddress": null
+          },
+          {
+            "pc": 3678,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+          },
+          {
+            "pc": 6096,
+            "callback": "afterSwap",
+            "selector": "0x095ea7b3",
+            "selectorName": "approve",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 3222,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 13,
+        "targetType": "TOKEN_CONTRACT",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "CONSTANT",
+        "targetSource": "CONSTANT",
+        "targetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+      },
+      "callback": "beforeSwap",
+      "targetAddress": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+      "targetType": "TOKEN_CONTRACT",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 3678,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5ugzmt00etunh6qba2tnr2",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0xecdf36d09c9f2608c14b62e65cd59a629c1410cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 6096,
+        "path": [
+          3222,
+          3228,
+          3241,
+          4204,
+          4225,
+          2001,
+          4934,
+          4957,
+          2012,
+          2042,
+          4850,
+          4862,
+          2064,
+          6056
+        ],
+        "calls": [
+          {
+            "pc": 6096,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 6096,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 3222,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0x095ea7b3",
+        "pathLength": 14,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "approve",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x095ea7b3",
+      "selectorName": "approve",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 6096,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uh2rg025xunh6od2u5o1m",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0xedf67c1f1b8d18c09d14ef8871e2dce16d4940cc",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 1395,
+        "path": [
+          4111,
+          4118,
+          4131,
+          5889,
+          5910,
+          1347,
+          1370,
+          1387
+        ],
+        "calls": [
+          {
+            "pc": 1395,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 1395,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 4111,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 1395,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    },
+    {
+      "id": "cmt5uhc3d08kdunh6u5fu18hx",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x1673ce5f7f5e39c7f32657189db3c3cffebe0088",
+      "chainId": 130,
+      "network": "Unichain",
+      "severity": "low",
+      "confidence": "LOW",
+      "evidence": {
+        "pc": 9985,
+        "path": [
+          4930,
+          4937,
+          4980,
+          10718,
+          10752,
+          4340,
+          11722,
+          11783,
+          10687,
+          10696,
+          11904,
+          11936,
+          10704,
+          9682,
+          9715,
+          9717,
+          9748,
+          9749,
+          9777,
+          9956
+        ],
+        "calls": [
+          {
+            "pc": 9985,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 9985,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 4930,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": null,
+        "pathLength": 20,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": null,
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 9985,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    }
+  ],
+  "caseStudies": [
+    {
+      "id": "cmt5uh61904jvunh6zsb3zdg2",
+      "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+      "hookAddress": "0x157628bf3f556a0e5b23c70f28c2dc04d8caa844",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 397,
+        "path": [
+          1169,
+          1175,
+          1188,
+          1471,
+          1492,
+          297,
+          319,
+          346
+        ],
+        "calls": [
+          {
+            "pc": 397,
+            "callback": "beforeSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          },
+          {
+            "pc": 397,
+            "callback": "afterSwap",
+            "selector": "0xa9059cbb",
+            "selectorName": "transfer",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 1169,
+        "callback": "beforeSwap",
+        "detector": "TOKEN_MOVEMENT_IN_CALLBACK",
+        "selector": "0xa9059cbb",
+        "pathLength": 8,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": "transfer",
+        "targetOrigin": "UNKNOWN",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0xa9059cbb",
+      "selectorName": "transfer",
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 397,
+      "whyItMatters": "A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?",
+        "Is the token address a constant?",
+        "Who receives the tokens on the callback path?"
+      ]
+    },
+    {
+      "id": "cmt5uh48s039bunh6pzymjsp7",
+      "detector": "USER_CONTROLLED_EXTERNAL_EXECUTION",
+      "hookAddress": "0x87853b0979c0d45ceac57675c4254f054a77a8c4",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "medium",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 3166,
+        "path": [
+          1758,
+          1765,
+          1778,
+          2560,
+          2581,
+          2518,
+          2532,
+          3135
+        ],
+        "calls": [
+          {
+            "pc": 3166,
+            "origin": "CALLDATA",
+            "callback": "beforeSwap"
+          },
+          {
+            "pc": 3166,
+            "origin": "CALLDATA",
+            "callback": "afterSwap"
+          }
+        ],
+        "opcode": "STATICCALL",
+        "entryPc": 1758,
+        "callback": "beforeSwap",
+        "detector": "USER_CONTROLLED_EXTERNAL_EXECUTION",
+        "selector": "0xddca3f43",
+        "pathLength": 8,
+        "targetType": "USER_CONTROLLED",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "CALLDATA",
+        "targetSource": "UNKNOWN",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "USER_CONTROLLED",
+      "selector": "0xddca3f43",
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "STATICCALL",
+      "pc": 3166,
+      "whyItMatters": "The CALL target appears to come from calldata. The callback may call a dynamically selected contract. This is not a vulnerability by itself. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Which calldata word becomes the address?",
+        "Is there a whitelist before CALL?",
+        "Is the target the swap sender or an arbitrary contract?"
+      ]
+    },
+    {
+      "id": "cmt5uh56j03sdunh6b4x0nfi4",
+      "detector": "UNKNOWN_EXTERNAL_TARGET",
+      "hookAddress": "0x0c055c6fe9090c30800ca107f0c04346b5e5b0c0",
+      "chainId": 1,
+      "network": "Ethereum",
+      "severity": "low",
+      "confidence": "MEDIUM",
+      "evidence": {
+        "pc": 657,
+        "path": [
+          2466,
+          2472,
+          2485,
+          3226,
+          3247,
+          527,
+          598,
+          604,
+          621,
+          636,
+          646
+        ],
+        "calls": [
+          {
+            "pc": 657,
+            "callback": "beforeSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          },
+          {
+            "pc": 657,
+            "callback": "afterSwap",
+            "targetType": "DYNAMIC",
+            "targetAddress": null
+          }
+        ],
+        "opcode": "CALL",
+        "entryPc": 2466,
+        "callback": "beforeSwap",
+        "detector": "UNKNOWN_EXTERNAL_TARGET",
+        "selector": "0x8da5cb5b",
+        "pathLength": 11,
+        "targetType": "DYNAMIC",
+        "analysisType": "BYTECODE_CFG",
+        "protocolName": null,
+        "selectorName": null,
+        "targetOrigin": "STORAGE",
+        "targetSource": "STORAGE",
+        "targetAddress": null
+      },
+      "callback": "beforeSwap",
+      "targetAddress": null,
+      "targetType": "DYNAMIC",
+      "selector": "0x8da5cb5b",
+      "selectorName": null,
+      "protocolName": null,
+      "opcode": "CALL",
+      "pc": 657,
+      "whyItMatters": "A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.",
+      "reviewActions": [
+        "Is the target a constant PUSH20, an SLOAD, or calldata?",
+        "Does verified source name the callee?",
+        "Would a swap caller influence that address?"
+      ]
+    }
+  ]
+}

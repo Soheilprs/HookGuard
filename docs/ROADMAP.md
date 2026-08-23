@@ -1,6 +1,6 @@
 # Roadmap
 
-HookGuard is built in numbered product phases. **Phases 0–7C are implemented in this repository.** Numerical risk scoring is **not** implemented and is not a launch requirement.
+HookGuard is built in numbered product phases. **Phases 0–7D are implemented in this repository.** Numerical risk scoring is **not** implemented and is not a launch requirement.
 
 HookGuard does not replace a professional smart-contract audit.
 
@@ -23,6 +23,7 @@ HookGuard does not replace a professional smart-contract audit.
 | 7A | Hook security analyzer | Source-first detectors for v4 callback-path patterns (no generic scanner, no scores) |
 | 7B | Real-world analysis | Corpus re-analysis, `reports/hookguard-security-analysis-results.*`, per-finding evidence |
 | 7C | Bytecode CFG | Callback-reachable CALL/DELEGATECALL/SSTORE without verified source |
+| 7D | External interactions | CALL target recovery, ERC-20/protocol classification, auto research docs |
 
 ## Next (not built)
 

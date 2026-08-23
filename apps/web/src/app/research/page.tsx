@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { AppShell } from '@/components/layout/app-shell';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { fetchLandscapeSafe } from '@/lib/api';
+import { fetchInteractionsSafe, fetchLandscapeSafe } from '@/lib/api';
 import { RISK_CATEGORY_LABELS } from '@hookguard/blockchain';
 
 export const metadata = {
@@ -12,6 +12,8 @@ export const dynamic = 'force-dynamic';
 
 export default async function ResearchPage() {
   const report = await fetchLandscapeSafe();
+  const interactions = await fetchInteractionsSafe();
+  const ix = interactions?.metrics;
   const coverage = report?.metrics.coverage;
   const categories = report?.metrics.riskCategoryHooks;
   const severity = report?.metrics.severityFindings;
@@ -162,6 +164,41 @@ export default async function ResearchPage() {
           ) : (
             <p className="text-sm text-muted-foreground">Landscape API unavailable.</p>
           )}
+        </CardContent>
+      </Card>
+
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle>External Interaction Intelligence</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2 text-sm">
+          <p className="text-muted-foreground">
+            Callback-reachable CALL targets recovered from bytecode. Not exploit
+            proofs. HookGuard does not replace a professional smart-contract audit.
+          </p>
+          <div className="grid gap-2 sm:grid-cols-2">
+            <div className="flex justify-between gap-4">
+              <span className="text-muted-foreground">Callback external calls</span>
+              <span className="font-medium">{ix?.callbackExternalCalls ?? 0}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-muted-foreground">Known protocols</span>
+              <span className="font-medium">{ix?.knownProtocols ?? 0}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-muted-foreground">Unknown targets</span>
+              <span className="font-medium">{ix?.unknownTargets ?? 0}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-muted-foreground">Token interactions</span>
+              <span className="font-medium">{ix?.erc20Interactions ?? 0}</span>
+            </div>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Dependency graph is hook → recovered CALL target → classification
+            (KNOWN_PROTOCOL / TOKEN_CONTRACT / UNKNOWN / USER_CONTROLLED). Full
+            write-up: docs/research/HOOK_BEHAVIOR_LANDSCAPE.md
+          </p>
         </CardContent>
       </Card>
 

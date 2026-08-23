@@ -55,6 +55,7 @@ npm run alerts:retry
 npm run report:risk              # reports/hookguard-security-landscape.{json,md}
 npm run analyze:hooks:research   # re-analyze corpus + reports/hookguard-security-analysis-results.{json,md} + reports/evidence/
 npm run analyze:bytecode         # CFG reachability + reports/bytecode-analysis-results.{json,md}
+npm run analyze:interactions     # CALL targets + reports/hookguard-interaction-analysis.* + docs/research/HOOK_*INTERACTION*
 ```
 
 Repeat for `--chain=unichain`. Checkpoints live in `indexer_checkpoints`. Re-running index resumes; it does not start from genesis if a checkpoint exists.

@@ -25,6 +25,11 @@ const required = [
   'docs/research/RISK_REVIEW_CHECKLIST.md',
   'docs/research/HOOK_SECURITY_ANALYSIS.md',
   'docs/research/BYTECODE_INTELLIGENCE_REPORT.md',
+  'docs/research/HOOK_EXTERNAL_INTERACTION_ANALYSIS.md',
+  'docs/research/HOOK_BEHAVIOR_LANDSCAPE.md',
+  'docs/research/HOOK_INTERACTION_CASE_STUDIES.md',
+  'reports/hookguard-interaction-analysis.md',
+  'reports/hookguard-interaction-analysis.json',
   'reports/bytecode-analysis-results.md',
   'reports/bytecode-analysis-results.json',
   'docs/research/REAL_WORLD_HOOK_ANALYSIS.md',
@@ -150,6 +155,19 @@ describe('launch documentation', () => {
     expect(bytecodeIntel).toMatch(/409/);
     expect(bytecodeResults).toMatch(/CALLBACK_REACHABLE_DELEGATECALL/);
     expect(bytecodeResults).toMatch(/not confirmed exploits/);
+    const interactionDoc = readFileSync(
+      join(root, 'docs/research/HOOK_EXTERNAL_INTERACTION_ANALYSIS.md'),
+      'utf8',
+    );
+    expect(interactionDoc).toMatch(/# Executive Summary/);
+    expect(interactionDoc).toMatch(/Callback external calls/);
+    expect(interactionDoc).toMatch(/880/);
+    const cases = readFileSync(
+      join(root, 'docs/research/HOOK_INTERACTION_CASE_STUDIES.md'),
+      'utf8',
+    );
+    expect(cases).toMatch(/Recommended review/);
+    expect(cases).not.toMatch(/user funds are stolen/i);
     const real = readFileSync(join(root, 'docs/research/REAL_WORLD_HOOK_ANALYSIS.md'), 'utf8');
     const results = readFileSync(
       join(root, 'reports/hookguard-security-analysis-results.md'),

@@ -339,6 +339,42 @@ const ANALYZER_GUIDANCE: Record<string, { guidance: string; reviewQuestions: str
       'Does verified source show CEI instead?',
     ],
   },
+  UNKNOWN_EXTERNAL_TARGET: {
+    guidance:
+      'A callback-reachable CALL target is not a curated protocol constant. Review who that contract is. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'Is the target a constant PUSH20, an SLOAD, or calldata?',
+      'Does verified source name the callee?',
+      'Would a swap caller influence that address?',
+    ],
+  },
+  TOKEN_MOVEMENT_IN_CALLBACK: {
+    guidance:
+      'A callback-reachable CALL is paired with an ERC-20 transfer/approve/permit selector. Tokens may move during swap/liquidity execution. That is not proof of theft. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'Which ERC-20 selector was recovered (transfer, transferFrom, approve, permit)?',
+      'Is the token address a constant?',
+      'Who receives the tokens on the callback path?',
+    ],
+  },
+  USER_CONTROLLED_EXTERNAL_EXECUTION: {
+    guidance:
+      'The CALL target appears to come from calldata. The callback may call a dynamically selected contract. This is not a vulnerability by itself. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'Which calldata word becomes the address?',
+      'Is there a whitelist before CALL?',
+      'Is the target the swap sender or an arbitrary contract?',
+    ],
+  },
+  PROTOCOL_INTERACTION: {
+    guidance:
+      'The CALL target equals a curated protocol address. This is a dependency map entry, not a confirmed issue. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'Which protocol address was matched?',
+      'Is that dependency intended for this hook?',
+      'Does the selector match that protocol?',
+    ],
+  },
   HOOK_PERMISSION_MISMATCH: {
     guidance:
       'Hook-address permission bits do not match implemented callbacks. Extra unflagged functions are not called by PoolManager. HookGuard does not replace a professional smart-contract audit.',

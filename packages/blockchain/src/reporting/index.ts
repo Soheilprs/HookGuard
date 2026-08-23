@@ -47,3 +47,18 @@ export {
   exportBytecodeResearchJson,
   exportBytecodeResearchMarkdown,
 } from './exporters/bytecode-markdown.js';
+export {
+  INTERACTION_DETECTORS,
+  INTERACTION_DISCLAIMER,
+  annotateInteractionFinding,
+  buildInteractionReport,
+  type InteractionCorpus,
+  type InteractionReport,
+} from './interaction-research.js';
+export {
+  exportInteractionJson,
+  exportInteractionMarkdown,
+  renderBehaviorLandscape,
+  renderExternalInteractionAnalysis,
+  renderInteractionCaseStudies,
+} from './exporters/interaction-docs.js';

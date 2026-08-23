@@ -1,4 +1,4 @@
-import type { LandscapeReport } from '@hookguard/blockchain';
+import type { InteractionReport, LandscapeReport } from '@hookguard/blockchain';
 import type {
   HookContractResponse,
   HookDetailResponse,
@@ -50,6 +50,19 @@ export async function fetchHook(
 
 export async function fetchStats(): Promise<RegistryStats> {
   return getJson<RegistryStats>('/stats');
+}
+
+export async function fetchInteractionsSafe(): Promise<InteractionReport | null> {
+  try {
+    const response = await fetch(`${API_URL}/research/interactions`, {
+      cache: 'no-store',
+      signal: AbortSignal.timeout(30_000),
+    });
+    if (!response.ok) return null;
+    return (await response.json()) as InteractionReport;
+  } catch {
+    return null;
+  }
 }
 
 export async function fetchLandscapeSafe(): Promise<LandscapeReport | null> {

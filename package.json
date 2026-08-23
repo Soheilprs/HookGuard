@@ -28,6 +28,7 @@
     "analyze:hooks": "npm run analyze:hooks -w @hookguard/api --",
     "analyze:hooks:research": "npm run analyze:hooks:research -w @hookguard/api --",
     "analyze:bytecode": "npm run analyze:bytecode -w @hookguard/api --",
+    "analyze:interactions": "npm run analyze:interactions -w @hookguard/api --",
     "monitor:hooks": "npm run monitor:hooks -w @hookguard/api --",
     "alerts:retry": "npm run alerts:retry -w @hookguard/api --",
     "validate:apply": "npm run validate:apply -w @hookguard/api --",

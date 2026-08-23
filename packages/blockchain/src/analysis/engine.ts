@@ -7,6 +7,7 @@ import { proxyRules } from './rules/proxy.rules.js';
 import { riskRules } from './risk/risk-engine.js';
 import { analyzerRules } from '../analyzer/engine.js';
 import { bytecodeAnalysisRules } from '../bytecode-analysis/engine.js';
+import { interactionAnalysisRules } from '../interaction-analysis/engine.js';
 import type { AnalysisInput, AnalysisRule, EngineFinding } from './types.js';
 
 export const DEFAULT_RULES: AnalysisRule[] = [
@@ -18,6 +19,7 @@ export const DEFAULT_RULES: AnalysisRule[] = [
   ...riskRules,
   ...analyzerRules,
   ...bytecodeAnalysisRules,
+  ...interactionAnalysisRules,
 ];
 
 const SEVERITY_ORDER: Record<FindingSeverity, number> = {

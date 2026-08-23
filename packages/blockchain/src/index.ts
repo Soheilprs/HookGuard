@@ -178,6 +178,12 @@ export {
 } from './bytecode-analysis/index.js';
 
 export {
+  interactionAnalysisRules,
+  INTERACTION_RULE_IDS,
+  recoverCallbackInteractions,
+} from './interaction-analysis/index.js';
+
+export {
   buildLandscapeReport,
   computeLandscapeMetrics,
   exportLandscapeJson,
@@ -197,6 +203,14 @@ export {
   annotateBytecodeFinding,
   exportBytecodeResearchJson,
   exportBytecodeResearchMarkdown,
+  INTERACTION_DETECTORS,
+  annotateInteractionFinding,
+  buildInteractionReport,
+  exportInteractionJson,
+  exportInteractionMarkdown,
+  renderBehaviorLandscape,
+  renderExternalInteractionAnalysis,
+  renderInteractionCaseStudies,
 } from './reporting/index.js';
 
 export type {
@@ -210,4 +224,6 @@ export type {
   AnalysisResearchReport,
   BytecodeResearchCorpus,
   BytecodeResearchReport,
+  InteractionCorpus,
+  InteractionReport,
 } from './reporting/index.js';

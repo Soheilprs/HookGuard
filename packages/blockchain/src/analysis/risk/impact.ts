@@ -17,6 +17,10 @@ export const RISK_IMPACTS: readonly RiskImpact[] = [
   'CALLBACK_CALL_REACHABLE',
   'CALLBACK_STATE_MUTATION',
   'CALLBACK_CALL_BEFORE_STATE',
+  'UNKNOWN_CALLBACK_TARGET',
+  'TOKEN_MOVEMENT_IN_CALLBACK',
+  'USER_CONTROLLED_CALLBACK_TARGET',
+  'PROTOCOL_CALLBACK_DEPENDENCY',
 ] as const;
 
 export const IMPACT_LABELS: Record<RiskImpact, string> = {
@@ -52,6 +56,14 @@ export const IMPACT_LABELS: Record<RiskImpact, string> = {
     'Hook callback modifies contract state during lifecycle execution (SSTORE reachable).',
   CALLBACK_CALL_BEFORE_STATE:
     'External execution occurs before a detected state update on a recovered callback path.',
+  UNKNOWN_CALLBACK_TARGET:
+    'A hook callback CALL target is unknown, storage-loaded, or dynamically computed.',
+  TOKEN_MOVEMENT_IN_CALLBACK:
+    'A hook callback CALL uses an ERC-20 transfer/approve/permit selector.',
+  USER_CONTROLLED_CALLBACK_TARGET:
+    'Hook callback may execute logic against a dynamically selected target derived from calldata.',
+  PROTOCOL_CALLBACK_DEPENDENCY:
+    'Hook callback CALL target matches a curated known protocol address.',
 };
 
 export function impactSeverity(
@@ -90,6 +102,14 @@ export function impactSeverity(
       return 'low';
     case 'CALLBACK_CALL_BEFORE_STATE':
       return 'medium';
+    case 'UNKNOWN_CALLBACK_TARGET':
+      return 'low';
+    case 'TOKEN_MOVEMENT_IN_CALLBACK':
+      return 'medium';
+    case 'USER_CONTROLLED_CALLBACK_TARGET':
+      return 'medium';
+    case 'PROTOCOL_CALLBACK_DEPENDENCY':
+      return 'info';
     default:
       return 'info';
   }

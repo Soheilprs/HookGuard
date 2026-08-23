@@ -22,6 +22,12 @@ export function ExecutionEvidence({
       </p>
       <dl className="mt-2 space-y-1 text-sm">
         <Row label="Callback" value={callback ?? '—'} mono />
+        <Row label="Target" value={asString(evidence.targetAddress) ?? '—'} mono />
+        <Row label="Selector" value={selectorLabel(evidence)} mono />
+        <Row
+          label="Target classification"
+          value={asString(evidence.targetType) ?? '—'}
+        />
         <Row label="Opcode" value={opcode ?? '—'} mono />
         <Row label="Program counter" value={pc === undefined || pc === null ? '—' : String(pc)} mono />
         <Row
@@ -57,4 +63,11 @@ function Row({
 
 function asString(value: unknown): string | null {
   return typeof value === 'string' && value.length > 0 ? value : null;
+}
+
+function selectorLabel(evidence: Record<string, unknown>): string {
+  const selector = asString(evidence.selector);
+  const name = asString(evidence.selectorName);
+  if (selector && name) return `${name} ${selector}`;
+  return selector ?? '—';
 }

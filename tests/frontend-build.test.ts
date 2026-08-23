@@ -90,6 +90,8 @@ describe('frontend foundation', () => {
     expect(findingCard).toMatch(/EvidenceViewer/);
     expect(findingCard).toMatch(/CodeEvidence/);
     expect(findingCard).toMatch(/ExecutionEvidence/);
+    const execution = readFileSync(join(web, 'src/components/execution-evidence.tsx'), 'utf8');
+    expect(execution).toMatch(/Target classification/);
     expect(findingCard).toMatch(/RiskGuidanceCard/);
     expect(findingCard).toMatch(/ReviewChecklist/);
     expect(confidence).toMatch(/LOW CONFIDENCE/);
@@ -144,6 +146,7 @@ describe('frontend foundation', () => {
     expect(landing).not.toMatch(/riskScore/);
     const research = readFileSync(join(web, 'src/app/research/page.tsx'), 'utf8');
     expect(research).toMatch(/Risk categories/);
+    expect(research).toMatch(/External Interaction Intelligence/);
     expect(research).toMatch(/Generated reports/);
     expect(research).toMatch(/does not replace a professional smart-contract audit/);
     expect(research).not.toMatch(/riskScore/);
