@@ -30,6 +30,18 @@ export function FindingCard({ finding }: { finding: FindingItem }) {
       <p className="mt-1 text-sm text-muted-foreground">{finding.description}</p>
       <p className="mt-2 text-xs text-muted-foreground">
         Evidence source: <span className="font-mono">{finding.detectionSource}</span>
+        {finding.impact ? (
+          <>
+            {' · '}
+            impact <span className="font-mono">{finding.impact}</span>
+          </>
+        ) : null}
+        {finding.affectedComponent ? (
+          <>
+            {' · '}
+            {finding.affectedComponent}
+          </>
+        ) : null}
       </p>
       <EvidenceViewer evidence={finding.evidence} />
     </article>

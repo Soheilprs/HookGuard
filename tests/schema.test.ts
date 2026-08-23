@@ -78,6 +78,8 @@ const requiredModels: Record<string, string[]> = {
     'validationStatus',
     'validatedAt',
     'validationNotes',
+    'impact',
+    'affectedComponent',
     'createdAt',
   ],
   IndexerCheckpoint: [

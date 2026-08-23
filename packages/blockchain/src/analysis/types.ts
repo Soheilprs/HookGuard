@@ -55,6 +55,8 @@ export interface EngineFinding {
   confidence: FindingConfidence;
   detectionSource: DetectionSource;
   ruleTier: RuleTier;
+  impact?: string | null;
+  affectedComponent?: string | null;
   description: string;
   evidence: Record<string, unknown>;
 }

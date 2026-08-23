@@ -20,7 +20,25 @@ export type ValidationStatus =
 
 export type RuleTier = 1 | 2 | 3;
 
+export type RiskCategory =
+  | 'FUND_SAFETY'
+  | 'SWAP_SECURITY'
+  | 'UPGRADE_SECURITY'
+  | 'ADMIN_CONTROL'
+  | 'ORACLE_SECURITY'
+  | 'EXTERNAL_EXECUTION'
+  | 'PERMISSION_SECURITY';
+
+export type RiskImpact =
+  | 'SWAP_PATH_LOGIC_REPLACEABLE'
+  | 'PRIVILEGED_TOKEN_MOVEMENT'
+  | 'PRIVILEGED_FEE_CHANGE'
+  | 'PRIVILEGED_ORACLE_CHANGE'
+  | 'CALLBACK_EXTERNAL_CALL'
+  | 'PRIVILEGED_CONFIGURATION';
+
 export type FindingCategory =
+  | RiskCategory
   | 'permissions'
   | 'access-control'
   | 'hook-lifecycle'
@@ -54,6 +72,8 @@ export interface Finding {
   validationStatus: ValidationStatus;
   validatedAt: Date | null;
   validationNotes: string | null;
+  impact: RiskImpact | string | null;
+  affectedComponent: string | null;
   description: string;
   evidence: FindingEvidence;
   createdAt: Date;

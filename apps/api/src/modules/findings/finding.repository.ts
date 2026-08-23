@@ -13,6 +13,8 @@ export interface FindingRecord {
   validationStatus: string;
   validatedAt: Date | null;
   validationNotes: string | null;
+  impact: string | null;
+  affectedComponent: string | null;
   description: string;
   evidence: Record<string, unknown>;
   createdAt: Date;
@@ -26,6 +28,8 @@ export interface SaveFindingInput {
   severity: string;
   confidence: string;
   detectionSource: string;
+  impact?: string | null;
+  affectedComponent?: string | null;
   description: string;
   evidence: Record<string, unknown>;
 }
@@ -84,6 +88,8 @@ export class InMemoryFindingRepository implements FindingRepository {
         validationStatus: existing?.validationStatus ?? 'UNREVIEWED',
         validatedAt: existing?.validatedAt ?? null,
         validationNotes: existing?.validationNotes ?? null,
+        impact: input.impact ?? null,
+        affectedComponent: input.affectedComponent ?? null,
         description: input.description,
         evidence: input.evidence,
         createdAt: existing?.createdAt ?? new Date(),
@@ -143,6 +149,8 @@ export class PrismaFindingRepository implements FindingRepository {
             confidence: input.confidence,
             detectionSource: input.detectionSource,
             validationStatus: 'UNREVIEWED',
+            impact: input.impact ?? null,
+            affectedComponent: input.affectedComponent ?? null,
             description: input.description,
             evidence: input.evidence as Prisma.InputJsonValue,
           },
@@ -152,6 +160,8 @@ export class PrismaFindingRepository implements FindingRepository {
             severity: input.severity,
             confidence: input.confidence,
             detectionSource: input.detectionSource,
+            impact: input.impact ?? null,
+            affectedComponent: input.affectedComponent ?? null,
             description: input.description,
             evidence: input.evidence as Prisma.InputJsonValue,
           },
@@ -198,6 +208,8 @@ function toRecord(row: {
   validationStatus: string;
   validatedAt: Date | null;
   validationNotes: string | null;
+  impact: string | null;
+  affectedComponent: string | null;
   description: string;
   evidence: unknown;
   createdAt: Date;

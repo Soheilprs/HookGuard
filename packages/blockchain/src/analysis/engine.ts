@@ -4,6 +4,7 @@ import { hooksRules } from './rules/hooks.rules.js';
 import { ownershipRules } from './rules/ownership.rules.js';
 import { permissionsRules } from './rules/permissions.rules.js';
 import { proxyRules } from './rules/proxy.rules.js';
+import { riskRules } from './risk/risk-engine.js';
 import type { AnalysisInput, AnalysisRule, EngineFinding } from './types.js';
 
 export const DEFAULT_RULES: AnalysisRule[] = [
@@ -12,6 +13,7 @@ export const DEFAULT_RULES: AnalysisRule[] = [
   ...hooksRules,
   ...externalCallRules,
   ...permissionsRules,
+  ...riskRules,
 ];
 
 const SEVERITY_ORDER: Record<FindingSeverity, number> = {

@@ -79,6 +79,7 @@ describe('frontend foundation', () => {
     );
     expect(findingCard).toMatch(/ConfidenceBadge/);
     expect(findingCard).toMatch(/Bytecode heuristic/);
+    expect(findingCard).toMatch(/finding.impact/);
     expect(confidence).toMatch(/LOW CONFIDENCE/);
     expect(detail).not.toMatch(/Security analysis pending/);
     expect(intelligence).toMatch(/Contract Intelligence/);

@@ -106,6 +106,15 @@ export {
   precision,
   associateCallsWithSource,
   privilegedMutators,
+  riskRules,
+  collectCapabilityFacts,
+  RISK_CATEGORIES,
+  RISK_CATEGORY_LABELS,
+  isRiskCategory,
+  CAPABILITY_DISCLAIMER,
+  RISK_IMPACTS,
+  IMPACT_LABELS,
+  impactSeverity,
 } from './analysis/index.js';
 
 export {
@@ -138,6 +147,8 @@ export type {
   AnalysisProxy,
   AnalysisRule,
   EngineFinding,
+  CapabilityFacts,
+  AffectedComponent,
   ValidationDataset,
   ValidationReview,
   ValidationMetrics,

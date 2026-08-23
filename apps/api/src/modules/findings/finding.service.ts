@@ -109,6 +109,8 @@ function toItem(row: FindingRecord): FindingItem {
     detectionSource: row.detectionSource,
     validationStatus: row.validationStatus,
     ruleTier: ruleTier(row.ruleId),
+    impact: row.impact,
+    affectedComponent: row.affectedComponent,
     description: row.description,
     evidence: row.evidence,
     createdAt: row.createdAt.toISOString(),

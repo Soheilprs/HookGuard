@@ -76,7 +76,7 @@ Phase 2C reviewed **20** real hooks and **135** findings: 80 confirmed, 0 false 
 - Verified source improves confidence; it does not prove safety. The Phase 2C corpus had **zero** verified-source hooks without explorer API keys.
 - Absence of findings is not a clean bill of health.
 - Confirmed findings are not exploit proofs. Always read the evidence.
-- HookGuard does not produce a numerical hook risk score.
+- HookGuard does not produce a numerical hook risk score. Capability correlations (proxy + swap callback + upgrade authority, and similar) are documented in [RISK-FRAMEWORK.md](./RISK-FRAMEWORK.md).
 
 ## What HookGuard does not guarantee
 

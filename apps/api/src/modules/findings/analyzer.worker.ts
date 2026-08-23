@@ -108,6 +108,8 @@ export async function runHookAnalysis(options: AnalyzeOptions): Promise<AnalyzeR
         evidence: finding.evidence,
         confidence: finding.confidence,
         detectionSource: finding.detectionSource,
+        impact: finding.impact ?? null,
+        affectedComponent: finding.affectedComponent ?? null,
       })),
     );
     result.analyzed += 1;

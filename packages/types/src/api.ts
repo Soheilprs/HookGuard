@@ -115,6 +115,8 @@ export interface FindingItem {
   detectionSource: string;
   validationStatus: string;
   ruleTier: number;
+  impact: string | null;
+  affectedComponent: string | null;
   description: string;
   evidence: Record<string, unknown>;
   createdAt: string;

@@ -128,9 +128,11 @@ model Finding {
   validationStatus String    @default("UNREVIEWED")
   validatedAt      DateTime?
   validationNotes  String?   @db.Text
-  description      String    @db.Text
-  evidence         Json
-  createdAt        DateTime  @default(now())
+  impact              String?
+  affectedComponent   String?
+  description         String    @db.Text
+  evidence            Json
+  createdAt           DateTime  @default(now())
 
   hook Hook @relation(fields: [hookId], references: [id], onDelete: Cascade)
 

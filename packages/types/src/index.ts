@@ -9,6 +9,8 @@ export type {
   FindingEvidence,
   FindingSeverity,
   HookPermissionClass,
+  RiskCategory,
+  RiskImpact,
   RuleTier,
   ValidationStatus,
 } from './finding.js';

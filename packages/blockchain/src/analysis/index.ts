@@ -31,3 +31,13 @@ export {
 } from './validation.js';
 export { associateCallsWithSource, flattenVerifiedSource } from './source-calls.js';
 export { privilegedMutators } from './privileged.js';
+export { riskRules, collectCapabilityFacts } from './risk/risk-engine.js';
+export {
+  RISK_CATEGORIES,
+  RISK_CATEGORY_LABELS,
+  isRiskCategory,
+  CAPABILITY_DISCLAIMER,
+} from './risk/taxonomy.js';
+export { RISK_IMPACTS, IMPACT_LABELS, impactSeverity } from './risk/impact.js';
+export type { CapabilityFacts } from './risk/facts.js';
+export type { AffectedComponent } from './risk/taxonomy.js';

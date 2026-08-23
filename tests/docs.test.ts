@@ -15,6 +15,7 @@ const required = [
   'docs/DEPLOYMENT.md',
   'docs/OPERATOR.md',
   'docs/DEMO.md',
+  'docs/RISK-FRAMEWORK.md',
   'docs/screenshots/homepage.jpg',
   'docs/screenshots/explorer.jpg',
   'docs/screenshots/findings.jpg',

@@ -17,6 +17,7 @@ HookGuard does not replace a professional smart-contract audit.
 | 4 | Public product | Public pages, watchlists, optional Telegram alerts |
 | 5 | Launch docs | README, architecture, methodology, validation, grant draft, deployment |
 | 6 | Launch / grant prep | `/ready`, CORS, operator runbook, demo walkthrough |
+| 6.5A | Risk framework | Capability correlations (no scores, no exploit claims) |
 
 ## Next (not built)
 

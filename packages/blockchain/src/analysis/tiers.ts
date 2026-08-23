@@ -17,6 +17,12 @@ export const RULE_TIERS: Record<string, RuleTier> = {
   'ext-call': 3,
   'ext-delegatecall': 3,
   'ext-staticcall': 3,
+  'risk-upgradeable-swap-control': 2,
+  'risk-privileged-asset-movement': 2,
+  'risk-privileged-fee-modification': 2,
+  'risk-privileged-oracle-modification': 2,
+  'risk-privileged-admin-control': 2,
+  'risk-callback-external-execution': 3,
 };
 
 export function ruleTier(ruleId: string, fallback: RuleTier = 3): RuleTier {

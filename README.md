@@ -144,6 +144,7 @@ Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [doc
 
 - [Architecture](docs/ARCHITECTURE.md)
 - [Security methodology](docs/SECURITY-METHODOLOGY.md)
+- [Risk framework](docs/RISK-FRAMEWORK.md)
 - [Validation](docs/VALIDATION.md)
 - [Deployment](docs/DEPLOYMENT.md)
 - [Operator runbook](docs/OPERATOR.md)
