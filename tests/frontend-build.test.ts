@@ -32,6 +32,9 @@ const components = [
   'src/components/monitoring-status.tsx',
   'src/components/security-event-card.tsx',
   'src/components/finding-card.tsx',
+  'src/components/risk-guidance-card.tsx',
+  'src/components/impact-explanation.tsx',
+  'src/components/review-checklist.tsx',
   'src/components/evidence-viewer.tsx',
   'src/components/watch-button.tsx',
   'src/components/timeline.tsx',
@@ -81,6 +84,10 @@ describe('frontend foundation', () => {
     expect(findingCard).toMatch(/ConfidenceBadge/);
     expect(findingCard).toMatch(/Bytecode heuristic/);
     expect(findingCard).toMatch(/finding.impact/);
+    expect(findingCard).toMatch(/ImpactExplanation/);
+    expect(findingCard).toMatch(/EvidenceViewer/);
+    expect(findingCard).toMatch(/RiskGuidanceCard/);
+    expect(findingCard).toMatch(/ReviewChecklist/);
     expect(confidence).toMatch(/LOW CONFIDENCE/);
     expect(detail).not.toMatch(/Security analysis pending/);
     expect(intelligence).toMatch(/Contract Intelligence/);

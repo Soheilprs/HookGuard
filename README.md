@@ -154,6 +154,9 @@ Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [doc
 - [Risk findings summary](docs/research/RISK_FINDINGS_SUMMARY.md)
 - [Case studies](docs/research/CASE_STUDIES.md)
 - [Validation report](docs/research/VALIDATION_REPORT.md)
+- [Security playbook](docs/research/SECURITY_PLAYBOOK.md)
+- [Developer guidance](docs/research/DEVELOPER_GUIDANCE.md)
+- [Risk review checklist](docs/research/RISK_REVIEW_CHECKLIST.md)
 - [Deployment](docs/DEPLOYMENT.md)
 - [Operator runbook](docs/OPERATOR.md)
 - [Demo walkthrough](docs/DEMO.md)
@@ -163,7 +166,7 @@ Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [doc
 
 ## Status
 
-**Phase 6.5B — security landscape reporting.** Product phases 0–6.5A are implemented. Numerical risk scoring is not.
+**Phase 6.5C — security intelligence playbook.** Product phases 0–6.5B are implemented. Numerical risk scoring is not.
 
 ## License
 

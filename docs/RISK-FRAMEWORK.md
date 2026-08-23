@@ -4,6 +4,8 @@ HookGuard reports **security-relevant capabilities and configurations**, not “
 
 It does not detect exploits. It does not assign a numerical risk score. It does not replace a professional smart-contract audit.
 
+How to review a finding: [research/SECURITY_PLAYBOOK.md](./research/SECURITY_PLAYBOOK.md). Developer checklist: [research/DEVELOPER_GUIDANCE.md](./research/DEVELOPER_GUIDANCE.md). Audience checklist: [research/RISK_REVIEW_CHECKLIST.md](./research/RISK_REVIEW_CHECKLIST.md).
+
 A risk finding is emitted only when **multiple independent facts** correlate. Every finding includes evidence JSON. The engine drops any candidate with empty evidence.
 
 ## Categories

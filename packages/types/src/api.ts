@@ -119,6 +119,9 @@ export interface FindingItem {
   affectedComponent: string | null;
   description: string;
   evidence: Record<string, unknown>;
+  guidance: string;
+  reviewQuestions: string[];
+  impactExplanation: string | null;
   createdAt: string;
 }
 

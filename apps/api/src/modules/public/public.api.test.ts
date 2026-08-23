@@ -42,7 +42,7 @@ const app = await buildApp({
 });
 
 beforeAll(async () => {
-  await hooks.upsertInitialize({
+  const created = await hooks.upsertInitialize({
     chainId: 1,
     blockNumber: 10n,
     poolId: POOL,
@@ -55,6 +55,28 @@ beforeAll(async () => {
     fee: 3000,
     tickSpacing: 60,
   });
+  await findings.replaceForHook(
+    created.hook.id,
+    ['risk-privileged-asset-movement'],
+    [
+      {
+        hookId: created.hook.id,
+        ruleId: 'risk-privileged-asset-movement',
+        title: 'Privileged control of token-transfer functions',
+        category: 'FUND_SAFETY',
+        severity: 'high',
+        description: 'Token-transfer selectors and an owner were observed.',
+        evidence: {
+          tokenMovers: [{ name: 'unknown', selector: '0xa9059cbb' }],
+          eoaController: true,
+        },
+        confidence: 'LOW',
+        detectionSource: 'BYTECODE_SELECTOR',
+        impact: 'PRIVILEGED_TOKEN_MOVEMENT',
+        affectedComponent: 'token-movement',
+      },
+    ],
+  );
 });
 
 afterAll(async () => {
@@ -72,7 +94,11 @@ describe('public hook and recent events APIs', () => {
       deployments: Array<{
         hook: { address: string };
         pools: unknown[];
-        findings: unknown[];
+        findings: Array<{
+          guidance: string;
+          reviewQuestions: string[];
+          evidence: Record<string, unknown>;
+        }>;
         events: unknown[];
         monitoring: { snapshotCount: number };
         watched: boolean;
@@ -82,6 +108,10 @@ describe('public hook and recent events APIs', () => {
     expect(body.deployments[0]?.hook.address.toLowerCase()).toBe(HOOK.toLowerCase());
     expect(body.deployments[0]?.pools).toHaveLength(1);
     expect(body.deployments[0]?.watched).toBe(false);
+    const finding = body.deployments[0]?.findings[0];
+    expect(finding?.guidance).toMatch(/does not replace a professional smart-contract audit/i);
+    expect(finding?.reviewQuestions.length).toBeGreaterThan(0);
+    expect(Object.keys(finding?.evidence ?? {}).length).toBeGreaterThan(0);
     expect(JSON.stringify(body)).not.toMatch(/riskScore/);
   });
 

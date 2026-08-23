@@ -20,6 +20,9 @@ const required = [
   'docs/research/RISK_FINDINGS_SUMMARY.md',
   'docs/research/CASE_STUDIES.md',
   'docs/research/VALIDATION_REPORT.md',
+  'docs/research/SECURITY_PLAYBOOK.md',
+  'docs/research/DEVELOPER_GUIDANCE.md',
+  'docs/research/RISK_REVIEW_CHECKLIST.md',
   'reports/hookguard-security-landscape.md',
   'reports/hookguard-security-landscape.json',
   'docs/screenshots/homepage.jpg',
@@ -89,5 +92,36 @@ describe('launch documentation', () => {
     expect(report).not.toMatch(/riskScore/);
     expect(summary).toMatch(/not mean confirmed exploits/i);
     expect(summary).not.toMatch(/user funds were stolen/i);
+  });
+
+  it('ships a security playbook without exaggerated claims', () => {
+    const playbook = readFileSync(join(root, 'docs/research/SECURITY_PLAYBOOK.md'), 'utf8');
+    const developer = readFileSync(join(root, 'docs/research/DEVELOPER_GUIDANCE.md'), 'utf8');
+    const checklist = readFileSync(join(root, 'docs/research/RISK_REVIEW_CHECKLIST.md'), 'utf8');
+    for (const category of [
+      'FUND_SAFETY',
+      'SWAP_SECURITY',
+      'UPGRADE_SECURITY',
+      'ADMIN_CONTROL',
+      'ORACLE_SECURITY',
+      'EXTERNAL_EXECUTION',
+    ]) {
+      expect(playbook).toContain(category);
+      expect(playbook).toMatch(new RegExp(`${category}[\\s\\S]{0,400}What HookGuard detects`));
+    }
+    expect(playbook).toMatch(/does not replace a professional smart-contract audit/i);
+    expect(playbook).not.toMatch(/is malicious/i);
+    expect(playbook).not.toMatch(/funds were stolen/i);
+    expect(playbook).not.toMatch(/riskScore/);
+    expect(developer).toMatch(/Access control/);
+    expect(developer).toMatch(/Upgradeability/);
+    expect(developer).toMatch(/Swap callbacks/);
+    expect(developer).toMatch(/External calls/);
+    expect(developer).toMatch(/Oracle configuration/);
+    expect(developer).toMatch(/Privileged functions/);
+    expect(checklist).toMatch(/Integrators/);
+    expect(checklist).toMatch(/Liquidity providers/);
+    expect(checklist).toMatch(/Researchers/);
+    expect(checklist).toMatch(/Finding → Impact → Evidence → Recommended review/);
   });
 });

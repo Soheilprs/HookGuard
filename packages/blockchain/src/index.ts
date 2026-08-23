@@ -156,6 +156,17 @@ export type {
 } from './analysis/index.js';
 
 export {
+  GUIDANCE_DISCLAIMER,
+  PLAYBOOK,
+  assertGuidanceHasNoEmptyPlaybook,
+  findingGuidanceFor,
+  impactExplanationFor,
+  playbookForCategory,
+} from './guidance/index.js';
+
+export type { FindingGuidanceFields, PlaybookCategory } from './guidance/index.js';
+
+export {
   buildLandscapeReport,
   computeLandscapeMetrics,
   exportLandscapeJson,

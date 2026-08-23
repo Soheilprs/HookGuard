@@ -37,7 +37,7 @@ beforeAll(async () => {
   });
   await findings.replaceForHook(
     created.hook.id,
-    ['proxy-used'],
+    ['proxy-used', 'risk-upgradeable-swap-control'],
     [
       {
         hookId: created.hook.id,
@@ -49,6 +49,24 @@ beforeAll(async () => {
         evidence: { kind: 'transparent', implementationAddress: '0x2222' },
         confidence: 'HIGH',
         detectionSource: 'EIP1967_STORAGE',
+      },
+      {
+        hookId: created.hook.id,
+        ruleId: 'risk-upgradeable-swap-control',
+        title: 'Swap-path hook logic is upgradeable',
+        category: 'UPGRADE_SECURITY',
+        severity: 'critical',
+        description: 'A proxy, swap callback, and upgrade authority were observed together.',
+        evidence: {
+          proxy: true,
+          proxyKind: 'eip-1967',
+          swapCallbacks: ['beforeSwap'],
+          eoaUpgradeController: true,
+        },
+        confidence: 'HIGH',
+        detectionSource: 'EIP1967_STORAGE',
+        impact: 'SWAP_PATH_LOGIC_REPLACEABLE',
+        affectedComponent: 'hook-proxy',
       },
     ],
   );
@@ -77,10 +95,13 @@ describe('GET /hooks/:address/findings', () => {
           category: string;
           description: string;
           evidence: Record<string, unknown>;
+          guidance: string;
+          reviewQuestions: string[];
+          impactExplanation: string | null;
         }>;
       }>;
     };
-    const finding = body.deployments[0]?.findings[0];
+    const finding = body.deployments[0]?.findings.find((row) => row.ruleId === 'proxy-used');
     expect(finding?.ruleId).toBe('proxy-used');
     expect(finding?.title).toBe('Hook is deployed behind a proxy');
     expect(finding?.severity).toBe('info');
@@ -88,8 +109,21 @@ describe('GET /hooks/:address/findings', () => {
     expect(finding?.confidence).toBe('HIGH');
     expect(finding?.detectionSource).toBe('EIP1967_STORAGE');
     expect(finding?.validationStatus).toBe('UNREVIEWED');
+    expect(finding?.guidance).toMatch(/does not replace a professional smart-contract audit/i);
+    expect(finding?.reviewQuestions.length).toBeGreaterThan(0);
+    expect(Object.keys(finding?.evidence ?? {}).length).toBeGreaterThan(0);
+
+    const risk = body.deployments[0]?.findings.find(
+      (row) => row.ruleId === 'risk-upgradeable-swap-control',
+    );
+    expect(risk?.guidance).toMatch(/proxy/i);
+    expect(risk?.impactExplanation).toMatch(/replace swap-callback logic/i);
+    expect(risk?.reviewQuestions.length).toBeGreaterThan(0);
+    expect(risk?.evidence.proxy).toBe(true);
+
     expect(JSON.stringify(body)).not.toMatch(/riskScore/);
     expect(JSON.stringify(body)).not.toMatch(/validationNotes/);
+    expect(JSON.stringify(body)).not.toMatch(/is malicious/i);
   });
 
   it('returns 404 for an unknown hook', async () => {

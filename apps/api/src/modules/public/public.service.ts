@@ -3,11 +3,10 @@ import {
   getChainById,
   isSupportedChainId,
   normalizeAddress,
-  ruleTier,
 } from '@hookguard/blockchain';
+import { serializeFinding } from '../findings/serialize.js';
 import type {
   ContractIntelligence,
-  FindingItem,
   HookListItem,
   PoolListItem,
   PublicHookResponse,
@@ -17,7 +16,7 @@ import type {
 import { getAddress, isAddress } from 'viem';
 import type { ContractRecord, ContractRepository } from '../contracts/contract.repository.js';
 import { PrismaContractRepository } from '../contracts/contract.repository.js';
-import type { FindingRecord, FindingRepository } from '../findings/finding.repository.js';
+import type { FindingRepository } from '../findings/finding.repository.js';
 import { PrismaFindingRepository } from '../findings/finding.repository.js';
 import type { HookRecord, HookRepository, PoolRecord } from '../hooks/hook.repository.js';
 import { PrismaHookRepository } from '../hooks/hook.repository.js';
@@ -80,7 +79,7 @@ export class PublicHookService {
             hook: toHookItem(hook),
             pools: hook.pools.map(toPoolItem),
             contract: toIntelligence(contractRows[0] ?? null),
-            findings: findings.map(toFindingItem),
+            findings: findings.map(serializeFinding),
             events: events.map(toEventItem),
             monitoring: {
               snapshotCount,
@@ -196,24 +195,6 @@ function toIntelligence(row: ContractRecord | null): ContractIntelligence | null
       address: checksum(permission.address),
       source: permission.source,
     })),
-  };
-}
-
-function toFindingItem(row: FindingRecord): FindingItem {
-  return {
-    ruleId: row.ruleId,
-    title: row.title,
-    category: row.category,
-    severity: row.severity,
-    confidence: row.confidence,
-    detectionSource: row.detectionSource,
-    validationStatus: row.validationStatus,
-    ruleTier: ruleTier(row.ruleId),
-    impact: row.impact,
-    affectedComponent: row.affectedComponent,
-    description: row.description,
-    evidence: row.evidence,
-    createdAt: row.createdAt.toISOString(),
   };
 }
 

@@ -2,16 +2,15 @@ import {
   getChainById,
   isSupportedChainId,
   normalizeAddress,
-  ruleTier,
 } from '@hookguard/blockchain';
-import type { FindingItem, HookFindingsResponse, HookListItem } from '@hookguard/types';
+import type { HookFindingsResponse, HookListItem } from '@hookguard/types';
+import { serializeFinding } from './serialize.js';
 import { getAddress, isAddress } from 'viem';
 import type { HookRepository } from '../hooks/hook.repository.js';
 import { PrismaHookRepository } from '../hooks/hook.repository.js';
 import { prisma } from '../../lib/prisma.js';
 import {
   PrismaFindingRepository,
-  type FindingRecord,
   type FindingRepository,
 } from './finding.repository.js';
 
@@ -44,7 +43,7 @@ export class FindingService {
       deployments: await Promise.all(
         deployments.map(async (hook) => ({
           hook: toHookItem(hook),
-          findings: (await this.findings.listByHookId(hook.id)).map(toItem),
+          findings: (await this.findings.listByHookId(hook.id)).map(serializeFinding),
         })),
       ),
     };
@@ -99,20 +98,4 @@ function toHookItem(hook: {
   };
 }
 
-function toItem(row: FindingRecord): FindingItem {
-  return {
-    ruleId: row.ruleId,
-    title: row.title,
-    category: row.category,
-    severity: row.severity,
-    confidence: row.confidence,
-    detectionSource: row.detectionSource,
-    validationStatus: row.validationStatus,
-    ruleTier: ruleTier(row.ruleId),
-    impact: row.impact,
-    affectedComponent: row.affectedComponent,
-    description: row.description,
-    evidence: row.evidence,
-    createdAt: row.createdAt.toISOString(),
-  };
-}
+

@@ -1,6 +1,9 @@
 import type { FindingItem } from '@hookguard/types';
 import { ConfidenceBadge } from '@/components/confidence-badge';
 import { EvidenceViewer } from '@/components/evidence-viewer';
+import { ImpactExplanation } from '@/components/impact-explanation';
+import { ReviewChecklist } from '@/components/review-checklist';
+import { RiskGuidanceCard } from '@/components/risk-guidance-card';
 import { SeverityBadge } from '@/components/severity-badge';
 import { cn } from '@/lib/utils';
 
@@ -30,12 +33,6 @@ export function FindingCard({ finding }: { finding: FindingItem }) {
       <p className="mt-1 text-sm text-muted-foreground">{finding.description}</p>
       <p className="mt-2 text-xs text-muted-foreground">
         Evidence source: <span className="font-mono">{finding.detectionSource}</span>
-        {finding.impact ? (
-          <>
-            {' · '}
-            impact <span className="font-mono">{finding.impact}</span>
-          </>
-        ) : null}
         {finding.affectedComponent ? (
           <>
             {' · '}
@@ -43,7 +40,10 @@ export function FindingCard({ finding }: { finding: FindingItem }) {
           </>
         ) : null}
       </p>
+      <ImpactExplanation impact={finding.impact} explanation={finding.impactExplanation} />
       <EvidenceViewer evidence={finding.evidence} />
+      <RiskGuidanceCard guidance={finding.guidance} category={finding.category} />
+      <ReviewChecklist questions={finding.reviewQuestions} />
     </article>
   );
 }

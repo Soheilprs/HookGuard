@@ -76,5 +76,8 @@ export interface Finding {
   affectedComponent: string | null;
   description: string;
   evidence: FindingEvidence;
+  /** Playbook text derived at read time. Not a stored score. */
+  guidance?: string | null;
+  reviewQuestions?: string[];
   createdAt: Date;
 }

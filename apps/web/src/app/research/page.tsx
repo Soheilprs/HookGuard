@@ -178,7 +178,13 @@ export default async function ResearchPage() {
           <p>
             Written research package:{' '}
             <span className="font-mono">docs/research/</span> (security report, findings
-            summary, case studies, validation).
+            summary, case studies, validation, playbook, developer guidance, review
+            checklist).
+          </p>
+          <p>
+            Findings render as Finding → Impact → Evidence → Recommended review.
+            Guidance is derived from category and impact. It is not a score and not
+            a new detector.
           </p>
           {report ? (
             <p className="text-xs">Last live aggregation: {report.generatedAt}</p>
