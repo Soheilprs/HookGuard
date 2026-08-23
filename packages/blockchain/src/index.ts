@@ -169,6 +169,15 @@ export type { FindingGuidanceFields, PlaybookCategory } from './guidance/index.j
 export { analyzerRules, ANALYZER_RULE_IDS, parseSolidityFunctions } from './analyzer/index.js';
 
 export {
+  analyzeHookBytecode,
+  bytecodeAnalysisRules,
+  BYTECODE_CFG,
+  BYTECODE_CFG_RULE_IDS,
+  disassemble,
+  recoverFunctionCandidates,
+} from './bytecode-analysis/index.js';
+
+export {
   buildLandscapeReport,
   computeLandscapeMetrics,
   exportLandscapeJson,
@@ -183,6 +192,11 @@ export {
   exportAnalysisResearchMarkdown,
   evidenceFileName,
   exportEvidenceMarkdown,
+  BYTECODE_CFG_DETECTORS,
+  buildBytecodeResearchReport,
+  annotateBytecodeFinding,
+  exportBytecodeResearchJson,
+  exportBytecodeResearchMarkdown,
 } from './reporting/index.js';
 
 export type {
@@ -194,4 +208,6 @@ export type {
   AnalysisResearchCorpus,
   AnalysisResearchFindingInput,
   AnalysisResearchReport,
+  BytecodeResearchCorpus,
+  BytecodeResearchReport,
 } from './reporting/index.js';

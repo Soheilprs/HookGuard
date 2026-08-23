@@ -33,6 +33,7 @@ const components = [
   'src/components/security-event-card.tsx',
   'src/components/finding-card.tsx',
   'src/components/code-evidence.tsx',
+  'src/components/execution-evidence.tsx',
   'src/components/risk-guidance-card.tsx',
   'src/components/impact-explanation.tsx',
   'src/components/review-checklist.tsx',
@@ -88,6 +89,7 @@ describe('frontend foundation', () => {
     expect(findingCard).toMatch(/ImpactExplanation/);
     expect(findingCard).toMatch(/EvidenceViewer/);
     expect(findingCard).toMatch(/CodeEvidence/);
+    expect(findingCard).toMatch(/ExecutionEvidence/);
     expect(findingCard).toMatch(/RiskGuidanceCard/);
     expect(findingCard).toMatch(/ReviewChecklist/);
     expect(confidence).toMatch(/LOW CONFIDENCE/);

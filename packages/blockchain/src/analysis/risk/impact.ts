@@ -13,6 +13,10 @@ export const RISK_IMPACTS: readonly RiskImpact[] = [
   'DELEGATECALL_IN_CALLBACK',
   'CUSTOM_ACCOUNTING_UNVALIDATED',
   'HOOK_PERMISSION_MISMATCH',
+  'CALLBACK_DELEGATE_REACHABLE',
+  'CALLBACK_CALL_REACHABLE',
+  'CALLBACK_STATE_MUTATION',
+  'CALLBACK_CALL_BEFORE_STATE',
 ] as const;
 
 export const IMPACT_LABELS: Record<RiskImpact, string> = {
@@ -40,6 +44,14 @@ export const IMPACT_LABELS: Record<RiskImpact, string> = {
     'Swap-path custom accounting (BeforeSwapDelta/AfterSwapDelta or hookData-derived delta) lacks an observed validation.',
   HOOK_PERMISSION_MISMATCH:
     'Hook-address permission bits do not match implemented Uniswap v4 callbacks.',
+  CALLBACK_DELEGATE_REACHABLE:
+    'Hook lifecycle execution can delegate behavior to another contract along a recovered control-flow path.',
+  CALLBACK_CALL_REACHABLE:
+    'Hook lifecycle execution can reach an external CALL along a recovered control-flow path.',
+  CALLBACK_STATE_MUTATION:
+    'Hook callback modifies contract state during lifecycle execution (SSTORE reachable).',
+  CALLBACK_CALL_BEFORE_STATE:
+    'External execution occurs before a detected state update on a recovered callback path.',
 };
 
 export function impactSeverity(
@@ -70,6 +82,14 @@ export function impactSeverity(
       return 'medium';
     case 'HOOK_PERMISSION_MISMATCH':
       return 'low';
+    case 'CALLBACK_DELEGATE_REACHABLE':
+      return 'medium';
+    case 'CALLBACK_CALL_REACHABLE':
+      return 'low';
+    case 'CALLBACK_STATE_MUTATION':
+      return 'low';
+    case 'CALLBACK_CALL_BEFORE_STATE':
+      return 'medium';
     default:
       return 'info';
   }

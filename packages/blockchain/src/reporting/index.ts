@@ -35,3 +35,15 @@ export {
 export { exportAnalysisResearchJson } from './exporters/analysis-json.js';
 export { exportAnalysisResearchMarkdown } from './exporters/analysis-markdown.js';
 export { evidenceFileName, exportEvidenceMarkdown } from './exporters/evidence-markdown.js';
+export {
+  BYTECODE_CFG_DETECTORS,
+  BYTECODE_RESEARCH_DISCLAIMER,
+  annotateBytecodeFinding,
+  buildBytecodeResearchReport,
+  type BytecodeResearchCorpus,
+  type BytecodeResearchReport,
+} from './bytecode-research.js';
+export {
+  exportBytecodeResearchJson,
+  exportBytecodeResearchMarkdown,
+} from './exporters/bytecode-markdown.js';

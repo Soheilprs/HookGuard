@@ -1,5 +1,6 @@
 import type { FindingItem } from '@hookguard/types';
 import { CodeEvidence } from '@/components/code-evidence';
+import { ExecutionEvidence } from '@/components/execution-evidence';
 import { ConfidenceBadge } from '@/components/confidence-badge';
 import { EvidenceViewer } from '@/components/evidence-viewer';
 import { ImpactExplanation } from '@/components/impact-explanation';
@@ -43,12 +44,19 @@ export function FindingCard({ finding }: { finding: FindingItem }) {
       </p>
       <ImpactExplanation impact={finding.impact} explanation={finding.impactExplanation} />
       <EvidenceViewer evidence={evidenceWithoutCode(finding.evidence)} />
-      <CodeEvidence
-        functionName={finding.functionName}
-        sourceLocation={finding.sourceLocation}
-        codeSnippet={finding.codeSnippet}
+      <ExecutionEvidence
+        evidence={finding.evidence}
         analysisType={finding.analysisType}
+        confidence={finding.confidence}
       />
+      {finding.analysisType === 'BYTECODE_CFG' ? null : (
+        <CodeEvidence
+          functionName={finding.functionName}
+          sourceLocation={finding.sourceLocation}
+          codeSnippet={finding.codeSnippet}
+          analysisType={finding.analysisType}
+        />
+      )}
       <RiskGuidanceCard guidance={finding.guidance} category={finding.category} />
       <ReviewChecklist questions={finding.reviewQuestions} />
     </article>

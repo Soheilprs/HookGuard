@@ -176,7 +176,9 @@ export default async function ResearchPage() {
             <span className="font-mono">.json</span>. Analyzer corpus research:{' '}
             <span className="font-mono">npm run analyze:hooks:research</span> writes{' '}
             <span className="font-mono">reports/hookguard-security-analysis-results.md</span> and{' '}
-            <span className="font-mono">reports/evidence/</span>.
+            <span className="font-mono">reports/evidence/</span>. Bytecode CFG:{' '}
+            <span className="font-mono">npm run analyze:bytecode</span> writes{' '}
+            <span className="font-mono">reports/bytecode-analysis-results.md</span>.
           </p>
           <p>
             Written research package:{' '}

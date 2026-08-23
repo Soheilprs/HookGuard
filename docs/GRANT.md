@@ -89,6 +89,7 @@ From the Phase 2C run against **real** PoolManager logs. [VALIDATION.md](./VALID
 | 6.5C | Security playbook, developer guidance, review checklist (no new rules) |
 | 7A | Hook-specific source analyzer (reentrancy window, unguarded setters, delegatecall in callbacks, custom accounting, permission mismatch) |
 | 7B | Real-world corpus analysis + evidence package (no invented exploits) |
+| 7C | Bytecode CFG: callback-reachable DELEGATECALL/CALL/SSTORE (under-approximate) |
 
 ## Future roadmap (not built)
 
@@ -117,8 +118,11 @@ Grant-facing research package (same corpus, no invented metrics):
 - [Risk review checklist](./research/RISK_REVIEW_CHECKLIST.md)
 - [Hook security analysis](./research/HOOK_SECURITY_ANALYSIS.md)
 - [Real-world analysis](./research/REAL_WORLD_HOOK_ANALYSIS.md)
+- [Bytecode intelligence](./research/BYTECODE_INTELLIGENCE_REPORT.md)
 
 Phase 7B corpus run: 880 hooks analyzed, **0** verified source, **409** bytecode `DANGEROUS_DELEGATECALL` review signals (LOW; not callback-bound). Source-gated detectors emitted 0 rather than inventing bindings.
+
+Phase 7C CFG: same 409 opcode-level DELEGATECALL hooks; **0** callback-reachable DELEGATECALL with resolved jumps; **39** callback-reachable CALL; **177** callback-reachable SSTORE (not a vulnerability); **10** call-before-SSTORE review signals.
 - Generated snapshot: [`reports/hookguard-security-landscape.md`](../reports/hookguard-security-landscape.md) (`npm run report:risk`)
 
 After the risk-correlation layer, the same 880 hooks produced **5,066** findings (Phase 2C observation-only total was 4,232). Unique-hook risk categories in that snapshot: `FUND_SAFETY` 17, `UPGRADE_SECURITY` 2, `EXTERNAL_EXECUTION` 815, `SWAP_SECURITY` / `ORACLE_SECURITY` / `ADMIN_CONTROL` / `PERMISSION_SECURITY` 0.

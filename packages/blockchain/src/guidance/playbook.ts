@@ -303,6 +303,42 @@ const ANALYZER_GUIDANCE: Record<string, { guidance: string; reviewQuestions: str
       'Can a swap caller influence token accounting?',
     ],
   },
+  CALLBACK_REACHABLE_DELEGATECALL: {
+    guidance:
+      'CFG analysis found DELEGATECALL reachable from a recovered hook callback entry. Jump targets that cannot be resolved are not followed. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'Is the recovered entry the real beforeSwap/afterSwap dispatcher dest?',
+      'Who controls the delegatecall target?',
+      'Would verified source show the opcode is not on the callback path?',
+    ],
+  },
+  CALLBACK_EXTERNAL_CALL: {
+    guidance:
+      'CFG analysis found CALL reachable from a recovered hook callback entry. This is a security-relevant execution pattern requiring review. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'Which callback entry reaches CALL?',
+      'Is the target a constant router or caller-controlled?',
+      'Does verified source bind this CALL to the callback body?',
+    ],
+  },
+  CALLBACK_STORAGE_MUTATION: {
+    guidance:
+      'CFG analysis found SSTORE reachable from a hook callback. Lifecycle execution may update storage. That is not by itself a vulnerability. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'What slot is written on the callback path?',
+      'Does a later swap observe that storage?',
+      'Is the write a normal fee/config cache?',
+    ],
+  },
+  CALLBACK_EXTERNAL_CALL_BEFORE_STORAGE_UPDATE: {
+    guidance:
+      'On a recovered callback path, an external call appears before a later SSTORE. Ordering is CFG-based, not a full interpreter. This is not a confirmed reentrancy issue. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'Is the CALL actually before the SSTORE on every path?',
+      'Can the callee re-enter the hook?',
+      'Does verified source show CEI instead?',
+    ],
+  },
   HOOK_PERMISSION_MISMATCH: {
     guidance:
       'Hook-address permission bits do not match implemented callbacks. Extra unflagged functions are not called by PoolManager. HookGuard does not replace a professional smart-contract audit.',

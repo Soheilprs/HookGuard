@@ -144,6 +144,7 @@ Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [doc
 | `npm run validate:apply` | Apply `data/validation/dataset.json` reviews |
 | `npm run report:risk` | Generate landscape JSON + Markdown from the database |
 | `npm run analyze:hooks:research` | Re-analyze the real corpus and write analyzer evidence reports |
+| `npm run analyze:bytecode` | CFG reachability on stored bytecode; write bytecode-analysis-results |
 
 ## Documentation
 
@@ -160,6 +161,7 @@ Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [doc
 - [Risk review checklist](docs/research/RISK_REVIEW_CHECKLIST.md)
 - [Hook security analysis](docs/research/HOOK_SECURITY_ANALYSIS.md)
 - [Real-world analysis](docs/research/REAL_WORLD_HOOK_ANALYSIS.md)
+- [Bytecode intelligence](docs/research/BYTECODE_INTELLIGENCE_REPORT.md)
 - [Deployment](docs/DEPLOYMENT.md)
 - [Operator runbook](docs/OPERATOR.md)
 - [Demo walkthrough](docs/DEMO.md)
@@ -169,7 +171,7 @@ Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [doc
 
 ## Status
 
-**Phase 7B — real-world analyzer research.** Product phases 0–7A are implemented. Numerical risk scoring is not.
+**Phase 7C — bytecode CFG intelligence.** Product phases 0–7B are implemented. Numerical risk scoring is not.
 
 ## License
 

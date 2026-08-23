@@ -24,6 +24,9 @@ const required = [
   'docs/research/DEVELOPER_GUIDANCE.md',
   'docs/research/RISK_REVIEW_CHECKLIST.md',
   'docs/research/HOOK_SECURITY_ANALYSIS.md',
+  'docs/research/BYTECODE_INTELLIGENCE_REPORT.md',
+  'reports/bytecode-analysis-results.md',
+  'reports/bytecode-analysis-results.json',
   'docs/research/REAL_WORLD_HOOK_ANALYSIS.md',
   'reports/hookguard-security-analysis-results.md',
   'reports/hookguard-security-analysis-results.json',
@@ -136,6 +139,17 @@ describe('launch documentation', () => {
     expect(analysis).toMatch(/HOOK_PERMISSION_MISMATCH/);
     expect(analysis).toMatch(/does not replace a professional smart-contract audit/i);
     expect(analysis).toMatch(/not a generic Solidity scanner/i);
+    const bytecodeIntel = readFileSync(
+      join(root, 'docs/research/BYTECODE_INTELLIGENCE_REPORT.md'),
+      'utf8',
+    );
+    const bytecodeResults = readFileSync(
+      join(root, 'reports/bytecode-analysis-results.md'),
+      'utf8',
+    );
+    expect(bytecodeIntel).toMatch(/409/);
+    expect(bytecodeResults).toMatch(/CALLBACK_REACHABLE_DELEGATECALL/);
+    expect(bytecodeResults).toMatch(/not confirmed exploits/);
     const real = readFileSync(join(root, 'docs/research/REAL_WORLD_HOOK_ANALYSIS.md'), 'utf8');
     const results = readFileSync(
       join(root, 'reports/hookguard-security-analysis-results.md'),
