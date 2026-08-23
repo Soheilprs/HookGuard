@@ -80,6 +80,10 @@ const requiredModels: Record<string, string[]> = {
     'validationNotes',
     'impact',
     'affectedComponent',
+    'sourceLocation',
+    'functionName',
+    'codeSnippet',
+    'analysisType',
     'createdAt',
   ],
   IndexerCheckpoint: [

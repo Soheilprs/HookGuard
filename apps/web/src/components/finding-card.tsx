@@ -1,4 +1,5 @@
 import type { FindingItem } from '@hookguard/types';
+import { CodeEvidence } from '@/components/code-evidence';
 import { ConfidenceBadge } from '@/components/confidence-badge';
 import { EvidenceViewer } from '@/components/evidence-viewer';
 import { ImpactExplanation } from '@/components/impact-explanation';
@@ -41,9 +42,28 @@ export function FindingCard({ finding }: { finding: FindingItem }) {
         ) : null}
       </p>
       <ImpactExplanation impact={finding.impact} explanation={finding.impactExplanation} />
-      <EvidenceViewer evidence={finding.evidence} />
+      <EvidenceViewer evidence={evidenceWithoutCode(finding.evidence)} />
+      <CodeEvidence
+        functionName={finding.functionName}
+        sourceLocation={finding.sourceLocation}
+        codeSnippet={finding.codeSnippet}
+        analysisType={finding.analysisType}
+      />
       <RiskGuidanceCard guidance={finding.guidance} category={finding.category} />
       <ReviewChecklist questions={finding.reviewQuestions} />
     </article>
+  );
+}
+
+const CODE_EVIDENCE_KEYS = new Set([
+  'functionName',
+  'sourceLocation',
+  'codeSnippet',
+  'analysisType',
+]);
+
+function evidenceWithoutCode(evidence: Record<string, unknown>): Record<string, unknown> {
+  return Object.fromEntries(
+    Object.entries(evidence).filter(([key]) => !CODE_EVIDENCE_KEYS.has(key)),
   );
 }

@@ -157,6 +157,7 @@ Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [doc
 - [Security playbook](docs/research/SECURITY_PLAYBOOK.md)
 - [Developer guidance](docs/research/DEVELOPER_GUIDANCE.md)
 - [Risk review checklist](docs/research/RISK_REVIEW_CHECKLIST.md)
+- [Hook security analysis](docs/research/HOOK_SECURITY_ANALYSIS.md)
 - [Deployment](docs/DEPLOYMENT.md)
 - [Operator runbook](docs/OPERATOR.md)
 - [Demo walkthrough](docs/DEMO.md)
@@ -166,7 +167,7 @@ Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [doc
 
 ## Status
 
-**Phase 6.5C — security intelligence playbook.** Product phases 0–6.5B are implemented. Numerical risk scoring is not.
+**Phase 7A — hook security analyzer.** Product phases 0–6.5C are implemented. Numerical risk scoring is not.
 
 ## License
 

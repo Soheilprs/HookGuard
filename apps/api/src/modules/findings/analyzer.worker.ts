@@ -110,6 +110,10 @@ export async function runHookAnalysis(options: AnalyzeOptions): Promise<AnalyzeR
         detectionSource: finding.detectionSource,
         impact: finding.impact ?? null,
         affectedComponent: finding.affectedComponent ?? null,
+        functionName: finding.functionName ?? null,
+        sourceLocation: finding.sourceLocation ?? null,
+        codeSnippet: finding.codeSnippet ?? null,
+        analysisType: finding.analysisType ?? null,
       })),
     );
     result.analyzed += 1;

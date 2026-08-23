@@ -23,6 +23,7 @@ const required = [
   'docs/research/SECURITY_PLAYBOOK.md',
   'docs/research/DEVELOPER_GUIDANCE.md',
   'docs/research/RISK_REVIEW_CHECKLIST.md',
+  'docs/research/HOOK_SECURITY_ANALYSIS.md',
   'reports/hookguard-security-landscape.md',
   'reports/hookguard-security-landscape.json',
   'docs/screenshots/homepage.jpg',
@@ -123,5 +124,14 @@ describe('launch documentation', () => {
     expect(checklist).toMatch(/Liquidity providers/);
     expect(checklist).toMatch(/Researchers/);
     expect(checklist).toMatch(/Finding → Impact → Evidence → Recommended review/);
+    const analysis = readFileSync(join(root, 'docs/research/HOOK_SECURITY_ANALYSIS.md'), 'utf8');
+    expect(analysis).toMatch(/CALLBACK_REENTRANCY_RISK/);
+    expect(analysis).toMatch(/MISSING_ACCESS_CONTROL/);
+    expect(analysis).toMatch(/UNRESTRICTED_EXTERNAL_EXECUTION/);
+    expect(analysis).toMatch(/DANGEROUS_DELEGATECALL/);
+    expect(analysis).toMatch(/CUSTOM_ACCOUNTING_REVIEW/);
+    expect(analysis).toMatch(/HOOK_PERMISSION_MISMATCH/);
+    expect(analysis).toMatch(/does not replace a professional smart-contract audit/i);
+    expect(analysis).toMatch(/not a generic Solidity scanner/i);
   });
 });

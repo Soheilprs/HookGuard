@@ -87,6 +87,7 @@ From the Phase 2C run against **real** PoolManager logs. [VALIDATION.md](./VALID
 | 6.5A | Risk taxonomy and AND-correlated capability findings (no scores) |
 | 6.5B | Landscape report CLI, `docs/research/`, `/research` UI |
 | 6.5C | Security playbook, developer guidance, review checklist (no new rules) |
+| 7A | Hook-specific source analyzer (reentrancy window, unguarded setters, delegatecall in callbacks, custom accounting, permission mismatch) |
 
 ## Future roadmap (not built)
 
@@ -113,6 +114,7 @@ Grant-facing research package (same corpus, no invented metrics):
 - [Security playbook](./research/SECURITY_PLAYBOOK.md)
 - [Developer guidance](./research/DEVELOPER_GUIDANCE.md)
 - [Risk review checklist](./research/RISK_REVIEW_CHECKLIST.md)
+- [Hook security analysis](./research/HOOK_SECURITY_ANALYSIS.md)
 - Generated snapshot: [`reports/hookguard-security-landscape.md`](../reports/hookguard-security-landscape.md) (`npm run report:risk`)
 
 After the risk-correlation layer, the same 880 hooks produced **5,066** findings (Phase 2C observation-only total was 4,232). Unique-hook risk categories in that snapshot: `FUND_SAFETY` 17, `UPGRADE_SECURITY` 2, `EXTERNAL_EXECUTION` 815, `SWAP_SECURITY` / `ORACLE_SECURITY` / `ADMIN_CONTROL` / `PERMISSION_SECURITY` 0.

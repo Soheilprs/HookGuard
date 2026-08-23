@@ -166,6 +166,8 @@ export {
 
 export type { FindingGuidanceFields, PlaybookCategory } from './guidance/index.js';
 
+export { analyzerRules, ANALYZER_RULE_IDS, parseSolidityFunctions } from './analyzer/index.js';
+
 export {
   buildLandscapeReport,
   computeLandscapeMetrics,

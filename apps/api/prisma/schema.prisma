@@ -132,6 +132,10 @@ model Finding {
   affectedComponent   String?
   description         String    @db.Text
   evidence            Json
+  sourceLocation      String?
+  functionName        String?
+  codeSnippet         String?   @db.Text
+  analysisType        String?
   createdAt           DateTime  @default(now())
 
   hook Hook @relation(fields: [hookId], references: [id], onDelete: Cascade)

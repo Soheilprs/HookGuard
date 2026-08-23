@@ -7,6 +7,12 @@ export const RISK_IMPACTS: readonly RiskImpact[] = [
   'PRIVILEGED_ORACLE_CHANGE',
   'CALLBACK_EXTERNAL_CALL',
   'PRIVILEGED_CONFIGURATION',
+  'CALLBACK_REENTRANCY_WINDOW',
+  'UNGUARDED_SENSITIVE_FUNCTION',
+  'UNRESTRICTED_CALLBACK_TARGET',
+  'DELEGATECALL_IN_CALLBACK',
+  'CUSTOM_ACCOUNTING_UNVALIDATED',
+  'HOOK_PERMISSION_MISMATCH',
 ] as const;
 
 export const IMPACT_LABELS: Record<RiskImpact, string> = {
@@ -22,6 +28,18 @@ export const IMPACT_LABELS: Record<RiskImpact, string> = {
     'External CALL/DELEGATECALL exists in the same contract that implements hook callbacks.',
   PRIVILEGED_CONFIGURATION:
     'A privileged account can change hook configuration (pause, ownership, hook address).',
+  CALLBACK_REENTRANCY_WINDOW:
+    'A hook callback may call out before a later state update, which is a reentrancy-window review signal.',
+  UNGUARDED_SENSITIVE_FUNCTION:
+    'A sensitive hook function (fee, oracle, hook, withdraw, upgrade, pause) has no observed access-control check.',
+  UNRESTRICTED_CALLBACK_TARGET:
+    'A hook callback performs an external call to a parameter or other unrestricted target.',
+  DELEGATECALL_IN_CALLBACK:
+    'delegatecall is present in a hook lifecycle function (or on a hook with those callbacks, bytecode-only).',
+  CUSTOM_ACCOUNTING_UNVALIDATED:
+    'Swap-path custom accounting (BeforeSwapDelta/AfterSwapDelta or hookData-derived delta) lacks an observed validation.',
+  HOOK_PERMISSION_MISMATCH:
+    'Hook-address permission bits do not match implemented Uniswap v4 callbacks.',
 };
 
 export function impactSeverity(
@@ -40,6 +58,18 @@ export function impactSeverity(
       return 'low';
     case 'PRIVILEGED_CONFIGURATION':
       return eoaController ? 'medium' : 'low';
+    case 'CALLBACK_REENTRANCY_WINDOW':
+      return 'medium';
+    case 'UNGUARDED_SENSITIVE_FUNCTION':
+      return 'high';
+    case 'UNRESTRICTED_CALLBACK_TARGET':
+      return 'medium';
+    case 'DELEGATECALL_IN_CALLBACK':
+      return 'high';
+    case 'CUSTOM_ACCOUNTING_UNVALIDATED':
+      return 'medium';
+    case 'HOOK_PERMISSION_MISMATCH':
+      return 'low';
     default:
       return 'info';
   }

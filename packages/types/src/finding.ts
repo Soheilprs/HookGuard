@@ -35,7 +35,13 @@ export type RiskImpact =
   | 'PRIVILEGED_FEE_CHANGE'
   | 'PRIVILEGED_ORACLE_CHANGE'
   | 'CALLBACK_EXTERNAL_CALL'
-  | 'PRIVILEGED_CONFIGURATION';
+  | 'PRIVILEGED_CONFIGURATION'
+  | 'CALLBACK_REENTRANCY_WINDOW'
+  | 'UNGUARDED_SENSITIVE_FUNCTION'
+  | 'UNRESTRICTED_CALLBACK_TARGET'
+  | 'DELEGATECALL_IN_CALLBACK'
+  | 'CUSTOM_ACCOUNTING_UNVALIDATED'
+  | 'HOOK_PERMISSION_MISMATCH';
 
 export type FindingCategory =
   | RiskCategory
@@ -79,5 +85,9 @@ export interface Finding {
   /** Playbook text derived at read time. Not a stored score. */
   guidance?: string | null;
   reviewQuestions?: string[];
+  functionName?: string | null;
+  sourceLocation?: string | null;
+  codeSnippet?: string | null;
+  analysisType?: string | null;
   createdAt: Date;
 }

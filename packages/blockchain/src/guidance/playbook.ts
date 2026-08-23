@@ -226,8 +226,10 @@ const OBSERVATION_CATEGORY_TO_PLAYBOOK: Record<string, RiskCategory> = {
   'external-calls': 'EXTERNAL_EXECUTION',
   oracle: 'ORACLE_SECURITY',
   'fee-collection': 'SWAP_SECURITY',
-  permissions: 'ADMIN_CONTROL',
+  permissions: 'PERMISSION_SECURITY',
   'hook-lifecycle': 'SWAP_SECURITY',
+  reentrancy: 'EXTERNAL_EXECUTION',
+  'delta-accounting': 'SWAP_SECURITY',
 };
 
 const GENERIC_GUIDANCE =
@@ -255,15 +257,73 @@ export function impactExplanationFor(impact: string | null | undefined): string 
   return `Recorded impact: ${impact}. ${GUIDANCE_DISCLAIMER}`;
 }
 
+const ANALYZER_GUIDANCE: Record<string, { guidance: string; reviewQuestions: string[] }> = {
+  CALLBACK_REENTRANCY_RISK: {
+    guidance:
+      'A listed hook callback contains an external CALL and a later state update. Review CEI ordering. This is not a confirmed issue. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'Is the external call inside beforeSwap/afterSwap or a liquidity callback?',
+      'Does a state write occur after that call?',
+      'Would a reentrant caller observe stale hook storage?',
+    ],
+  },
+  MISSING_ACCESS_CONTROL: {
+    guidance:
+      'A sensitive hook function (setFee, setOracle, setHook, withdraw, rescueTokens, upgradeTo, pause) has no observed onlyOwner, role, or msg.sender check. Confirm who can call it. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'Which sensitive functions lack a guard in source?',
+      'Is there a modifier the parser missed (custom name)?',
+      'Should this function be onlyOwner, a role, or removed?',
+    ],
+  },
+  UNRESTRICTED_EXTERNAL_EXECUTION: {
+    guidance:
+      'A hook callback calls a target that is a parameter or similarly unrestricted. A constant router is not this finding. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'Is the call target `sender`, hookData-decoded, or another parameter?',
+      'Would a swap caller control that address?',
+      'Is the target a constant/immutable instead?',
+    ],
+  },
+  DANGEROUS_DELEGATECALL: {
+    guidance:
+      'delegatecall in a hook lifecycle function runs arbitrary code against hook storage. Bytecode-only hits are not proven to sit in the callback. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'Is delegatecall source-bound to a listed callback?',
+      'Who controls the target?',
+      'If this is bytecode-only, can verified source rule it out?',
+    ],
+  },
+  CUSTOM_ACCOUNTING_REVIEW: {
+    guidance:
+      'Swap-path custom accounting appears to use hookData or another unvalidated input. Custom accounting is a Uniswap v4 feature; this is a review signal. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'Is BeforeSwapDelta/AfterSwapDelta derived from hookData?',
+      'Is the delta bounded or zero when unused?',
+      'Can a swap caller influence token accounting?',
+    ],
+  },
+  HOOK_PERMISSION_MISMATCH: {
+    guidance:
+      'Hook-address permission bits do not match implemented callbacks. Extra unflagged functions are not called by PoolManager. HookGuard does not replace a professional smart-contract audit.',
+    reviewQuestions: [
+      'Which flags are set vs which callbacks exist in source?',
+      'Is an extra callback intentionally unimplemented at the flag layer?',
+      'Is a flagged callback missing from this implementation?',
+    ],
+  },
+};
+
 export function findingGuidanceFor(input: {
   category: string;
   impact?: string | null;
   ruleId?: string;
 }): FindingGuidanceFields {
+  const analyzer = input.ruleId ? ANALYZER_GUIDANCE[input.ruleId] : undefined;
   const entry = playbookForCategory(input.category);
   return {
-    guidance: entry?.guidance ?? GENERIC_GUIDANCE,
-    reviewQuestions: entry?.reviewQuestions ?? GENERIC_QUESTIONS,
+    guidance: analyzer?.guidance ?? entry?.guidance ?? GENERIC_GUIDANCE,
+    reviewQuestions: analyzer?.reviewQuestions ?? entry?.reviewQuestions ?? GENERIC_QUESTIONS,
     impactExplanation: impactExplanationFor(input.impact),
   };
 }

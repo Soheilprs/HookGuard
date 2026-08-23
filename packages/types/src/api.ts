@@ -122,6 +122,10 @@ export interface FindingItem {
   guidance: string;
   reviewQuestions: string[];
   impactExplanation: string | null;
+  functionName: string | null;
+  sourceLocation: string | null;
+  codeSnippet: string | null;
+  analysisType: string | null;
   createdAt: string;
 }
 

@@ -57,6 +57,10 @@ export interface EngineFinding {
   ruleTier: RuleTier;
   impact?: string | null;
   affectedComponent?: string | null;
+  functionName?: string | null;
+  sourceLocation?: string | null;
+  codeSnippet?: string | null;
+  analysisType?: string | null;
   description: string;
   evidence: Record<string, unknown>;
 }

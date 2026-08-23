@@ -17,6 +17,10 @@ export interface FindingRecord {
   affectedComponent: string | null;
   description: string;
   evidence: Record<string, unknown>;
+  sourceLocation: string | null;
+  functionName: string | null;
+  codeSnippet: string | null;
+  analysisType: string | null;
   createdAt: Date;
 }
 
@@ -32,6 +36,10 @@ export interface SaveFindingInput {
   affectedComponent?: string | null;
   description: string;
   evidence: Record<string, unknown>;
+  sourceLocation?: string | null;
+  functionName?: string | null;
+  codeSnippet?: string | null;
+  analysisType?: string | null;
 }
 
 export interface FindingReviewInput {
@@ -92,6 +100,10 @@ export class InMemoryFindingRepository implements FindingRepository {
         affectedComponent: input.affectedComponent ?? null,
         description: input.description,
         evidence: input.evidence,
+        sourceLocation: input.sourceLocation ?? null,
+        functionName: input.functionName ?? null,
+        codeSnippet: input.codeSnippet ?? null,
+        analysisType: input.analysisType ?? null,
         createdAt: existing?.createdAt ?? new Date(),
       };
       this.findings.set(mapKey, record);
@@ -153,6 +165,10 @@ export class PrismaFindingRepository implements FindingRepository {
             affectedComponent: input.affectedComponent ?? null,
             description: input.description,
             evidence: input.evidence as Prisma.InputJsonValue,
+            sourceLocation: input.sourceLocation ?? null,
+            functionName: input.functionName ?? null,
+            codeSnippet: input.codeSnippet ?? null,
+            analysisType: input.analysisType ?? null,
           },
           update: {
             title: input.title,
@@ -164,6 +180,10 @@ export class PrismaFindingRepository implements FindingRepository {
             affectedComponent: input.affectedComponent ?? null,
             description: input.description,
             evidence: input.evidence as Prisma.InputJsonValue,
+            sourceLocation: input.sourceLocation ?? null,
+            functionName: input.functionName ?? null,
+            codeSnippet: input.codeSnippet ?? null,
+            analysisType: input.analysisType ?? null,
           },
         });
         saved.push(toRecord(row));
@@ -212,6 +232,10 @@ function toRecord(row: {
   affectedComponent: string | null;
   description: string;
   evidence: unknown;
+  sourceLocation: string | null;
+  functionName: string | null;
+  codeSnippet: string | null;
+  analysisType: string | null;
   createdAt: Date;
 }): FindingRecord {
   return {

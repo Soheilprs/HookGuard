@@ -23,6 +23,12 @@ export const RULE_TIERS: Record<string, RuleTier> = {
   'risk-privileged-oracle-modification': 2,
   'risk-privileged-admin-control': 2,
   'risk-callback-external-execution': 3,
+  CALLBACK_REENTRANCY_RISK: 2,
+  MISSING_ACCESS_CONTROL: 2,
+  UNRESTRICTED_EXTERNAL_EXECUTION: 2,
+  DANGEROUS_DELEGATECALL: 2,
+  CUSTOM_ACCOUNTING_REVIEW: 2,
+  HOOK_PERMISSION_MISMATCH: 2,
 };
 
 export function ruleTier(ruleId: string, fallback: RuleTier = 3): RuleTier {
