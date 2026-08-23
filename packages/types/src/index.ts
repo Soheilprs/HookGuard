@@ -39,3 +39,19 @@ export type {
   HookEventsResponse,
   HookMonitoringResponse,
 } from './api.js';
+export {
+  DEFAULT_ALERT_EVENT_TYPES,
+} from './alerts.js';
+export type {
+  AlertDeliveryItem,
+  AlertDeliveryStatus,
+  AlertPreferenceItem,
+  HookAlertsResponse,
+  PublicHookDeployment,
+  PublicHookResponse,
+  RecentAlertsResponse,
+  RecentEventsResponse,
+  WatchlistItem,
+  WatchlistResponse,
+  WatchMutationResponse,
+} from './alerts.js';

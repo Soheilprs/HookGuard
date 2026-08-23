@@ -69,6 +69,7 @@ export interface HookRepository {
     address: string,
     chainId?: number,
   ): Promise<Array<HookRecord & { pools: PoolRecord[] }>>;
+  getById(id: string): Promise<HookRecord | null>;
   countHooks(chainId?: number): Promise<number>;
   countPools(chainId?: number): Promise<number>;
   getCheckpoint(
@@ -206,6 +207,10 @@ export class InMemoryHookRepository implements HookRepository {
         (pool) => pool.chainId === hook.chainId && pool.hookAddress === hook.address,
       ),
     }));
+  }
+
+  async getById(id: string): Promise<HookRecord | null> {
+    return [...this.hooks.values()].find((hook) => hook.id === id) ?? null;
   }
 
   async countHooks(chainId?: number): Promise<number> {
@@ -362,6 +367,11 @@ export class PrismaHookRepository implements HookRepository {
       ...toHookRecord(row),
       pools: row.pools.map(toPoolRecord),
     }));
+  }
+
+  async getById(id: string): Promise<HookRecord | null> {
+    const row = await this.prisma.hook.findUnique({ where: { id } });
+    return row ? toHookRecord(row) : null;
   }
 
   async countHooks(chainId?: number): Promise<number> {

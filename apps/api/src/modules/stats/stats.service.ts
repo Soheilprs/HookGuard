@@ -18,6 +18,8 @@ export interface CorpusStats {
   hooksMonitored: number;
   securityEvents: number;
   lastMonitoringRun: string | null;
+  alertsPending: number;
+  alertsSent: number;
   byChain: Array<{ chainId: number; hooks: number; pools: number }>;
 }
 
@@ -33,6 +35,8 @@ export async function getCorpusStats(): Promise<CorpusStats> {
     monitoredGroups,
     securityEvents,
     latestSnapshot,
+    alertsPending,
+    alertsSent,
   ] = await Promise.all([
     prisma.hook.count(),
     prisma.pool.count(),
@@ -47,6 +51,8 @@ export async function getCorpusStats(): Promise<CorpusStats> {
       orderBy: { createdAt: 'desc' },
       select: { createdAt: true },
     }),
+    prisma.alertDelivery.count({ where: { status: 'PENDING' } }),
+    prisma.alertDelivery.count({ where: { status: 'SENT' } }),
   ]);
 
   const poolsByChain = new Map(poolGroups.map((row) => [row.chainId, row._count]));
@@ -66,6 +72,8 @@ export async function getCorpusStats(): Promise<CorpusStats> {
     hooksMonitored: monitoredGroups.length,
     securityEvents,
     lastMonitoringRun: latestSnapshot?.createdAt.toISOString() ?? null,
+    alertsPending,
+    alertsSent,
     byChain,
   };
 }

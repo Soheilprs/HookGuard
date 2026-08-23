@@ -3,8 +3,16 @@ import { AppShell } from '@/components/layout/app-shell';
 import { EmptyState } from '@/components/empty-state';
 import { HooksTable } from '@/components/hooks-table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { fetchCorpusSafe, fetchHooksSafe } from '@/lib/api';
+import { SecurityEventCard } from '@/components/security-event-card';
+import {
+  fetchCorpusSafe,
+  fetchHooksSafe,
+  fetchRecentAlertsSafe,
+  fetchRecentEventsSafe,
+} from '@/lib/api';
 import { formatIndexedAt } from '@/lib/format';
+import { truncateAddress } from '@/lib/utils';
+import Link from 'next/link';
 
 export const metadata = {
   title: 'Dashboard',
@@ -13,7 +21,12 @@ export const metadata = {
 export const dynamic = 'force-dynamic';
 
 export default async function DashboardPage() {
-  const [stats, list] = await Promise.all([fetchCorpusSafe(), fetchHooksSafe()]);
+  const [stats, list, recentEvents, recentAlerts] = await Promise.all([
+    fetchCorpusSafe(),
+    fetchHooksSafe(),
+    fetchRecentEventsSafe(),
+    fetchRecentAlertsSafe(),
+  ]);
   const recent = list.hooks.slice(0, 8);
 
   const cards = [
@@ -74,6 +87,63 @@ export default async function DashboardPage() {
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      <div className="mt-6 grid gap-4 lg:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent changes</CardTitle>
+          </CardHeader>
+          <CardContent className={recentEvents.events.length === 0 ? 'p-0' : 'space-y-3'}>
+            {recentEvents.events.length === 0 ? (
+              <EmptyState
+                title="No security events yet"
+                description="Run the monitoring worker to snapshot hooks and record evidence-backed changes."
+              />
+            ) : (
+              recentEvents.events.map((event) => (
+                <SecurityEventCard
+                  key={event.id}
+                  event={event}
+                  hookAddress={event.hook.address}
+                  chainName={event.hook.chain.name}
+                />
+              ))
+            )}
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent alerts</CardTitle>
+          </CardHeader>
+          <CardContent className={recentAlerts.alerts.length === 0 ? 'p-0' : 'space-y-3'}>
+            {recentAlerts.alerts.length === 0 ? (
+              <EmptyState
+                title="No alerts yet"
+                description="Watch a hook to generate pending or Telegram deliveries when security events fire."
+              />
+            ) : (
+              recentAlerts.alerts.map((alert) => (
+                <div key={alert.id} className="rounded-xl border border-border p-4 text-sm">
+                  <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                    <span className="font-medium uppercase tracking-wide text-foreground">
+                      {alert.status}
+                    </span>
+                    <span className="font-mono">{truncateAddress(alert.hookAddress, 4)}</span>
+                    <span>{alert.event.type.replaceAll('_', ' ')}</span>
+                  </div>
+                  <p className="mt-1 font-medium">{alert.event.title}</p>
+                  <Link
+                    href={`/public/hooks/${alert.hookAddress}?chainId=${alert.chainId}`}
+                    className="mt-2 inline-block text-xs text-primary hover:underline"
+                  >
+                    Open public page
+                  </Link>
+                </div>
+              ))
+            )}
+          </CardContent>
+        </Card>
       </div>
 
       <Card className="mt-6">

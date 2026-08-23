@@ -9,7 +9,15 @@ import {
 import { getAddress } from 'viem';
 import type { ContractRecord, ContractRepository } from '../contracts/contract.repository.js';
 import type { HookRepository } from '../hooks/hook.repository.js';
-import { monitorSnapshotFromRecord, type MonitoringRepository } from './repository.js';
+import {
+  monitorSnapshotFromRecord,
+  type EventRecord,
+  type MonitoringRepository,
+} from './repository.js';
+
+export interface AlertSink {
+  dispatch(events: EventRecord[]): Promise<unknown>;
+}
 
 export interface MonitorOptions {
   chainId: number;
@@ -19,6 +27,7 @@ export interface MonitorOptions {
   client?: ReadOnlyClient;
   sourceProvider?: SourceProvider;
   address?: `0x${string}`;
+  alerts?: AlertSink;
   logger?: Pick<Console, 'info' | 'warn' | 'error'>;
 }
 
@@ -28,6 +37,7 @@ export interface MonitorResult {
   skipped: number;
   snapshots: number;
   events: number;
+  alerts: number;
 }
 
 export async function runHookMonitoring(options: MonitorOptions): Promise<MonitorResult> {
@@ -42,6 +52,7 @@ export async function runHookMonitoring(options: MonitorOptions): Promise<Monito
     skipped: 0,
     snapshots: 0,
     events: 0,
+    alerts: 0,
   };
 
   for (const hook of targets) {
@@ -99,10 +110,22 @@ export async function runHookMonitoring(options: MonitorOptions): Promise<Monito
     result.monitored += 1;
     result.snapshots += 1;
     result.events += committed.events.length;
+    if (options.alerts && committed.events.length > 0) {
+      try {
+        await options.alerts.dispatch(committed.events);
+        result.alerts += committed.events.length;
+      } catch (error) {
+        log.warn(
+          `[monitor] alerts failed for ${hook.address}: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        );
+      }
+    }
   }
 
   log.info(
-    `[monitor] chain ${options.chainId} monitored=${result.monitored} skipped=${result.skipped} snapshots=${result.snapshots} events=${result.events}`,
+    `[monitor] chain ${options.chainId} monitored=${result.monitored} skipped=${result.skipped} snapshots=${result.snapshots} events=${result.events} alerts=${result.alerts}`,
   );
   return result;
 }

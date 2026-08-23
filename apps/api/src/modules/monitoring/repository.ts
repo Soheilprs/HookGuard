@@ -47,6 +47,8 @@ export interface MonitoringRepository {
   snapshotCount(hookId: string): Promise<number>;
   eventCount(hookId: string): Promise<number>;
   listEvents(hookId: string): Promise<EventRecord[]>;
+  listRecentEvents(limit?: number): Promise<EventRecord[]>;
+  getEvent(id: string): Promise<EventRecord | null>;
   commit(snapshot: MonitorSnapshot, events: SecurityChange[]): Promise<{
     snapshot: SnapshotRecord;
     events: EventRecord[];
@@ -146,6 +148,22 @@ export class InMemoryMonitoringRepository implements MonitoringRepository {
     );
   }
 
+  async listRecentEvents(limit = 20): Promise<EventRecord[]> {
+    const all: EventRecord[] = [];
+    for (const rows of this.events.values()) all.push(...rows);
+    return all
+      .sort((a, b) => b.detectedAt.getTime() - a.detectedAt.getTime())
+      .slice(0, limit);
+  }
+
+  async getEvent(id: string): Promise<EventRecord | null> {
+    for (const rows of this.events.values()) {
+      const match = rows.find((row) => row.id === id);
+      if (match) return match;
+    }
+    return null;
+  }
+
   async commit(
     snapshot: MonitorSnapshot,
     events: SecurityChange[],
@@ -227,6 +245,19 @@ export class PrismaMonitoringRepository implements MonitoringRepository {
       orderBy: { detectedAt: 'desc' },
     });
     return rows.map(toEventRecord);
+  }
+
+  async listRecentEvents(limit = 20): Promise<EventRecord[]> {
+    const rows = await this.prisma.securityEvent.findMany({
+      orderBy: { detectedAt: 'desc' },
+      take: limit,
+    });
+    return rows.map(toEventRecord);
+  }
+
+  async getEvent(id: string): Promise<EventRecord | null> {
+    const row = await this.prisma.securityEvent.findUnique({ where: { id } });
+    return row ? toEventRecord(row) : null;
   }
 
   async commit(

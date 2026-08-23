@@ -77,6 +77,7 @@ Copy `.env.example` values into `.env` files. **Never commit secrets.**
 | `npm run inspect:contracts` | Collect hook bytecode / source / proxy facts |
 | `npm run analyze:hooks` | Run evidence-based security rules (no scores) |
 | `npm run monitor:hooks` | Snapshot hook security state and persist change events |
+| `npm run alerts:retry` | Retry pending or failed Telegram alert deliveries |
 | `npm run validate:apply` | Apply manual validation reviews from `data/validation/dataset.json` |
 
 ## Tech stack
@@ -95,7 +96,7 @@ Copy `.env.example` values into `.env` files. **Never commit secrets.**
 
 ## Status
 
-**Phase 3 — continuous monitoring.** Snapshots of hook security state are compared over time. Implementation, admin, owner, bytecode, privileged-function, and permission changes become evidence-backed security events. No numerical risk scores.
+**Phase 4 — public monitoring and alerts.** Public hook security pages, watchlists, and optional Telegram deliveries for security events. No numerical risk scores.
 
 ## License
 

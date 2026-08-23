@@ -64,6 +64,8 @@ export interface RegistryStats {
   hooksMonitored: number;
   securityEvents: number;
   lastMonitoringRun: string | null;
+  alertsPending: number;
+  alertsSent: number;
   byChain: Array<{ chainId: number; hooks: number; pools: number }>;
 }
 

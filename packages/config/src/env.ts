@@ -5,6 +5,8 @@ export interface ApiConfig {
   host: string;
   port: number;
   databaseUrl: string;
+  telegramBotToken: string;
+  telegramChatId: string;
 }
 
 export interface WebConfig {
@@ -51,6 +53,8 @@ export function loadApiConfigFromEnv(
     host: source.API_HOST ?? '0.0.0.0',
     port: parsePort(source.API_PORT ?? '3001'),
     databaseUrl,
+    telegramBotToken: source.TELEGRAM_BOT_TOKEN ?? '',
+    telegramChatId: source.TELEGRAM_CHAT_ID ?? '',
   };
 }
 

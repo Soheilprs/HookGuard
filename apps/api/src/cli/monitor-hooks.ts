@@ -10,6 +10,7 @@ import {
 } from '@hookguard/blockchain';
 import { PrismaContractRepository } from '../modules/contracts/contract.repository.js';
 import { PrismaHookRepository } from '../modules/hooks/hook.repository.js';
+import { createAlertService } from '../modules/alerts/alert.service.js';
 import { PrismaMonitoringRepository } from '../modules/monitoring/repository.js';
 import { scheduleHookMonitoring } from '../modules/monitoring/scheduler.js';
 import { prisma } from '../lib/prisma.js';
@@ -49,6 +50,7 @@ async function main(): Promise<void> {
   const hooks = new PrismaHookRepository(prisma);
   const contracts = new PrismaContractRepository(prisma);
   const monitoring = new PrismaMonitoringRepository(prisma);
+  const alerts = createAlertService();
   const sourceProvider = createDefaultSourceProvider();
 
   console.info('HookGuard continuous monitoring (read-only, no scores, no transactions)');
@@ -63,6 +65,7 @@ async function main(): Promise<void> {
       monitoring,
       client,
       sourceProvider,
+      alerts,
       address: options.address,
     });
   }

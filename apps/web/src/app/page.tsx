@@ -19,9 +19,9 @@ const features = [
     icon: Search,
   },
   {
-    title: 'Risk Dashboard',
+    title: 'Monitoring & alerts',
     description:
-      'Scores, findings, and empty-until-proven data so LPs and protocols can see what is known before they provide liquidity.',
+      'Watch deployed hooks for implementation, owner, and bytecode changes. Evidence-backed events — not a numerical score.',
     icon: Shield,
   },
 ];
@@ -39,8 +39,8 @@ const steps = [
   },
   {
     step: '03',
-    title: 'Score risk',
-    body: 'Map structured findings to a reviewable 0–100 score. No invented results.',
+    title: 'Watch and alert',
+    body: 'Subscribe to security events on a hook. Telegram delivery is optional and never required.',
   },
 ];
 

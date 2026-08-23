@@ -8,6 +8,8 @@ describe('loadApiConfigFromEnv', () => {
     expect(config.port).toBe(3001);
     expect(config.host).toBe('0.0.0.0');
     expect(config.databaseUrl).toContain('postgresql://');
+    expect(config.telegramBotToken).toBe('');
+    expect(config.telegramChatId).toBe('');
   });
 
   it('throws in production when DATABASE_URL is missing', () => {

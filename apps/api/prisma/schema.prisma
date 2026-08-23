@@ -22,10 +22,11 @@ model Hook {
   poolCount       Int       @default(0)
   lastIndexedAt   DateTime?
 
-  findings  Finding[]
-  pools     Pool[]
-  snapshots HookSnapshot[]
-  events    SecurityEvent[]
+  findings   Finding[]
+  pools      Pool[]
+  snapshots  HookSnapshot[]
+  events     SecurityEvent[]
+  watchlists Watchlist[]
 
   @@unique([address, chainId])
   @@index([chainId])
@@ -177,11 +178,64 @@ model SecurityEvent {
   detectedAt  DateTime  @default(now())
   resolvedAt  DateTime?
 
-  hook Hook @relation(fields: [hookId], references: [id], onDelete: Cascade)
+  hook       Hook            @relation(fields: [hookId], references: [id], onDelete: Cascade)
+  deliveries AlertDelivery[]
 
   @@index([hookId, detectedAt])
   @@index([type])
   @@map("security_events")
+}
+
+/// A lightweight watch on a hook. Identifier is a client-supplied key (no auth yet).
+model Watchlist {
+  id             String    @id @default(cuid())
+  hookId         String
+  identifier     String
+  createdAt      DateTime  @default(now())
+  lastNotifiedAt DateTime?
+
+  hook         Hook              @relation(fields: [hookId], references: [id], onDelete: Cascade)
+  preferences  AlertPreference[]
+  deliveries   AlertDelivery[]
+
+  @@unique([hookId, identifier])
+  @@index([identifier])
+  @@index([hookId])
+  @@map("watchlists")
+}
+
+/// Per-watch event-type filter. Missing rows mean the type is enabled by default.
+model AlertPreference {
+  id          String   @id @default(cuid())
+  watchlistId String
+  eventType   String
+  enabled     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  watchlist Watchlist @relation(fields: [watchlistId], references: [id], onDelete: Cascade)
+
+  @@unique([watchlistId, eventType])
+  @@index([watchlistId])
+  @@map("alert_preferences")
+}
+
+/// Delivery attempt for a security event to a watchlist (Telegram or pending).
+model AlertDelivery {
+  id              String    @id @default(cuid())
+  securityEventId String
+  watchlistId     String
+  status          String
+  sentAt          DateTime?
+  error           String?   @db.Text
+  attempts        Int       @default(0)
+
+  event     SecurityEvent @relation(fields: [securityEventId], references: [id], onDelete: Cascade)
+  watchlist Watchlist     @relation(fields: [watchlistId], references: [id], onDelete: Cascade)
+
+  @@unique([securityEventId, watchlistId])
+  @@index([status])
+  @@index([watchlistId])
+  @@map("alert_deliveries")
 }
 
 /// Resume cursor for a (chain, contract) log scan.

@@ -10,8 +10,10 @@ import { EmptyState } from '@/components/empty-state';
 import { PoolsTable } from '@/components/pools-table';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { MonitoringBadge } from '@/components/monitoring-badge';
 import { MonitoringStatus } from '@/components/monitoring-status';
 import { SecurityTimeline } from '@/components/security-timeline';
+import { WatchButton } from '@/components/watch-button';
 import {
   fetchHookContractSafe,
   fetchHookEventsSafe,
@@ -82,7 +84,8 @@ export default async function HookDetailPage({
           {valid ? decoded : 'Invalid address'}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Registry metadata from Uniswap v4 PoolManager events.
+          Evidence-backed security intelligence for a deployed Uniswap v4 hook.
+          Numerical scores are not produced.
         </p>
       </div>
 
@@ -130,8 +133,25 @@ export default async function HookDetailPage({
               deployment.hook.chainId,
               deployment.hook.address,
             );
+            const monitored =
+              (monitoringByChain.get(deployment.hook.chainId)?.snapshotCount ?? 0) > 0;
             return (
               <div key={deployment.hook.id} className="space-y-4">
+                <div className="flex flex-wrap items-center gap-2">
+                  <ChainBadge name={deployment.hook.chain.name} />
+                  <MonitoringBadge monitored={monitored} />
+                  <WatchButton
+                    address={deployment.hook.address}
+                    chainId={deployment.hook.chainId}
+                  />
+                  <Link
+                    href={`/public/hooks/${deployment.hook.address}?chainId=${deployment.hook.chainId}`}
+                    className="text-xs text-muted-foreground hover:text-foreground"
+                  >
+                    Public page
+                  </Link>
+                </div>
+
                 <SecurityFindings
                   findings={findingsByChain.get(deployment.hook.chainId) ?? []}
                 />
@@ -143,6 +163,7 @@ export default async function HookDetailPage({
 
                 <SecurityTimeline
                   events={eventsByChain.get(deployment.hook.chainId) ?? []}
+                  hookAddress={deployment.hook.address}
                 />
 
                 <div className="grid gap-4 md:grid-cols-2">

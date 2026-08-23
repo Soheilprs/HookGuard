@@ -77,6 +77,8 @@ export class HookService {
       hooksMonitored: 0,
       securityEvents: 0,
       lastMonitoringRun: null,
+      alertsPending: 0,
+      alertsSent: 0,
       byChain: [],
     };
   }

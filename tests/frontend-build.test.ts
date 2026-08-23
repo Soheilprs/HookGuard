@@ -12,6 +12,8 @@ const pages = [
   'src/app/hooks/page.tsx',
   'src/app/hooks/[address]/page.tsx',
   'src/app/methodology/page.tsx',
+  'src/app/public/hooks/[address]/page.tsx',
+  'src/app/watchlist/page.tsx',
 ];
 
 const components = [
@@ -27,6 +29,11 @@ const components = [
   'src/components/security-findings.tsx',
   'src/components/security-timeline.tsx',
   'src/components/monitoring-status.tsx',
+  'src/components/security-event-card.tsx',
+  'src/components/finding-card.tsx',
+  'src/components/evidence-viewer.tsx',
+  'src/components/watch-button.tsx',
+  'src/components/timeline.tsx',
 ];
 
 describe('frontend foundation', () => {
@@ -60,13 +67,18 @@ describe('frontend foundation', () => {
 
     expect(explorer + table).toMatch(/No hooks indexed yet/);
     expect(findings).toMatch(/Security Findings/);
-    expect(findings).toMatch(/evidence/);
+    expect(findings).toMatch(/FindingCard/);
+    const findingCard = readFileSync(
+      join(web, 'src/components/finding-card.tsx'),
+      'utf8',
+    );
+    expect(findingCard).toMatch(/evidence/);
     const confidence = readFileSync(
       join(web, 'src/components/confidence-badge.tsx'),
       'utf8',
     );
-    expect(findings).toMatch(/ConfidenceBadge/);
-    expect(findings).toMatch(/Bytecode heuristic/);
+    expect(findingCard).toMatch(/ConfidenceBadge/);
+    expect(findingCard).toMatch(/Bytecode heuristic/);
     expect(confidence).toMatch(/LOW CONFIDENCE/);
     expect(detail).not.toMatch(/Security analysis pending/);
     expect(intelligence).toMatch(/Contract Intelligence/);
@@ -78,18 +90,36 @@ describe('frontend foundation', () => {
       join(web, 'src/components/security-timeline.tsx'),
       'utf8',
     );
+    const eventCard = readFileSync(
+      join(web, 'src/components/security-event-card.tsx'),
+      'utf8',
+    );
     const monitoring = readFileSync(
       join(web, 'src/components/monitoring-status.tsx'),
       'utf8',
     );
     expect(timeline).toMatch(/Security Timeline/);
-    expect(timeline).toMatch(/evidence/i);
-    expect(timeline).toMatch(/ConfidenceBadge/);
+    expect(eventCard).toMatch(/EvidenceViewer/);
+    expect(eventCard).toMatch(/ConfidenceBadge/);
     expect(timeline).not.toMatch(/riskScore/);
     expect(monitoring).toMatch(/Monitoring Status/);
     expect(detail).toMatch(/SecurityTimeline/);
     expect(detail).toMatch(/MonitoringStatus/);
+    expect(detail).toMatch(/WatchButton/);
     expect(detail).not.toMatch(/riskScore/);
+    const publicPage = readFileSync(
+      join(web, 'src/app/public/hooks/[address]/page.tsx'),
+      'utf8',
+    );
+    expect(publicPage).toMatch(/Public security page/);
+    expect(publicPage).toMatch(/WatchButton/);
+    expect(publicPage).toMatch(/SecurityFindings/);
+    expect(publicPage).not.toMatch(/riskScore/);
+    const watchButton = readFileSync(
+      join(web, 'src/components/watch-button.tsx'),
+      'utf8',
+    );
+    expect(watchButton).toMatch(/Watch hook/);
   });
 
   it('is configured as a Next.js app that can build', () => {

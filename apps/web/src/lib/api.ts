@@ -5,7 +5,11 @@ import type {
   HookFindingsResponse,
   HookListResponse,
   HookMonitoringResponse,
+  PublicHookResponse,
+  RecentAlertsResponse,
+  RecentEventsResponse,
   RegistryStats,
+  WatchlistResponse,
 } from '@hookguard/types';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
@@ -77,6 +81,8 @@ export async function fetchStatsSafe(): Promise<RegistryStats> {
       hooksMonitored: 0,
       securityEvents: 0,
       lastMonitoringRun: null,
+      alertsPending: 0,
+      alertsSent: 0,
       byChain: [],
     };
   }
@@ -203,6 +209,62 @@ export async function fetchHookMonitoringSafe(
       return { deployments: [] };
     }
     return null;
+  }
+}
+
+export async function fetchPublicHook(
+  address: string,
+  chainId?: number,
+): Promise<PublicHookResponse> {
+  const params = new URLSearchParams();
+  if (chainId !== undefined) params.set('chainId', String(chainId));
+  const query = params.toString();
+  return getJson<PublicHookResponse>(
+    `/public/hooks/${encodeURIComponent(address)}${query ? `?${query}` : ''}`,
+  );
+}
+
+export async function fetchPublicHookSafe(
+  address: string,
+  chainId?: number,
+): Promise<PublicHookResponse | null> {
+  try {
+    return await fetchPublicHook(address, chainId);
+  } catch (error) {
+    if (
+      error &&
+      typeof error === 'object' &&
+      'status' in error &&
+      error.status === 404
+    ) {
+      return { deployments: [] };
+    }
+    return null;
+  }
+}
+
+export async function fetchRecentEventsSafe(): Promise<RecentEventsResponse> {
+  try {
+    return await getJson<RecentEventsResponse>('/events/recent?limit=8');
+  } catch {
+    return { events: [] };
+  }
+}
+
+export async function fetchRecentAlertsSafe(): Promise<RecentAlertsResponse> {
+  try {
+    return await getJson<RecentAlertsResponse>('/alerts/recent?limit=8');
+  } catch {
+    return { alerts: [] };
+  }
+}
+
+export async function fetchWatchlistSafe(identifier: string): Promise<WatchlistResponse> {
+  try {
+    const params = new URLSearchParams({ identifier });
+    return await getJson<WatchlistResponse>(`/watchlist?${params}`);
+  } catch {
+    return { watchlists: [] };
   }
 }
 

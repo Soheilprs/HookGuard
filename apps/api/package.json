@@ -17,6 +17,7 @@
     "inspect:contracts": "tsx src/cli/inspect-contracts.ts",
     "analyze:hooks": "tsx src/cli/analyze-hooks.ts",
     "monitor:hooks": "tsx src/cli/monitor-hooks.ts",
+    "alerts:retry": "tsx src/cli/retry-alerts.ts",
     "validate:apply": "tsx src/cli/apply-validation.ts",
     "clean": "rm -rf dist"
   },

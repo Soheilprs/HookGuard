@@ -111,6 +111,9 @@ const requiredModels: Record<string, string[]> = {
     'detectedAt',
     'resolvedAt',
   ],
+  Watchlist: ['id', 'hookId', 'identifier', 'createdAt', 'lastNotifiedAt'],
+  AlertPreference: ['id', 'watchlistId', 'eventType', 'enabled', 'createdAt'],
+  AlertDelivery: ['id', 'securityEventId', 'watchlistId', 'status', 'sentAt', 'error'],
 };
 
 function parseModels(schema: string): Record<string, string[]> {
@@ -149,6 +152,9 @@ describe('database schema', () => {
         'IndexerCheckpoint',
         'Pool',
         'SecurityEvent',
+        'Watchlist',
+        'AlertPreference',
+        'AlertDelivery',
       ].sort(),
     );
   });

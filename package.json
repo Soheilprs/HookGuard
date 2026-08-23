@@ -27,6 +27,7 @@
     "inspect:contracts": "npm run inspect:contracts -w @hookguard/api --",
     "analyze:hooks": "npm run analyze:hooks -w @hookguard/api --",
     "monitor:hooks": "npm run monitor:hooks -w @hookguard/api --",
+    "alerts:retry": "npm run alerts:retry -w @hookguard/api --",
     "validate:apply": "npm run validate:apply -w @hookguard/api --",
     "clean": "rm -rf apps/*/.next apps/*/dist packages/*/dist coverage"
   },

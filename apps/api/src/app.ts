@@ -19,12 +19,27 @@ import {
   createMonitoringService,
   type MonitoringService,
 } from './modules/monitoring/service.js';
+import { alertController } from './modules/alerts/controller.js';
+import { createAlertService, type AlertService } from './modules/alerts/alert.service.js';
+import { publicController } from './modules/public/controller.js';
+import {
+  createPublicHookService,
+  type PublicHookService,
+} from './modules/public/public.service.js';
+import { watchlistController } from './modules/watchlist/controller.js';
+import {
+  createWatchlistService,
+  type WatchlistService,
+} from './modules/watchlist/service.js';
 
 export interface AppDeps {
   hookService?: HookService;
   contractService?: ContractService;
   findingService?: FindingService;
   monitoringService?: MonitoringService;
+  watchlistService?: WatchlistService;
+  alertService?: AlertService;
+  publicHookService?: PublicHookService;
 }
 
 export async function buildApp(deps: AppDeps = {}): Promise<FastifyInstance> {
@@ -55,6 +70,21 @@ export async function buildApp(deps: AppDeps = {}): Promise<FastifyInstance> {
   const monitoringService = deps.monitoringService ?? createMonitoringService();
   await app.register(async (instance) =>
     monitoringController(instance, { service: monitoringService }),
+  );
+
+  const watchlistService = deps.watchlistService ?? createWatchlistService();
+  await app.register(async (instance) =>
+    watchlistController(instance, { service: watchlistService }),
+  );
+
+  const alertService = deps.alertService ?? createAlertService();
+  await app.register(async (instance) =>
+    alertController(instance, { service: alertService }),
+  );
+
+  const publicHookService = deps.publicHookService ?? createPublicHookService();
+  await app.register(async (instance) =>
+    publicController(instance, { service: publicHookService }),
   );
 
   return app;
