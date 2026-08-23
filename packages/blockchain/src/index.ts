@@ -108,6 +108,29 @@ export {
   privilegedMutators,
 } from './analysis/index.js';
 
+export {
+  buildMonitorSnapshot,
+  compareSnapshots,
+  changeFingerprint,
+  detectBytecodeChanges,
+  detectOwnershipChanges,
+  detectPermissionChanges,
+  detectProxyChanges,
+  hashFunctions,
+  hashPermissions,
+  normalizeMonitorAddress,
+  ownerFromPermissions,
+  privilegedEntries,
+  SECURITY_EVENT_TYPES,
+} from './monitoring/index.js';
+
+export type {
+  MonitorSnapshot,
+  SecurityChange,
+  SnapshotFunction,
+  SnapshotPermission,
+} from './monitoring/index.js';
+
 export type {
   AnalysisInput,
   AnalysisFunction,

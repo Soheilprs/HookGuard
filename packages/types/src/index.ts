@@ -16,6 +16,13 @@ export type { RiskLevel, RiskScore } from './risk.js';
 export { riskLevelFromScore } from './risk.js';
 export type { ChainDefinition, ChainNativeCurrency, ChainSlug } from './chain.js';
 export type {
+  HookMonitoringStatus,
+  HookSnapshotView,
+  MonitoringStats,
+  SecurityEventItem,
+  SecurityEventType,
+} from './monitoring.js';
+export type {
   ChainRef,
   HookDetail,
   HookDetailResponse,
@@ -29,4 +36,6 @@ export type {
   HookContractResponse,
   FindingItem,
   HookFindingsResponse,
+  HookEventsResponse,
+  HookMonitoringResponse,
 } from './api.js';

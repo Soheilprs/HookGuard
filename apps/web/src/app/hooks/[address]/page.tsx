@@ -10,7 +10,15 @@ import { EmptyState } from '@/components/empty-state';
 import { PoolsTable } from '@/components/pools-table';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { fetchHookContractSafe, fetchHookFindingsSafe, fetchHookSafe } from '@/lib/api';
+import { MonitoringStatus } from '@/components/monitoring-status';
+import { SecurityTimeline } from '@/components/security-timeline';
+import {
+  fetchHookContractSafe,
+  fetchHookEventsSafe,
+  fetchHookFindingsSafe,
+  fetchHookMonitoringSafe,
+  fetchHookSafe,
+} from '@/lib/api';
 import { formatBlock, formatIndexedAt } from '@/lib/format';
 import { truncateAddress } from '@/lib/utils';
 import type { ReactNode } from 'react';
@@ -34,19 +42,27 @@ export default async function HookDetailPage({
   const valid = isAddress(decoded, { strict: false });
   const chainId = query.chainId ? Number(query.chainId) : undefined;
   const filterChain = Number.isInteger(chainId) ? chainId : undefined;
-  const [payload, contractPayload, findingsPayload] = valid
+  const [payload, contractPayload, findingsPayload, eventsPayload, monitoringPayload] = valid
     ? await Promise.all([
         fetchHookSafe(decoded, filterChain),
         fetchHookContractSafe(decoded, filterChain),
         fetchHookFindingsSafe(decoded, filterChain),
+        fetchHookEventsSafe(decoded, filterChain),
+        fetchHookMonitoringSafe(decoded, filterChain),
       ])
-    : [null, null, null];
+    : [null, null, null, null, null];
   const deployments = payload?.deployments ?? [];
   const contractsByChain = new Map(
     (contractPayload?.deployments ?? []).map((row) => [row.hook.chainId, row.contract]),
   );
   const findingsByChain = new Map(
     (findingsPayload?.deployments ?? []).map((row) => [row.hook.chainId, row.findings]),
+  );
+  const eventsByChain = new Map(
+    (eventsPayload?.deployments ?? []).map((row) => [row.hook.chainId, row.events]),
+  );
+  const monitoringByChain = new Map(
+    (monitoringPayload?.deployments ?? []).map((row) => [row.hook.chainId, row.monitoring]),
   );
 
   return (
@@ -118,6 +134,15 @@ export default async function HookDetailPage({
               <div key={deployment.hook.id} className="space-y-4">
                 <SecurityFindings
                   findings={findingsByChain.get(deployment.hook.chainId) ?? []}
+                />
+
+                <MonitoringStatus
+                  chainName={deployment.hook.chain.name}
+                  status={monitoringByChain.get(deployment.hook.chainId) ?? null}
+                />
+
+                <SecurityTimeline
+                  events={eventsByChain.get(deployment.hook.chainId) ?? []}
                 />
 
                 <div className="grid gap-4 md:grid-cols-2">

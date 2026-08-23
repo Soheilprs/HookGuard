@@ -1,4 +1,9 @@
 import type { Address } from './hook.js';
+import type {
+  HookMonitoringStatus,
+  HookSnapshotView,
+  SecurityEventItem,
+} from './monitoring.js';
 
 export interface ChainRef {
   id: number;
@@ -56,6 +61,9 @@ export interface RegistryStats {
   averageRisk: number | null;
   contractsInspected: number;
   verifiedSource: number;
+  hooksMonitored: number;
+  securityEvents: number;
+  lastMonitoringRun: string | null;
   byChain: Array<{ chainId: number; hooks: number; pools: number }>;
 }
 
@@ -114,5 +122,20 @@ export interface HookFindingsResponse {
   deployments: Array<{
     hook: HookListItem;
     findings: FindingItem[];
+  }>;
+}
+
+export interface HookEventsResponse {
+  deployments: Array<{
+    hook: HookListItem;
+    events: SecurityEventItem[];
+  }>;
+}
+
+export interface HookMonitoringResponse {
+  deployments: Array<{
+    hook: HookListItem;
+    monitoring: HookMonitoringStatus;
+    lastSnapshot: HookSnapshotView | null;
   }>;
 }

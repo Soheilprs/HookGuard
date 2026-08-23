@@ -74,6 +74,9 @@ export class HookService {
       averageRisk: null,
       contractsInspected: 0,
       verifiedSource: 0,
+      hooksMonitored: 0,
+      securityEvents: 0,
+      lastMonitoringRun: null,
       byChain: [],
     };
   }

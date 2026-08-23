@@ -1,6 +1,6 @@
 # Roadmap
 
-HookGuard is built in phases. **This repository currently implements Phase 0 only.** Later phases are planning, not work in progress.
+HookGuard is built in phases. The repository currently implements product Phases 0–3 (foundation through continuous monitoring). Numerical risk scoring is still not implemented.
 
 ## Phase 0 — Foundation (current)
 

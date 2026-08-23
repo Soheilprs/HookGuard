@@ -76,6 +76,7 @@ Copy `.env.example` values into `.env` files. **Never commit secrets.**
 | `npm run index:v4` | Discover Uniswap v4 hooks (read-only) |
 | `npm run inspect:contracts` | Collect hook bytecode / source / proxy facts |
 | `npm run analyze:hooks` | Run evidence-based security rules (no scores) |
+| `npm run monitor:hooks` | Snapshot hook security state and persist change events |
 | `npm run validate:apply` | Apply manual validation reviews from `data/validation/dataset.json` |
 
 ## Tech stack
@@ -94,7 +95,7 @@ Copy `.env.example` values into `.env` files. **Never commit secrets.**
 
 ## Status
 
-**Phase 2C — validated findings.** Real Ethereum and Unichain hooks are indexed, inspected, and analyzed. Findings carry confidence, detection source, and optional manual validation status. No numerical risk scores.
+**Phase 3 — continuous monitoring.** Snapshots of hook security state are compared over time. Implementation, admin, owner, bytecode, privileged-function, and permission changes become evidence-backed security events. No numerical risk scores.
 
 ## License
 

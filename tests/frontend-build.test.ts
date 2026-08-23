@@ -25,6 +25,8 @@ const components = [
   'src/components/loading-state.tsx',
   'src/components/contract-intelligence.tsx',
   'src/components/security-findings.tsx',
+  'src/components/security-timeline.tsx',
+  'src/components/monitoring-status.tsx',
 ];
 
 describe('frontend foundation', () => {
@@ -72,6 +74,22 @@ describe('frontend foundation', () => {
     expect(intelligence).toMatch(/Permissions/);
     expect(detail).not.toMatch(/riskScore:\s*[1-9]/);
     expect(findings).not.toMatch(/riskScore/);
+    const timeline = readFileSync(
+      join(web, 'src/components/security-timeline.tsx'),
+      'utf8',
+    );
+    const monitoring = readFileSync(
+      join(web, 'src/components/monitoring-status.tsx'),
+      'utf8',
+    );
+    expect(timeline).toMatch(/Security Timeline/);
+    expect(timeline).toMatch(/evidence/i);
+    expect(timeline).toMatch(/ConfidenceBadge/);
+    expect(timeline).not.toMatch(/riskScore/);
+    expect(monitoring).toMatch(/Monitoring Status/);
+    expect(detail).toMatch(/SecurityTimeline/);
+    expect(detail).toMatch(/MonitoringStatus/);
+    expect(detail).not.toMatch(/riskScore/);
   });
 
   it('is configured as a Next.js app that can build', () => {

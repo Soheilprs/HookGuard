@@ -22,8 +22,10 @@ model Hook {
   poolCount       Int       @default(0)
   lastIndexedAt   DateTime?
 
-  findings Finding[]
-  pools    Pool[]
+  findings  Finding[]
+  pools     Pool[]
+  snapshots HookSnapshot[]
+  events    SecurityEvent[]
 
   @@unique([address, chainId])
   @@index([chainId])
@@ -138,6 +140,48 @@ model Finding {
   @@index([confidence])
   @@index([validationStatus])
   @@map("findings")
+}
+
+/// Point-in-time security state of a hook. Baseline on first monitor run.
+model HookSnapshot {
+  id                    String   @id @default(cuid())
+  hookId                String
+  blockNumber           BigInt
+  implementationAddress String?
+  adminAddress          String?
+  ownerAddress          String?
+  bytecodeHash          String
+  functionsHash         String
+  permissionsHash       String
+  functionsJson         Json     @default("[]")
+  permissionsJson       Json     @default("[]")
+  createdAt             DateTime @default(now())
+
+  hook Hook @relation(fields: [hookId], references: [id], onDelete: Cascade)
+
+  @@index([hookId, createdAt])
+  @@index([createdAt])
+  @@map("hook_snapshots")
+}
+
+/// A detected change between consecutive snapshots. Never stored without evidence.
+model SecurityEvent {
+  id          String    @id @default(cuid())
+  hookId      String
+  type        String
+  severity    String
+  confidence  String
+  title       String
+  description String    @db.Text
+  evidence    Json
+  detectedAt  DateTime  @default(now())
+  resolvedAt  DateTime?
+
+  hook Hook @relation(fields: [hookId], references: [id], onDelete: Cascade)
+
+  @@index([hookId, detectedAt])
+  @@index([type])
+  @@map("security_events")
 }
 
 /// Resume cursor for a (chain, contract) log scan.

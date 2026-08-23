@@ -1,8 +1,10 @@
 import type {
   HookContractResponse,
   HookDetailResponse,
+  HookEventsResponse,
   HookFindingsResponse,
   HookListResponse,
+  HookMonitoringResponse,
   RegistryStats,
 } from '@hookguard/types';
 
@@ -72,6 +74,9 @@ export async function fetchStatsSafe(): Promise<RegistryStats> {
       averageRisk: null,
       contractsInspected: 0,
       verifiedSource: 0,
+      hooksMonitored: 0,
+      securityEvents: 0,
+      lastMonitoringRun: null,
       byChain: [],
     };
   }
@@ -126,6 +131,68 @@ export async function fetchHookFindingsSafe(
 ): Promise<HookFindingsResponse | null> {
   try {
     return await fetchHookFindings(address, chainId);
+  } catch (error) {
+    if (
+      error &&
+      typeof error === 'object' &&
+      'status' in error &&
+      error.status === 404
+    ) {
+      return { deployments: [] };
+    }
+    return null;
+  }
+}
+
+export async function fetchHookEvents(
+  address: string,
+  chainId?: number,
+): Promise<HookEventsResponse> {
+  const params = new URLSearchParams();
+  if (chainId !== undefined) params.set('chainId', String(chainId));
+  const query = params.toString();
+  return getJson<HookEventsResponse>(
+    `/hooks/${encodeURIComponent(address)}/events${query ? `?${query}` : ''}`,
+  );
+}
+
+export async function fetchHookEventsSafe(
+  address: string,
+  chainId?: number,
+): Promise<HookEventsResponse | null> {
+  try {
+    return await fetchHookEvents(address, chainId);
+  } catch (error) {
+    if (
+      error &&
+      typeof error === 'object' &&
+      'status' in error &&
+      error.status === 404
+    ) {
+      return { deployments: [] };
+    }
+    return null;
+  }
+}
+
+export async function fetchHookMonitoring(
+  address: string,
+  chainId?: number,
+): Promise<HookMonitoringResponse> {
+  const params = new URLSearchParams();
+  if (chainId !== undefined) params.set('chainId', String(chainId));
+  const query = params.toString();
+  return getJson<HookMonitoringResponse>(
+    `/hooks/${encodeURIComponent(address)}/monitoring${query ? `?${query}` : ''}`,
+  );
+}
+
+export async function fetchHookMonitoringSafe(
+  address: string,
+  chainId?: number,
+): Promise<HookMonitoringResponse | null> {
+  try {
+    return await fetchHookMonitoring(address, chainId);
   } catch (error) {
     if (
       error &&

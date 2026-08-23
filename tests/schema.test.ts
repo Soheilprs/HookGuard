@@ -87,6 +87,30 @@ const requiredModels: Record<string, string[]> = {
     'lastProcessedBlock',
     'updatedAt',
   ],
+  HookSnapshot: [
+    'id',
+    'hookId',
+    'blockNumber',
+    'implementationAddress',
+    'adminAddress',
+    'ownerAddress',
+    'bytecodeHash',
+    'functionsHash',
+    'permissionsHash',
+    'createdAt',
+  ],
+  SecurityEvent: [
+    'id',
+    'hookId',
+    'type',
+    'severity',
+    'confidence',
+    'title',
+    'description',
+    'evidence',
+    'detectedAt',
+    'resolvedAt',
+  ],
 };
 
 function parseModels(schema: string): Record<string, string[]> {
@@ -121,8 +145,10 @@ describe('database schema', () => {
         'ContractPermission',
         'Finding',
         'Hook',
+        'HookSnapshot',
         'IndexerCheckpoint',
         'Pool',
+        'SecurityEvent',
       ].sort(),
     );
   });

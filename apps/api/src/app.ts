@@ -14,11 +14,17 @@ import {
   createFindingService,
   type FindingService,
 } from './modules/findings/finding.service.js';
+import { monitoringController } from './modules/monitoring/controller.js';
+import {
+  createMonitoringService,
+  type MonitoringService,
+} from './modules/monitoring/service.js';
 
 export interface AppDeps {
   hookService?: HookService;
   contractService?: ContractService;
   findingService?: FindingService;
+  monitoringService?: MonitoringService;
 }
 
 export async function buildApp(deps: AppDeps = {}): Promise<FastifyInstance> {
@@ -44,6 +50,11 @@ export async function buildApp(deps: AppDeps = {}): Promise<FastifyInstance> {
   const findingService = deps.findingService ?? createFindingService();
   await app.register(async (instance) =>
     findingController(instance, { service: findingService }),
+  );
+
+  const monitoringService = deps.monitoringService ?? createMonitoringService();
+  await app.register(async (instance) =>
+    monitoringController(instance, { service: monitoringService }),
   );
 
   return app;
