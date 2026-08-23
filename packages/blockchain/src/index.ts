@@ -175,6 +175,14 @@ export {
   exportLandscapeMarkdown,
   assertReportEvidence,
   LANDSCAPE_DISCLAIMER,
+  ANALYSIS_RESEARCH_DETECTORS,
+  ANALYSIS_RESEARCH_DISCLAIMER,
+  assertAnalysisResearchEvidence,
+  buildAnalysisResearchReport,
+  exportAnalysisResearchJson,
+  exportAnalysisResearchMarkdown,
+  evidenceFileName,
+  exportEvidenceMarkdown,
 } from './reporting/index.js';
 
 export type {
@@ -183,4 +191,7 @@ export type {
   ReportCorpus,
   ReportHook,
   ReportFinding,
+  AnalysisResearchCorpus,
+  AnalysisResearchFindingInput,
+  AnalysisResearchReport,
 } from './reporting/index.js';

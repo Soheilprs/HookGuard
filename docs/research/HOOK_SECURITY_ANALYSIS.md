@@ -107,4 +107,6 @@ Observation rules from earlier phases (`ext-call`, `hooks-permission-compare`, r
 - Bytecode `DELEGATECALL` + flags is a review signal, not “delegatecall in beforeSwap.”
 - Absence of a detector hit is not safety.
 
-Synthetic fixtures used in tests: `packages/blockchain/src/analyzer/fixtures/UnsafeHook.sol`, `SafeHook.sol`.
+Synthetic fixtures used in tests: `packages/blockchain/src/analyzer/fixtures/UnsafeHook.sol`, `SafeHook.sol`. They are **not** the Phase 7B corpus.
+
+Real-world output: [`reports/hookguard-security-analysis-results.md`](../../reports/hookguard-security-analysis-results.md), JSON companion, and [`reports/evidence/`](../../reports/evidence/). Interpretation: [REAL_WORLD_HOOK_ANALYSIS.md](./REAL_WORLD_HOOK_ANALYSIS.md). Regenerate with `npm run analyze:hooks:research`.

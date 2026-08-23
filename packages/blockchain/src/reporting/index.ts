@@ -22,3 +22,16 @@ export {
 export { assertReportEvidence, buildLandscapeReport } from './risk-report.js';
 export { exportLandscapeJson } from './exporters/json.js';
 export { exportLandscapeMarkdown } from './exporters/markdown.js';
+export {
+  ANALYSIS_RESEARCH_DETECTORS,
+  ANALYSIS_RESEARCH_DISCLAIMER,
+  assertAnalysisResearchEvidence,
+  buildAnalysisResearchReport,
+  isAnalysisResearchDetector,
+  type AnalysisResearchCorpus,
+  type AnalysisResearchFindingInput,
+  type AnalysisResearchReport,
+} from './analysis-research.js';
+export { exportAnalysisResearchJson } from './exporters/analysis-json.js';
+export { exportAnalysisResearchMarkdown } from './exporters/analysis-markdown.js';
+export { evidenceFileName, exportEvidenceMarkdown } from './exporters/evidence-markdown.js';

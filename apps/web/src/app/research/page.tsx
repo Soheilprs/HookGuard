@@ -173,7 +173,10 @@ export default async function ResearchPage() {
           <p>
             Operators generate a snapshot with <span className="font-mono">npm run report:risk</span>.
             Files: <span className="font-mono">reports/hookguard-security-landscape.md</span> and{' '}
-            <span className="font-mono">.json</span>.
+            <span className="font-mono">.json</span>. Analyzer corpus research:{' '}
+            <span className="font-mono">npm run analyze:hooks:research</span> writes{' '}
+            <span className="font-mono">reports/hookguard-security-analysis-results.md</span> and{' '}
+            <span className="font-mono">reports/evidence/</span>.
           </p>
           <p>
             Written research package:{' '}

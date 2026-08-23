@@ -24,6 +24,9 @@ const required = [
   'docs/research/DEVELOPER_GUIDANCE.md',
   'docs/research/RISK_REVIEW_CHECKLIST.md',
   'docs/research/HOOK_SECURITY_ANALYSIS.md',
+  'docs/research/REAL_WORLD_HOOK_ANALYSIS.md',
+  'reports/hookguard-security-analysis-results.md',
+  'reports/hookguard-security-analysis-results.json',
   'reports/hookguard-security-landscape.md',
   'reports/hookguard-security-landscape.json',
   'docs/screenshots/homepage.jpg',
@@ -133,5 +136,26 @@ describe('launch documentation', () => {
     expect(analysis).toMatch(/HOOK_PERMISSION_MISMATCH/);
     expect(analysis).toMatch(/does not replace a professional smart-contract audit/i);
     expect(analysis).toMatch(/not a generic Solidity scanner/i);
+    const real = readFileSync(join(root, 'docs/research/REAL_WORLD_HOOK_ANALYSIS.md'), 'utf8');
+    const results = readFileSync(
+      join(root, 'reports/hookguard-security-analysis-results.md'),
+      'utf8',
+    );
+    expect(real).toMatch(/409/);
+    expect(real).toMatch(/not confirmed exploits/i);
+    expect(results).toMatch(/DANGEROUS_DELEGATECALL/);
+    expect(results).toMatch(/Total hooks indexed/);
+    expect(results).toMatch(/880/);
+    const evidenceSample = join(
+      root,
+      'reports/evidence/cmt5t93at074tunlawpgtyqdt.md',
+    );
+    expect(existsSync(evidenceSample)).toBe(true);
+    const evidence = readFileSync(evidenceSample, 'utf8');
+    expect(evidence).toMatch(/0x00001cd60b57fb77687985353645fb65554d0040/);
+    expect(evidence).toMatch(/DANGEROUS_DELEGATECALL/);
+    expect(evidence).toMatch(/Why it matters/);
+    expect(evidence).toMatch(/Recommended review action/);
+    expect(evidence).toMatch(/reachableFromHookCallback/);
   });
 });
