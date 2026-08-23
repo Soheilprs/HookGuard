@@ -58,7 +58,7 @@ Uniswap v4 PoolManager (Ethereum, Unichain)
         ▼
    Fastify API  ── PostgreSQL
         ▲
-   Next.js web (explorer, public pages, dashboard, methodology)
+   Next.js web (explorer, public pages, dashboard, methodology, research)
 ```
 
 Pipelines (all CLI-driven, no production cron required):
@@ -68,6 +68,7 @@ Pipelines (all CLI-driven, no production cron required):
 3. **Analyze** published rules → `Finding`
 4. **Monitor** consecutive snapshots → `SecurityEvent`
 5. **Alert** watchlists → `AlertDelivery` (Telegram or pending)
+6. **Report** landscape metrics → `reports/hookguard-security-landscape.{json,md}`
 
 Diagrams (system, index, analyze, monitor, alert): [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).  
 Operators (frontend / API / database / workers / RPC): [docs/OPERATOR.md](docs/OPERATOR.md).  
@@ -93,6 +94,8 @@ packages/types    Shared domain types
 packages/config   Environment configuration
 packages/blockchain  Chains, indexer, analysis, monitoring
 docs/             Architecture, methodology, validation, grant draft, deployment
+docs/research/    Landscape report, risk summary, case studies, validation package
+reports/          Generated security landscape (from `npm run report:risk`)
 ```
 
 ## Quick start
@@ -139,6 +142,7 @@ Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [doc
 | `npm run monitor:hooks` | Snapshots and security events |
 | `npm run alerts:retry` | Retry pending/failed Telegram deliveries |
 | `npm run validate:apply` | Apply `data/validation/dataset.json` reviews |
+| `npm run report:risk` | Generate landscape JSON + Markdown from the database |
 
 ## Documentation
 
@@ -146,6 +150,10 @@ Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [doc
 - [Security methodology](docs/SECURITY-METHODOLOGY.md)
 - [Risk framework](docs/RISK-FRAMEWORK.md)
 - [Validation](docs/VALIDATION.md)
+- [Security landscape report](docs/research/HOOKGUARD_SECURITY_REPORT.md)
+- [Risk findings summary](docs/research/RISK_FINDINGS_SUMMARY.md)
+- [Case studies](docs/research/CASE_STUDIES.md)
+- [Validation report](docs/research/VALIDATION_REPORT.md)
 - [Deployment](docs/DEPLOYMENT.md)
 - [Operator runbook](docs/OPERATOR.md)
 - [Demo walkthrough](docs/DEMO.md)
@@ -155,7 +163,7 @@ Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [doc
 
 ## Status
 
-**Phase 6 — public launch and grant submission prep.** Product phases 0–4 are implemented. Numerical risk scoring is not.
+**Phase 6.5B — security landscape reporting.** Product phases 0–6.5A are implemented. Numerical risk scoring is not.
 
 ## License
 

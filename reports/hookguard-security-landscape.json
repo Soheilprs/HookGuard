@@ -1,0 +1,139 @@
+{
+  "generatedAt": "2026-08-23T12:16:51.621Z",
+  "disclaimer": "HookGuard reports security-relevant capabilities and configurations. Findings are not confirmed exploits, not accusations of malice, and not a numerical risk score. HookGuard does not replace a professional smart-contract audit.",
+  "metrics": {
+    "coverage": {
+      "networks": [
+        {
+          "id": 1,
+          "slug": "ethereum",
+          "name": "Ethereum"
+        },
+        {
+          "id": 130,
+          "slug": "unichain",
+          "name": "Unichain"
+        }
+      ],
+      "hooksAnalyzed": 880,
+      "poolsIndexed": 2805,
+      "findings": 5066,
+      "monitoredHooks": 0,
+      "securityEvents": 0
+    },
+    "riskCategoryHooks": {
+      "FUND_SAFETY": 17,
+      "SWAP_SECURITY": 0,
+      "UPGRADE_SECURITY": 2,
+      "ADMIN_CONTROL": 0,
+      "ORACLE_SECURITY": 0,
+      "EXTERNAL_EXECUTION": 815,
+      "PERMISSION_SECURITY": 0
+    },
+    "severityFindings": {
+      "critical": 2,
+      "high": 15,
+      "medium": 2,
+      "low": 2305
+    },
+    "severityHooks": {
+      "critical": 2,
+      "high": 15,
+      "medium": 2,
+      "low": 843
+    },
+    "confidenceFindings": {
+      "CONFIRMED": 80,
+      "STRONG": 1121,
+      "OBSERVED": 3865
+    },
+    "capabilities": {
+      "beforeSwap": 789,
+      "afterSwap": 335,
+      "beforeAddLiquidity": 558,
+      "afterAddLiquidity": 95,
+      "upgradeable": 22,
+      "privilegedAdmin": 260,
+      "externalExecution": 815
+    }
+  },
+  "caseStudies": [
+    {
+      "category": "FUND_SAFETY",
+      "ruleId": "risk-privileged-asset-movement",
+      "hookAddress": "0x09017ceb0966692d7fe529c1fbed36b938232088",
+      "chainId": 1,
+      "title": "Privileged control of token-transfer functions",
+      "impact": "PRIVILEGED_TOKEN_MOVEMENT",
+      "evidence": {
+        "controllers": [
+          {
+            "id": "cmt5jeosb02snun3jvfiniivf",
+            "type": "owner",
+            "source": "owner()",
+            "address": "0xb4427ba9e1006d19362f45e3534c332b21bbe2a3",
+            "contractId": "cmt5jeore02reun3jzgob9at6"
+          }
+        ],
+        "tokenMovers": [
+          {
+            "name": "unknown",
+            "selector": "0x23b872dd"
+          },
+          {
+            "name": "unknown",
+            "selector": "0xa9059cbb"
+          }
+        ],
+        "eoaController": true
+      }
+    },
+    {
+      "category": "UPGRADE_SECURITY",
+      "ruleId": "risk-upgradeable-swap-control",
+      "hookAddress": "0x083b8e471227c65579d30fc6a923ea07eecbc080",
+      "chainId": 1,
+      "title": "Swap-path hook logic is upgradeable",
+      "impact": "SWAP_PATH_LOGIC_REPLACEABLE",
+      "evidence": {
+        "proxy": true,
+        "proxyKind": "eip-1967",
+        "adminAddress": null,
+        "swapCallbacks": [
+          "beforeSwap"
+        ],
+        "upgradeFunctions": [
+          {
+            "name": "unknown",
+            "selector": "0x3659cfe6"
+          }
+        ],
+        "eoaUpgradeController": true,
+        "implementationAddress": "0xef19a091166534a52fa9faa4305b429adf110080"
+      }
+    },
+    {
+      "category": "EXTERNAL_EXECUTION",
+      "ruleId": "risk-callback-external-execution",
+      "hookAddress": "0x0000000aa232009084bd71a5797d089aa4edfad4",
+      "chainId": 1,
+      "title": "External CALL/DELEGATECALL present alongside hook callbacks",
+      "impact": "CALLBACK_EXTERNAL_CALL",
+      "evidence": {
+        "callPresent": true,
+        "lifecycleCallbacks": [
+          "beforeInitialize",
+          "afterInitialize",
+          "beforeAddLiquidity",
+          "beforeRemoveLiquidity",
+          "beforeSwap",
+          "afterSwap",
+          "afterDonate"
+        ],
+        "delegatecallPresent": false,
+        "sourceLifecycleCalls": [],
+        "reachableFromHookCallback": false
+      }
+    }
+  ]
+}

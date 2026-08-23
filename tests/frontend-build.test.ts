@@ -14,6 +14,7 @@ const pages = [
   'src/app/methodology/page.tsx',
   'src/app/public/hooks/[address]/page.tsx',
   'src/app/watchlist/page.tsx',
+  'src/app/research/page.tsx',
 ];
 
 const components = [
@@ -130,6 +131,11 @@ describe('frontend foundation', () => {
     expect(landing).toMatch(/Roadmap/);
     expect(landing).toMatch(/does not replace a professional smart-contract audit/);
     expect(landing).not.toMatch(/riskScore/);
+    const research = readFileSync(join(web, 'src/app/research/page.tsx'), 'utf8');
+    expect(research).toMatch(/Risk categories/);
+    expect(research).toMatch(/Generated reports/);
+    expect(research).toMatch(/does not replace a professional smart-contract audit/);
+    expect(research).not.toMatch(/riskScore/);
   });
 
   it('is configured as a Next.js app that can build', () => {

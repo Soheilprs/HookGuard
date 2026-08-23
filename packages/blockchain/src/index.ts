@@ -154,3 +154,20 @@ export type {
   ValidationMetrics,
   RuleQualityRow,
 } from './analysis/index.js';
+
+export {
+  buildLandscapeReport,
+  computeLandscapeMetrics,
+  exportLandscapeJson,
+  exportLandscapeMarkdown,
+  assertReportEvidence,
+  LANDSCAPE_DISCLAIMER,
+} from './reporting/index.js';
+
+export type {
+  LandscapeReport,
+  LandscapeMetrics,
+  ReportCorpus,
+  ReportHook,
+  ReportFinding,
+} from './reporting/index.js';

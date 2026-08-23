@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, BookOpen, LayoutDashboard, Search } from 'lucide-react';
+import { Bell, BookOpen, FileText, LayoutDashboard, Search } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -10,6 +10,7 @@ const items = [
   { href: '/hooks', label: 'Hook Explorer', icon: Search },
   { href: '/watchlist', label: 'Watchlist', icon: Bell },
   { href: '/methodology', label: 'Methodology', icon: BookOpen },
+  { href: '/research', label: 'Research', icon: FileText },
 ] as const;
 
 export function Sidebar() {

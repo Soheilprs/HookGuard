@@ -10,6 +10,7 @@ import {
   type ContractService,
 } from './modules/contracts/contract.service.js';
 import { statsController } from './modules/stats/stats.controller.js';
+import { researchController } from './modules/research/research.controller.js';
 import { findingController } from './modules/findings/finding.controller.js';
 import {
   createFindingService,
@@ -83,6 +84,7 @@ export async function buildApp(deps: AppDeps = {}): Promise<FastifyInstance> {
 
   await healthRoutes(app, { ping: deps.databasePing });
   await app.register(statsController);
+  await app.register(researchController);
 
   const hookService = deps.hookService ?? createHookService();
   await app.register(async (instance) => hookController(instance, { service: hookService }));

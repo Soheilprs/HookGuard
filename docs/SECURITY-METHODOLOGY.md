@@ -67,7 +67,7 @@ UUPS is **not** claimed merely because an implementation slot is set.
 
 Precision = `confirmed / (confirmed + false positives)`. `NEEDS_CONTEXT` is excluded on purpose. Reviewers must not convert heuristics into confirmed vulns to improve the number.
 
-Phase 2C reviewed **20** real hooks and **135** findings: 80 confirmed, 0 false positive, 55 needs context.
+Phase 2C reviewed **20** real hooks and **135** findings: 80 confirmed, 0 false positive, 55 needs context. Expanded write-up: [research/VALIDATION_REPORT.md](./research/VALIDATION_REPORT.md). Landscape metrics: [research/HOOKGUARD_SECURITY_REPORT.md](./research/HOOKGUARD_SECURITY_REPORT.md).
 
 ## Limitations
 

@@ -3,6 +3,7 @@ export const marketingLinks = [
   { href: '/hooks', label: 'Explorer' },
   { href: '/watchlist', label: 'Watchlist' },
   { href: '/methodology', label: 'Methodology' },
+  { href: '/research', label: 'Research' },
 ] as const;
 
 export const appNav = [
@@ -10,4 +11,5 @@ export const appNav = [
   { href: '/hooks', label: 'Hook Explorer', icon: 'search' },
   { href: '/watchlist', label: 'Watchlist', icon: 'bell' },
   { href: '/methodology', label: 'Methodology', icon: 'book' },
+  { href: '/research', label: 'Research', icon: 'file' },
 ] as const;

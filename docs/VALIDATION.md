@@ -2,6 +2,8 @@
 
 Manual review of HookGuard findings on **real** Uniswap v4 deployments.
 
+Grant-facing expansion: [research/VALIDATION_REPORT.md](./research/VALIDATION_REPORT.md). Landscape snapshot: [research/HOOKGUARD_SECURITY_REPORT.md](./research/HOOKGUARD_SECURITY_REPORT.md).
+
 Dataset: `data/validation/dataset.json`
 
 HookGuard does not replace a professional smart-contract audit. Validation improves trustworthiness of **existing** rules. It is not a count of “vulns found.”

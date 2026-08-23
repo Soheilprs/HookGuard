@@ -16,6 +16,12 @@ const required = [
   'docs/OPERATOR.md',
   'docs/DEMO.md',
   'docs/RISK-FRAMEWORK.md',
+  'docs/research/HOOKGUARD_SECURITY_REPORT.md',
+  'docs/research/RISK_FINDINGS_SUMMARY.md',
+  'docs/research/CASE_STUDIES.md',
+  'docs/research/VALIDATION_REPORT.md',
+  'reports/hookguard-security-landscape.md',
+  'reports/hookguard-security-landscape.json',
   'docs/screenshots/homepage.jpg',
   'docs/screenshots/explorer.jpg',
   'docs/screenshots/findings.jpg',
@@ -49,5 +55,39 @@ describe('launch documentation', () => {
     expect(demo).toMatch(/Hook exploration/);
     expect(demo).toMatch(/Findings walkthrough/);
     expect(demo).toMatch(/Monitoring walkthrough/);
+  });
+
+  it('packages a research landscape with evidence, not scores', () => {
+    const report = readFileSync(join(root, 'docs/research/HOOKGUARD_SECURITY_REPORT.md'), 'utf8');
+    const summary = readFileSync(join(root, 'docs/research/RISK_FINDINGS_SUMMARY.md'), 'utf8');
+    const cases = readFileSync(join(root, 'docs/research/CASE_STUDIES.md'), 'utf8');
+    const validation = readFileSync(join(root, 'docs/research/VALIDATION_REPORT.md'), 'utf8');
+    const landscape = readFileSync(join(root, 'reports/hookguard-security-landscape.md'), 'utf8');
+    const landscapeJson = JSON.parse(
+      readFileSync(join(root, 'reports/hookguard-security-landscape.json'), 'utf8'),
+    ) as {
+      metrics: { coverage: { hooksAnalyzed: number; poolsIndexed: number; findings: number } };
+      caseStudies: Array<{ evidence: Record<string, unknown> }>;
+    };
+
+    expect(report).toMatch(/does not replace a professional smart-contract audit/i);
+    expect(report).toMatch(/880/);
+    expect(report).toMatch(/2805|2,805/);
+    expect(summary).toMatch(/Uniswap Foundation/);
+    expect(summary).not.toMatch(/monthly active users/i);
+    expect(cases).toMatch(/0x083b8e471227c65579d30fc6a923ea07eecbc080/);
+    expect(cases).toMatch(/Do not treat these as accusations/);
+    expect(validation).toMatch(/Reviewed hooks/);
+    expect(validation).toMatch(/\*\*20\*\*/);
+    expect(validation).toMatch(/\*\*135\*\*/);
+    expect(validation).toMatch(/not automatically vulnerabilities/);
+    expect(landscape).toMatch(/does not replace a professional smart-contract audit/i);
+    expect(landscapeJson.metrics.coverage.hooksAnalyzed).toBeGreaterThan(0);
+    expect(landscapeJson.caseStudies.every((study) => Object.keys(study.evidence).length > 0)).toBe(
+      true,
+    );
+    expect(report).not.toMatch(/riskScore/);
+    expect(summary).toMatch(/not mean confirmed exploits/i);
+    expect(summary).not.toMatch(/user funds were stolen/i);
   });
 });

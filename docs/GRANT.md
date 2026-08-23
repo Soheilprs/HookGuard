@@ -84,6 +84,8 @@ From the Phase 2C run against **real** PoolManager logs. [VALIDATION.md](./VALID
 | 4 | Public pages, watchlists, Telegram-optional alerts |
 | 5 | Launch docs, grant draft, deployment notes |
 | 6 | `/ready`, CORS production rules, operator runbook, demo walkthrough |
+| 6.5A | Risk taxonomy and AND-correlated capability findings (no scores) |
+| 6.5B | Landscape report CLI, `docs/research/`, `/research` UI |
 
 ## Future roadmap (not built)
 
@@ -100,5 +102,15 @@ From the Phase 2C run against **real** PoolManager logs. [VALIDATION.md](./VALID
 1. Archive RPC and explorer APIs so the public corpus is complete and verified-source rates are measurable.
 2. A hosted **read-only** instance (web + API + Postgres) with `/health` and `/ready`.
 3. Continued validation of **existing** rules on new deployments — not speculative detectors.
+
+Grant-facing research package (same corpus, no invented metrics):
+
+- [Security landscape report](./research/HOOKGUARD_SECURITY_REPORT.md)
+- [Risk findings summary](./research/RISK_FINDINGS_SUMMARY.md)
+- [Case studies](./research/CASE_STUDIES.md)
+- [Validation report](./research/VALIDATION_REPORT.md)
+- Generated snapshot: [`reports/hookguard-security-landscape.md`](../reports/hookguard-security-landscape.md) (`npm run report:risk`)
+
+After the risk-correlation layer, the same 880 hooks produced **5,066** findings (Phase 2C observation-only total was 4,232). Unique-hook risk categories in that snapshot: `FUND_SAFETY` 17, `UPGRADE_SECURITY` 2, `EXTERNAL_EXECUTION` 815, `SWAP_SECURITY` / `ORACLE_SECURITY` / `ADMIN_CONTROL` / `PERMISSION_SECURITY` 0.
 
 Success is **published evidence about real hooks**, not a count of “vulnerabilities found.”

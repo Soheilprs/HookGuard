@@ -19,6 +19,7 @@
     "monitor:hooks": "tsx src/cli/monitor-hooks.ts",
     "alerts:retry": "tsx src/cli/retry-alerts.ts",
     "validate:apply": "tsx src/cli/apply-validation.ts",
+    "report:risk": "tsx src/cli/report-risk.ts",
     "clean": "rm -rf dist"
   },
   "dependencies": {
