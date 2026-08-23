@@ -89,3 +89,22 @@ export type {
   PermissionFact,
   ContractIntelligenceFacts,
 } from './contract/index.js';
+
+export {
+  runAnalysis,
+  DEFAULT_RULES,
+  engineRuleIds,
+  scanOpcodes,
+  hookAddressFlags,
+  HOOK_CALLBACKS,
+  PRIVILEGED_FUNCTIONS,
+} from './analysis/index.js';
+
+export type {
+  AnalysisInput,
+  AnalysisFunction,
+  AnalysisPermission,
+  AnalysisProxy,
+  AnalysisRule,
+  EngineFinding,
+} from './analysis/index.js';

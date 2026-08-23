@@ -64,7 +64,17 @@ const requiredModels: Record<string, string[]> = {
     'stateMutability',
   ],
   ContractPermission: ['id', 'contractId', 'type', 'address', 'source'],
-  Finding: ['id', 'hookId', 'category', 'severity', 'description', 'createdAt'],
+  Finding: [
+    'id',
+    'hookId',
+    'ruleId',
+    'title',
+    'category',
+    'severity',
+    'description',
+    'evidence',
+    'createdAt',
+  ],
   IndexerCheckpoint: [
     'id',
     'chainId',

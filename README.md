@@ -58,6 +58,7 @@ Index Uniswap v4 hooks (read-only, no keys):
 npm run db:migrate:deploy -w @hookguard/api
 npm run index:v4 -- --chain=ethereum --max-blocks=5000
 npm run inspect:contracts -- --chain=ethereum
+npm run analyze:hooks -- --chain=ethereum
 ```
 
 Copy `.env.example` values into `.env` files. **Never commit secrets.**
@@ -74,6 +75,7 @@ Copy `.env.example` values into `.env` files. **Never commit secrets.**
 | `npm run db:validate` | Prisma schema check |
 | `npm run index:v4` | Discover Uniswap v4 hooks (read-only) |
 | `npm run inspect:contracts` | Collect hook bytecode / source / proxy facts |
+| `npm run analyze:hooks` | Run evidence-based security rules (no scores) |
 
 ## Tech stack
 
@@ -89,7 +91,7 @@ Copy `.env.example` values into `.env` files. **Never commit secrets.**
 
 ## Status
 
-**Phase 2A — contract intelligence.** Hooks are discovered from PoolManager events. Bytecode, source, proxy, and permission facts are collected. No scores.
+**Phase 2B — security analysis.** Evidence-based findings from proxy, ownership, lifecycle, external-call, and privileged-function rules. No numerical risk scores.
 
 ## License
 

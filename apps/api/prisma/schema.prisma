@@ -112,19 +112,24 @@ model ContractPermission {
   @@map("contract_permissions")
 }
 
-/// A structured security observation about a hook. Empty until analysis runs.
+/// An evidence-based security observation. Never stored without evidence JSON.
 model Finding {
   id          String   @id @default(cuid())
   hookId      String
+  ruleId      String
+  title       String
   category    String
   severity    String
   description String   @db.Text
+  evidence    Json
   createdAt   DateTime @default(now())
 
   hook Hook @relation(fields: [hookId], references: [id], onDelete: Cascade)
 
+  @@unique([hookId, ruleId])
   @@index([hookId])
   @@index([severity])
+  @@index([ruleId])
   @@map("findings")
 }
 

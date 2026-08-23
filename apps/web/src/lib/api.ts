@@ -1,6 +1,7 @@
 import type {
   HookContractResponse,
   HookDetailResponse,
+  HookFindingsResponse,
   HookListResponse,
   RegistryStats,
 } from '@hookguard/types';
@@ -83,6 +84,37 @@ export async function fetchHookContractSafe(
 ): Promise<HookContractResponse | null> {
   try {
     return await fetchHookContract(address, chainId);
+  } catch (error) {
+    if (
+      error &&
+      typeof error === 'object' &&
+      'status' in error &&
+      error.status === 404
+    ) {
+      return { deployments: [] };
+    }
+    return null;
+  }
+}
+
+export async function fetchHookFindings(
+  address: string,
+  chainId?: number,
+): Promise<HookFindingsResponse> {
+  const params = new URLSearchParams();
+  if (chainId !== undefined) params.set('chainId', String(chainId));
+  const query = params.toString();
+  return getJson<HookFindingsResponse>(
+    `/hooks/${encodeURIComponent(address)}/findings${query ? `?${query}` : ''}`,
+  );
+}
+
+export async function fetchHookFindingsSafe(
+  address: string,
+  chainId?: number,
+): Promise<HookFindingsResponse | null> {
+  try {
+    return await fetchHookFindings(address, chainId);
   } catch (error) {
     if (
       error &&

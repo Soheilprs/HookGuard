@@ -92,3 +92,20 @@ export interface HookContractResponse {
     analysisStatus: 'pending';
   }>;
 }
+
+export interface FindingItem {
+  ruleId: string;
+  title: string;
+  category: string;
+  severity: string;
+  description: string;
+  evidence: Record<string, unknown>;
+  createdAt: string;
+}
+
+export interface HookFindingsResponse {
+  deployments: Array<{
+    hook: HookListItem;
+    findings: FindingItem[];
+  }>;
+}

@@ -2,14 +2,14 @@ import { explorerAddressUrl } from '@hookguard/blockchain';
 import { isAddress } from 'viem';
 import { ShieldOff } from 'lucide-react';
 import Link from 'next/link';
-import { AnalysisPending } from '@/components/analysis-pending';
 import { ContractIntelligencePanel } from '@/components/contract-intelligence';
+import { SecurityFindings } from '@/components/security-findings';
 import { AppShell } from '@/components/layout/app-shell';
 import { EmptyState } from '@/components/empty-state';
 import { PoolsTable } from '@/components/pools-table';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { fetchHookContractSafe, fetchHookSafe } from '@/lib/api';
+import { fetchHookContractSafe, fetchHookFindingsSafe, fetchHookSafe } from '@/lib/api';
 import { formatBlock, formatIndexedAt } from '@/lib/format';
 import { truncateAddress } from '@/lib/utils';
 import type { ReactNode } from 'react';
@@ -33,15 +33,19 @@ export default async function HookDetailPage({
   const valid = isAddress(decoded, { strict: false });
   const chainId = query.chainId ? Number(query.chainId) : undefined;
   const filterChain = Number.isInteger(chainId) ? chainId : undefined;
-  const [payload, contractPayload] = valid
+  const [payload, contractPayload, findingsPayload] = valid
     ? await Promise.all([
         fetchHookSafe(decoded, filterChain),
         fetchHookContractSafe(decoded, filterChain),
+        fetchHookFindingsSafe(decoded, filterChain),
       ])
-    : [null, null];
+    : [null, null, null];
   const deployments = payload?.deployments ?? [];
   const contractsByChain = new Map(
     (contractPayload?.deployments ?? []).map((row) => [row.hook.chainId, row.contract]),
+  );
+  const findingsByChain = new Map(
+    (findingsPayload?.deployments ?? []).map((row) => [row.hook.chainId, row.findings]),
   );
 
   return (
@@ -99,7 +103,9 @@ export default async function HookDetailPage({
             );
             return (
               <div key={deployment.hook.id} className="space-y-4">
-                <AnalysisPending />
+                <SecurityFindings
+                  findings={findingsByChain.get(deployment.hook.chainId) ?? []}
+                />
 
                 <div className="grid gap-4 md:grid-cols-2">
                   <Card>

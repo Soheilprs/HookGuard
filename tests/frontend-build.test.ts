@@ -23,6 +23,7 @@ const components = [
   'src/components/empty-state.tsx',
   'src/components/loading-state.tsx',
   'src/components/contract-intelligence.tsx',
+  'src/components/security-findings.tsx',
 ];
 
 describe('frontend foundation', () => {
@@ -45,8 +46,8 @@ describe('frontend foundation', () => {
       join(web, 'src/app/hooks/[address]/page.tsx'),
       'utf8',
     );
-    const pending = readFileSync(
-      join(web, 'src/components/analysis-pending.tsx'),
+    const findings = readFileSync(
+      join(web, 'src/components/security-findings.tsx'),
       'utf8',
     );
     const intelligence = readFileSync(
@@ -55,11 +56,14 @@ describe('frontend foundation', () => {
     );
 
     expect(explorer + table).toMatch(/No hooks indexed yet/);
-    expect(pending).toMatch(/Security analysis pending/);
+    expect(findings).toMatch(/Security Findings/);
+    expect(findings).toMatch(/evidence/);
+    expect(detail).not.toMatch(/Security analysis pending/);
     expect(intelligence).toMatch(/Contract Intelligence/);
     expect(intelligence).toMatch(/Functions/);
     expect(intelligence).toMatch(/Permissions/);
     expect(detail).not.toMatch(/riskScore:\s*[1-9]/);
+    expect(findings).not.toMatch(/riskScore/);
   });
 
   it('is configured as a Next.js app that can build', () => {

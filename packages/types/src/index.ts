@@ -4,6 +4,7 @@ export type { Contract, ContractFunction, ContractPermission } from './contract.
 export type {
   Finding,
   FindingCategory,
+  FindingEvidence,
   FindingSeverity,
 } from './finding.js';
 export type { RiskLevel, RiskScore } from './risk.js';
@@ -21,4 +22,6 @@ export type {
   ContractPermissionItem,
   ContractIntelligence,
   HookContractResponse,
+  FindingItem,
+  HookFindingsResponse,
 } from './api.js';
