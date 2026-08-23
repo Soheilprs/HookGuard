@@ -1,8 +1,7 @@
-import { Layers, Search, ShieldAlert, Sigma } from 'lucide-react';
+import { FileCode, Layers, Search, ShieldAlert } from 'lucide-react';
 import { AppShell } from '@/components/layout/app-shell';
 import { EmptyState } from '@/components/empty-state';
 import { HooksTable } from '@/components/hooks-table';
-import { ScoreBadge } from '@/components/score-badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { fetchHooksSafe, fetchStatsSafe } from '@/lib/api';
 
@@ -20,7 +19,7 @@ export default async function DashboardPage() {
     { label: 'Hooks indexed', value: String(stats.hooksIndexed), icon: Layers },
     { label: 'Pools tracked', value: String(stats.poolsTracked), icon: Search },
     { label: 'Findings', value: String(stats.findings), icon: ShieldAlert },
-    { label: 'Average risk', value: stats.averageRisk, icon: Sigma },
+    { label: 'Verified source', value: String(stats.verifiedSource), icon: FileCode },
   ] as const;
 
   return (
@@ -28,7 +27,8 @@ export default async function DashboardPage() {
       <div className="mb-8">
         <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Live snapshot of the HookGuard registry. Risk scoring is not enabled yet.
+          Live snapshot of the HookGuard registry. Findings are evidence-backed.
+          Numerical risk scores are not produced.
         </p>
       </div>
 
@@ -42,11 +42,7 @@ export default async function DashboardPage() {
               <card.icon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              {typeof card.value === 'number' || card.value === null ? (
-                <ScoreBadge score={card.value} className="min-w-12 text-lg" />
-              ) : (
-                <p className="text-2xl font-semibold tracking-tight">{card.value}</p>
-              )}
+              <p className="text-2xl font-semibold tracking-tight">{card.value}</p>
             </CardContent>
           </Card>
         ))}

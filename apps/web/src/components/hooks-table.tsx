@@ -11,6 +11,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { formatIndexedAt } from '@/lib/format';
+import { ChainBadge } from '@/components/chain-badge';
 import { truncateAddress } from '@/lib/utils';
 
 export function HooksTable({ hooks }: { hooks: HookListItem[] }) {
@@ -45,7 +46,9 @@ export function HooksTable({ hooks }: { hooks: HookListItem[] }) {
                 {truncateAddress(hook.address, 6)}
               </Link>
             </TableCell>
-            <TableCell>{hook.chain.name}</TableCell>
+            <TableCell>
+              <ChainBadge name={hook.chain.name} />
+            </TableCell>
             <TableCell className="font-mono text-sm">{hook.poolCount}</TableCell>
             <TableCell className="text-muted-foreground">
               {formatIndexedAt(hook.lastIndexedAt)}

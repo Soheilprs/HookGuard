@@ -1,5 +1,8 @@
 import { toFunctionSelector } from 'viem';
+import type { HookPermissionClass } from '@hookguard/types';
 import type { AnalysisInput, AnalysisRule, EngineFinding } from '../types.js';
+import { hasNamedAbi } from '../types.js';
+import { ruleTier } from '../tiers.js';
 
 export interface HookCallbackSpec {
   name: string;
@@ -117,15 +120,19 @@ export const hooksLifecycleRule: AnalysisRule = {
   run(input: AnalysisInput): EngineFinding[] {
     const callbacks = detectedCallbacks(input);
     if (callbacks.length === 0) return [];
+    const named = hasNamedAbi(input);
     return [
       {
         ruleId: this.id,
         title: 'Uniswap v4 hook lifecycle callbacks present',
         category: 'hook-lifecycle',
         severity: 'info',
+        confidence: named ? 'HIGH' : 'MEDIUM',
+        detectionSource: named ? 'VERIFIED_ABI' : 'BYTECODE_SELECTOR',
+        ruleTier: named ? 2 : 3,
         description:
           'ABI and/or bytecode selectors match Uniswap v4 IHooks callbacks. This lists which pool lifecycle points the hook can run at.',
-        evidence: { callbacks },
+        evidence: { callbacks, namedAbi: named },
       },
     ];
   },
@@ -142,6 +149,9 @@ export const hooksAddressFlagsRule: AnalysisRule = {
         title: 'Hook address permission flags are set',
         category: 'hook-lifecycle',
         severity: 'info',
+        confidence: 'HIGH',
+        detectionSource: 'HOOK_ADDRESS_FLAGS',
+        ruleTier: ruleTier(this.id, 1),
         description:
           'Uniswap v4 encodes enabled callbacks in the low 14 bits of the hook address. Those bits are set on this address.',
         evidence: {
@@ -154,30 +164,93 @@ export const hooksAddressFlagsRule: AnalysisRule = {
   },
 };
 
-export const hooksFlagMismatchRule: AnalysisRule = {
-  id: 'hooks-flag-mismatch',
+export function classifyHookPermissions(input: AnalysisInput): {
+  classification: HookPermissionClass;
+  flags: string[];
+  callbacks: string[];
+  extraImplemented: string[];
+  missingExpected: string[];
+} {
+  const flags = hookAddressFlags(input.hookAddress);
+  const callbacks = detectedCallbacks(input).map((item) => item.name);
+  const flagSet = new Set(flags);
+  const callbackSet = new Set(callbacks);
+  const extraImplemented = callbacks.filter((name) => !flagSet.has(name));
+  const missingExpected = flags.filter((name) => !callbackSet.has(name));
+
+  if (!hasNamedAbi(input) && !input.sourceVerified) {
+    return {
+      classification: 'UNKNOWN_SOURCE',
+      flags,
+      callbacks,
+      extraImplemented,
+      missingExpected,
+    };
+  }
+  if (missingExpected.length > 0) {
+    return {
+      classification: 'MISSING_EXPECTED_CALLBACK',
+      flags,
+      callbacks,
+      extraImplemented,
+      missingExpected,
+    };
+  }
+  if (extraImplemented.length > 0) {
+    return {
+      classification: 'EXTRA_IMPLEMENTED_CALLBACK',
+      flags,
+      callbacks,
+      extraImplemented,
+      missingExpected,
+    };
+  }
+  return {
+    classification: 'MATCH',
+    flags,
+    callbacks,
+    extraImplemented,
+    missingExpected,
+  };
+}
+
+export const hooksPermissionCompareRule: AnalysisRule = {
+  id: 'hooks-permission-compare',
   run(input: AnalysisInput): EngineFinding[] {
-    const flags = new Set(hookAddressFlags(input.hookAddress));
-    const callbacks = new Set(detectedCallbacks(input).map((item) => item.name));
-    if (flags.size === 0 || callbacks.size === 0) return [];
-
-    const flagWithoutFn = [...flags].filter((name) => !callbacks.has(name));
-    const fnWithoutFlag = [...callbacks].filter((name) => !flags.has(name));
-    if (flagWithoutFn.length === 0 && fnWithoutFlag.length === 0) return [];
-
+    const compared = classifyHookPermissions(input);
+    if (compared.flags.length === 0 && compared.callbacks.length === 0) return [];
+    const extra = compared.classification === 'EXTRA_IMPLEMENTED_CALLBACK';
+    const missing = compared.classification === 'MISSING_EXPECTED_CALLBACK';
+    const unknown = compared.classification === 'UNKNOWN_SOURCE';
     return [
       {
         ruleId: this.id,
-        title: 'Hook address flags do not match implemented callbacks',
+        title: extra
+          ? 'Implemented callback is not set in hook address flags'
+          : missing
+            ? 'Hook address flag has no matching implemented callback'
+            : unknown
+              ? 'Hook permission comparison is incomplete without verified ABI'
+              : 'Hook address flags match implemented callbacks',
         category: 'hook-lifecycle',
-        severity: 'medium',
-        description:
-          'The permission bits encoded in the hook address differ from the IHooks functions found in ABI/bytecode.',
+        severity: 'info',
+        confidence: unknown ? 'LOW' : 'HIGH',
+        detectionSource: unknown ? 'BYTECODE_SELECTOR' : 'HOOK_ADDRESS_FLAGS',
+        ruleTier: unknown ? 3 : 1,
+        description: extra
+          ? 'A lifecycle function appears in ABI/bytecode but the corresponding permission bit is not set on the hook address. PoolManager will not call it. This is not automatically a vulnerability.'
+          : missing
+            ? 'A permission bit is set on the hook address but the matching IHooks function was not found. This may be an unverified implementation or a selector mismatch.'
+            : unknown
+              ? 'Flags and/or selectors were observed, but without a verified ABI the comparison is incomplete.'
+              : 'Enabled hook-address flags match the discovered IHooks callbacks.',
         evidence: {
-          flagsSet: [...flags],
-          callbacksFound: [...callbacks],
-          flagWithoutFunction: flagWithoutFn,
-          functionWithoutFlag: fnWithoutFlag,
+          classification: compared.classification,
+          flagsSet: compared.flags,
+          callbacksFound: compared.callbacks,
+          extraImplemented: compared.extraImplemented,
+          missingExpected: compared.missingExpected,
+          sourceVerified: input.sourceVerified,
         },
       },
     ];
@@ -187,5 +260,5 @@ export const hooksFlagMismatchRule: AnalysisRule = {
 export const hooksRules: AnalysisRule[] = [
   hooksLifecycleRule,
   hooksAddressFlagsRule,
-  hooksFlagMismatchRule,
+  hooksPermissionCompareRule,
 ];

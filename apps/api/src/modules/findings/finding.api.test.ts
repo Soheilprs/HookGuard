@@ -47,6 +47,8 @@ beforeAll(async () => {
         severity: 'info',
         description: 'Storage-slot inspection shows a proxy.',
         evidence: { kind: 'transparent', implementationAddress: '0x2222' },
+        confidence: 'HIGH',
+        detectionSource: 'EIP1967_STORAGE',
       },
     ],
   );
@@ -69,6 +71,9 @@ describe('GET /hooks/:address/findings', () => {
           ruleId: string;
           title: string;
           severity: string;
+          confidence: string;
+          detectionSource: string;
+          validationStatus: string;
           category: string;
           description: string;
           evidence: Record<string, unknown>;
@@ -80,7 +85,11 @@ describe('GET /hooks/:address/findings', () => {
     expect(finding?.title).toBe('Hook is deployed behind a proxy');
     expect(finding?.severity).toBe('info');
     expect(finding?.evidence.kind).toBe('transparent');
+    expect(finding?.confidence).toBe('HIGH');
+    expect(finding?.detectionSource).toBe('EIP1967_STORAGE');
+    expect(finding?.validationStatus).toBe('UNREVIEWED');
     expect(JSON.stringify(body)).not.toMatch(/riskScore/);
+    expect(JSON.stringify(body)).not.toMatch(/validationNotes/);
   });
 
   it('returns 404 for an unknown hook', async () => {

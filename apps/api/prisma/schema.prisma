@@ -114,15 +114,20 @@ model ContractPermission {
 
 /// An evidence-based security observation. Never stored without evidence JSON.
 model Finding {
-  id          String   @id @default(cuid())
-  hookId      String
-  ruleId      String
-  title       String
-  category    String
-  severity    String
-  description String   @db.Text
-  evidence    Json
-  createdAt   DateTime @default(now())
+  id               String    @id @default(cuid())
+  hookId           String
+  ruleId           String
+  title            String
+  category         String
+  severity         String
+  confidence       String    @default("MEDIUM")
+  detectionSource  String    @default("BYTECODE_OPCODE")
+  validationStatus String    @default("UNREVIEWED")
+  validatedAt      DateTime?
+  validationNotes  String?   @db.Text
+  description      String    @db.Text
+  evidence         Json
+  createdAt        DateTime  @default(now())
 
   hook Hook @relation(fields: [hookId], references: [id], onDelete: Cascade)
 
@@ -130,6 +135,8 @@ model Finding {
   @@index([hookId])
   @@index([severity])
   @@index([ruleId])
+  @@index([confidence])
+  @@index([validationStatus])
   @@map("findings")
 }
 

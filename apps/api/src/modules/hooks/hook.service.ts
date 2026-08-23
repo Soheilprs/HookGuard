@@ -72,6 +72,9 @@ export class HookService {
       poolsTracked,
       findings: 0,
       averageRisk: null,
+      contractsInspected: 0,
+      verifiedSource: 0,
+      byChain: [],
     };
   }
 }

@@ -1,18 +1,18 @@
 # HookGuard
 
-Open-source **security intelligence** for [Uniswap v4](https://docs.uniswap.org/contracts/v4/overview) hooks.
+Open-source **evidence-backed security intelligence** for [Uniswap v4](https://docs.uniswap.org/contracts/v4/overview) hooks.
 
-HookGuard is a registry, analysis engine, and risk dashboard — not an AI auditor and not a generic smart-contract scanner. It exists so developers, liquidity providers, researchers, and protocols can understand hook security risk before capital is at stake.
+HookGuard is not primarily another hook registry, a generic v4 analytics product, a generic smart-contract scanner, or an AI auditor. It exists so developers, liquidity providers, researchers, and protocols can inspect **deployed** hooks with published evidence.
 
-The registry and contract intelligence layers are live. Security analysis and scoring are not implemented.
+HookGuard does not replace a professional smart-contract audit. It does not produce a numerical hook risk score.
 
 ## Product
 
 | Surface | Purpose |
 | --- | --- |
 | Hook Registry | Canonical catalog of v4 hooks and the pools that use them |
-| Security Analysis Engine | Deterministic, hook-specific checks (permissions, lifecycle, PoolManager interaction) |
-| Risk Dashboard | Scores and findings — empty until the engine has real results |
+| Security Analysis Engine | Evidence-based, hook-specific findings (permissions, lifecycle, proxy, external calls) |
+| Findings UI | Severity, confidence, detection source, and evidence — not a risk score |
 
 Supported chains in Phase 0 configuration: **Ethereum** (`1`) and **Unichain** (`130`).
 
@@ -76,6 +76,7 @@ Copy `.env.example` values into `.env` files. **Never commit secrets.**
 | `npm run index:v4` | Discover Uniswap v4 hooks (read-only) |
 | `npm run inspect:contracts` | Collect hook bytecode / source / proxy facts |
 | `npm run analyze:hooks` | Run evidence-based security rules (no scores) |
+| `npm run validate:apply` | Apply manual validation reviews from `data/validation/dataset.json` |
 
 ## Tech stack
 
@@ -88,10 +89,12 @@ Copy `.env.example` values into `.env` files. **Never commit secrets.**
 - [Architecture](docs/ARCHITECTURE.md)
 - [Roadmap](docs/ROADMAP.md)
 - [Security model](docs/SECURITY-MODEL.md)
+- [Security methodology](docs/SECURITY-METHODOLOGY.md)
+- [Validation](docs/VALIDATION.md)
 
 ## Status
 
-**Phase 2B — security analysis.** Evidence-based findings from proxy, ownership, lifecycle, external-call, and privileged-function rules. No numerical risk scores.
+**Phase 2C — validated findings.** Real Ethereum and Unichain hooks are indexed, inspected, and analyzed. Findings carry confidence, detection source, and optional manual validation status. No numerical risk scores.
 
 ## License
 

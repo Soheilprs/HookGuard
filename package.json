@@ -23,9 +23,10 @@
     "format:check": "prettier --check .",
     "db:generate": "npm run db:generate -w @hookguard/api",
     "db:validate": "npm run db:validate -w @hookguard/api",
-    "index:v4": "npm run index:v4 -w @hookguard/api",
-    "inspect:contracts": "npm run inspect:contracts -w @hookguard/api",
-    "analyze:hooks": "npm run analyze:hooks -w @hookguard/api",
+    "index:v4": "npm run index:v4 -w @hookguard/api --",
+    "inspect:contracts": "npm run inspect:contracts -w @hookguard/api --",
+    "analyze:hooks": "npm run analyze:hooks -w @hookguard/api --",
+    "validate:apply": "npm run validate:apply -w @hookguard/api --",
     "clean": "rm -rf apps/*/.next apps/*/dist packages/*/dist coverage"
   },
   "devDependencies": {

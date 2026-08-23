@@ -8,6 +8,11 @@ export interface FindingRecord {
   title: string;
   category: string;
   severity: string;
+  confidence: string;
+  detectionSource: string;
+  validationStatus: string;
+  validatedAt: Date | null;
+  validationNotes: string | null;
   description: string;
   evidence: Record<string, unknown>;
   createdAt: Date;
@@ -19,8 +24,18 @@ export interface SaveFindingInput {
   title: string;
   category: string;
   severity: string;
+  confidence: string;
+  detectionSource: string;
   description: string;
   evidence: Record<string, unknown>;
+}
+
+export interface FindingReviewInput {
+  hookId: string;
+  ruleId: string;
+  status: string;
+  notes: string;
+  validatedAt?: Date;
 }
 
 export interface FindingRepository {
@@ -30,6 +45,8 @@ export interface FindingRepository {
     findings: SaveFindingInput[],
   ): Promise<FindingRecord[]>;
   listByHookId(hookId: string): Promise<FindingRecord[]>;
+  applyReview(input: FindingReviewInput): Promise<void>;
+  countAll(): Promise<number>;
 }
 
 export class InMemoryFindingRepository implements FindingRepository {
@@ -62,6 +79,11 @@ export class InMemoryFindingRepository implements FindingRepository {
         title: input.title,
         category: input.category,
         severity: input.severity,
+        confidence: input.confidence,
+        detectionSource: input.detectionSource,
+        validationStatus: existing?.validationStatus ?? 'UNREVIEWED',
+        validatedAt: existing?.validatedAt ?? null,
+        validationNotes: existing?.validationNotes ?? null,
         description: input.description,
         evidence: input.evidence,
         createdAt: existing?.createdAt ?? new Date(),
@@ -76,6 +98,18 @@ export class InMemoryFindingRepository implements FindingRepository {
     return [...this.findings.values()]
       .filter((row) => row.hookId === hookId)
       .sort((a, b) => a.ruleId.localeCompare(b.ruleId));
+  }
+
+  async applyReview(input: FindingReviewInput): Promise<void> {
+    const row = this.findings.get(this.key(input.hookId, input.ruleId));
+    if (!row) return;
+    row.validationStatus = input.status;
+    row.validationNotes = input.notes;
+    row.validatedAt = input.validatedAt ?? new Date();
+  }
+
+  async countAll(): Promise<number> {
+    return this.findings.size;
   }
 }
 
@@ -106,6 +140,9 @@ export class PrismaFindingRepository implements FindingRepository {
             title: input.title,
             category: input.category,
             severity: input.severity,
+            confidence: input.confidence,
+            detectionSource: input.detectionSource,
+            validationStatus: 'UNREVIEWED',
             description: input.description,
             evidence: input.evidence as Prisma.InputJsonValue,
           },
@@ -113,6 +150,8 @@ export class PrismaFindingRepository implements FindingRepository {
             title: input.title,
             category: input.category,
             severity: input.severity,
+            confidence: input.confidence,
+            detectionSource: input.detectionSource,
             description: input.description,
             evidence: input.evidence as Prisma.InputJsonValue,
           },
@@ -130,6 +169,21 @@ export class PrismaFindingRepository implements FindingRepository {
     });
     return rows.map(toRecord);
   }
+
+  async applyReview(input: FindingReviewInput): Promise<void> {
+    await this.prisma.finding.updateMany({
+      where: { hookId: input.hookId, ruleId: input.ruleId },
+      data: {
+        validationStatus: input.status,
+        validationNotes: input.notes,
+        validatedAt: input.validatedAt ?? new Date(),
+      },
+    });
+  }
+
+  async countAll(): Promise<number> {
+    return this.prisma.finding.count();
+  }
 }
 
 function toRecord(row: {
@@ -139,6 +193,11 @@ function toRecord(row: {
   title: string;
   category: string;
   severity: string;
+  confidence: string;
+  detectionSource: string;
+  validationStatus: string;
+  validatedAt: Date | null;
+  validationNotes: string | null;
   description: string;
   evidence: unknown;
   createdAt: Date;

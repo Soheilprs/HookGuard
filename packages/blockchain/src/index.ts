@@ -96,8 +96,16 @@ export {
   engineRuleIds,
   scanOpcodes,
   hookAddressFlags,
+  classifyHookPermissions,
   HOOK_CALLBACKS,
   PRIVILEGED_FUNCTIONS,
+  RULE_TIERS,
+  ruleTier,
+  parseValidationDataset,
+  computeValidationMetrics,
+  precision,
+  associateCallsWithSource,
+  privilegedMutators,
 } from './analysis/index.js';
 
 export type {
@@ -107,4 +115,8 @@ export type {
   AnalysisProxy,
   AnalysisRule,
   EngineFinding,
+  ValidationDataset,
+  ValidationReview,
+  ValidationMetrics,
+  RuleQualityRow,
 } from './analysis/index.js';

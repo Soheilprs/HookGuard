@@ -11,6 +11,7 @@ const pages = [
   'src/app/dashboard/page.tsx',
   'src/app/hooks/page.tsx',
   'src/app/hooks/[address]/page.tsx',
+  'src/app/methodology/page.tsx',
 ];
 
 const components = [
@@ -58,6 +59,13 @@ describe('frontend foundation', () => {
     expect(explorer + table).toMatch(/No hooks indexed yet/);
     expect(findings).toMatch(/Security Findings/);
     expect(findings).toMatch(/evidence/);
+    const confidence = readFileSync(
+      join(web, 'src/components/confidence-badge.tsx'),
+      'utf8',
+    );
+    expect(findings).toMatch(/ConfidenceBadge/);
+    expect(findings).toMatch(/Bytecode heuristic/);
+    expect(confidence).toMatch(/LOW CONFIDENCE/);
     expect(detail).not.toMatch(/Security analysis pending/);
     expect(intelligence).toMatch(/Contract Intelligence/);
     expect(intelligence).toMatch(/Functions/);

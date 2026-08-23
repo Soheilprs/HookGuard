@@ -12,7 +12,14 @@ function input(overrides: Partial<AnalysisInput> = {}): AnalysisInput {
     hookAddress: HOOK,
     chainId: 1,
     bytecode: '0x60806040',
-    functions: [],
+    functions: [
+      {
+        name: 'setFee',
+        selector: '0x11111111',
+        visibility: 'external',
+        stateMutability: 'nonpayable',
+      },
+    ],
     permissions: [
       { type: 'owner', address: OWNER, source: 'owner()' },
       {
@@ -21,6 +28,8 @@ function input(overrides: Partial<AnalysisInput> = {}): AnalysisInput {
         source: 'AccessControl.getRoleMember(DEFAULT_ADMIN_ROLE)',
       },
     ],
+    sourceVerified: true,
+    sourceCode: null,
     proxy: {
       isProxy: false,
       kind: 'none',
@@ -48,11 +57,18 @@ describe('ownership rules', () => {
 
   it('flags EOA owner and DEFAULT_ADMIN_ROLE holder', () => {
     const findings = runAnalysis(input(), ownershipRules);
-    expect(
-      findings.find((finding) => finding.ruleId === 'ownership-owner-eoa')?.severity,
-    ).toBe('medium');
+    const ownerEoa = findings.find((finding) => finding.ruleId === 'ownership-owner-eoa');
+    expect(ownerEoa?.severity).toBe('medium');
+    expect(ownerEoa?.evidence.correlated).toBe(true);
     expect(
       findings.some((finding) => finding.ruleId === 'ownership-default-admin-eoa'),
     ).toBe(true);
+  });
+
+  it('keeps uncorrelated EOA owner as an info fact', () => {
+    const findings = runAnalysis(input({ functions: [] }), ownershipRules);
+    const ownerEoa = findings.find((finding) => finding.ruleId === 'ownership-owner-eoa');
+    expect(ownerEoa?.severity).toBe('info');
+    expect(ownerEoa?.evidence.correlated).toBe(false);
   });
 });

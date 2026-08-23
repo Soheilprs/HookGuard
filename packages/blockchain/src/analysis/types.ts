@@ -1,4 +1,11 @@
-import type { Address, FindingCategory, FindingSeverity } from '@hookguard/types';
+import type {
+  Address,
+  DetectionSource,
+  FindingCategory,
+  FindingConfidence,
+  FindingSeverity,
+  RuleTier,
+} from '@hookguard/types';
 
 export interface AnalysisFunction {
   name: string;
@@ -31,6 +38,8 @@ export interface AnalysisInput {
   functions: AnalysisFunction[];
   permissions: AnalysisPermission[];
   proxy: AnalysisProxy;
+  sourceVerified: boolean;
+  sourceCode: string | null;
   /**
    * Whether related addresses have empty bytecode.
    * Missing keys mean the code was not fetched; EOA rules must not fire.
@@ -43,6 +52,9 @@ export interface EngineFinding {
   title: string;
   category: FindingCategory;
   severity: FindingSeverity;
+  confidence: FindingConfidence;
+  detectionSource: DetectionSource;
+  ruleTier: RuleTier;
   description: string;
   evidence: Record<string, unknown>;
 }
@@ -60,4 +72,8 @@ export function codeIsEmpty(
   const key = address.toLowerCase();
   if (!(key in input.codeEmpty)) return undefined;
   return input.codeEmpty[key];
+}
+
+export function hasNamedAbi(input: AnalysisInput): boolean {
+  return input.functions.some((fn) => fn.name !== 'unknown');
 }

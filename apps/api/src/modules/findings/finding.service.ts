@@ -1,4 +1,9 @@
-import { getChainById, isSupportedChainId, normalizeAddress } from '@hookguard/blockchain';
+import {
+  getChainById,
+  isSupportedChainId,
+  normalizeAddress,
+  ruleTier,
+} from '@hookguard/blockchain';
 import type { FindingItem, HookFindingsResponse, HookListItem } from '@hookguard/types';
 import { getAddress, isAddress } from 'viem';
 import type { HookRepository } from '../hooks/hook.repository.js';
@@ -100,6 +105,10 @@ function toItem(row: FindingRecord): FindingItem {
     title: row.title,
     category: row.category,
     severity: row.severity,
+    confidence: row.confidence,
+    detectionSource: row.detectionSource,
+    validationStatus: row.validationStatus,
+    ruleTier: ruleTier(row.ruleId),
     description: row.description,
     evidence: row.evidence,
     createdAt: row.createdAt.toISOString(),

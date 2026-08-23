@@ -54,16 +54,23 @@ export const privilegedFunctionsRule: AnalysisRule = {
     if (matched.length === 0) return [];
 
     const upgrade = matched.some((fn) => fn.name.toLowerCase().startsWith('upgrade'));
-    const severity: FindingSeverity = upgrade ? 'high' : 'medium';
+    const named = matched.some((fn) => fn.name !== 'unknown');
+    const severity: FindingSeverity = upgrade && named ? 'high' : named ? 'medium' : 'low';
 
     return [
       {
         ruleId: this.id,
-        title: 'Privileged / admin setter functions present',
+        title: named
+          ? 'Privileged / admin setter functions present'
+          : 'Privileged selectors present (name unknown)',
         category: 'permissions',
         severity,
-        description:
-          'ABI or known selectors include admin-style setters (fee, oracle, hook, pause, ownership, upgrade). Presence is a fact; it is not a confirmed vulnerability.',
+        confidence: named ? 'HIGH' : 'LOW',
+        detectionSource: named ? 'VERIFIED_ABI' : 'BYTECODE_SELECTOR',
+        ruleTier: named ? 2 : 3,
+        description: named
+          ? 'ABI includes admin-style setters (fee, oracle, hook, pause, ownership, upgrade). Presence is a fact; it is not a confirmed vulnerability.'
+          : 'Bytecode selectors match known privileged functions, but names were not recovered from ABI. Low confidence.',
         evidence: {
           functions: matched.map((fn) => ({
             name: fn.name,

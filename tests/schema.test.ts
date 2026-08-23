@@ -73,6 +73,11 @@ const requiredModels: Record<string, string[]> = {
     'severity',
     'description',
     'evidence',
+    'confidence',
+    'detectionSource',
+    'validationStatus',
+    'validatedAt',
+    'validationNotes',
     'createdAt',
   ],
   IndexerCheckpoint: [

@@ -45,6 +45,14 @@ export async function fetchStats(): Promise<RegistryStats> {
   return getJson<RegistryStats>('/stats');
 }
 
+export async function fetchCorpusSafe(): Promise<RegistryStats> {
+  try {
+    return await getJson<RegistryStats>('/corpus');
+  } catch {
+    return fetchStatsSafe();
+  }
+}
+
 export async function fetchHooksSafe(chainId?: number): Promise<HookListResponse> {
   try {
     return await fetchHooks(chainId);
@@ -62,6 +70,9 @@ export async function fetchStatsSafe(): Promise<RegistryStats> {
       poolsTracked: 0,
       findings: 0,
       averageRisk: null,
+      contractsInspected: 0,
+      verifiedSource: 0,
+      byChain: [],
     };
   }
 }

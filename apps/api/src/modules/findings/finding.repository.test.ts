@@ -9,6 +9,8 @@ const SAMPLE = {
   severity: 'info',
   description: 'Proxy detected.',
   evidence: { kind: 'transparent' },
+  confidence: 'HIGH',
+  detectionSource: 'EIP1967_STORAGE',
 };
 
 describe('finding persistence', () => {
@@ -35,5 +37,21 @@ describe('finding persistence', () => {
 
     const rows = await repo.listByHookId('hook-1');
     expect(rows.map((row) => row.ruleId)).toEqual(['proxy-used']);
+  });
+
+  it('records validation status without inventing CONFIRMED', async () => {
+    const repo = new InMemoryFindingRepository();
+    await repo.replaceForHook('hook-1', ['proxy-used'], [SAMPLE]);
+    const before = await repo.listByHookId('hook-1');
+    expect(before[0]?.validationStatus).toBe('UNREVIEWED');
+    await repo.applyReview({
+      hookId: 'hook-1',
+      ruleId: 'proxy-used',
+      status: 'NEEDS_CONTEXT',
+      notes: 'reviewer note',
+    });
+    const after = await repo.listByHookId('hook-1');
+    expect(after[0]?.validationStatus).toBe('NEEDS_CONTEXT');
+    expect(after[0]?.validationNotes).toBe('reviewer note');
   });
 });

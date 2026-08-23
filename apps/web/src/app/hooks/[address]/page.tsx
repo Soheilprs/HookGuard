@@ -2,6 +2,7 @@ import { explorerAddressUrl } from '@hookguard/blockchain';
 import { isAddress } from 'viem';
 import { ShieldOff } from 'lucide-react';
 import Link from 'next/link';
+import { ChainBadge } from '@/components/chain-badge';
 import { ContractIntelligencePanel } from '@/components/contract-intelligence';
 import { SecurityFindings } from '@/components/security-findings';
 import { AppShell } from '@/components/layout/app-shell';
@@ -81,6 +82,18 @@ export default async function HookDetailPage({
             }
           />
         </Card>
+      ) : payload === null ? (
+        <Card>
+          <EmptyState
+            title="Unable to reach the registry API"
+            description="The dashboard could not load hook data. Confirm the API is running and NEXT_PUBLIC_API_URL is set."
+            action={
+              <Button asChild variant="outline">
+                <Link href="/hooks">Back to explorer</Link>
+              </Button>
+            }
+          />
+        </Card>
       ) : deployments.length === 0 ? (
         <Card>
           <EmptyState
@@ -113,7 +126,10 @@ export default async function HookDetailPage({
                       <CardTitle>Hook</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3 text-sm">
-                      <Row label="Chain" value={deployment.hook.chain.name} />
+                      <Row
+                        label="Chain"
+                        value={<ChainBadge name={deployment.hook.chain.name} />}
+                      />
                       <Row
                         label="Address"
                         value={

@@ -30,6 +30,8 @@ describe('privileged function rules', () => {
           stateMutability: 'nonpayable',
         },
       ],
+      sourceVerified: true,
+      sourceCode: null,
       permissions: [],
       proxy: {
         isProxy: false,
@@ -46,5 +48,38 @@ describe('privileged function rules', () => {
     )?.map((item) => item.name);
     expect(names).toEqual(expect.arrayContaining(['setFee', 'pause', 'upgradeTo']));
     expect(finding?.severity).toBe('high');
+    expect(finding?.confidence).toBe('HIGH');
+    expect(finding?.detectionSource).toBe('VERIFIED_ABI');
+  });
+
+  it('treats unnamed privileged selectors as low-confidence heuristics', () => {
+    const input: AnalysisInput = {
+      hookAddress: getAddress('0x1111111111111111111111111111111111111111'),
+      chainId: 1,
+      bytecode: '0x',
+      functions: [
+        {
+          name: 'unknown',
+          selector: '0x3659cfe6',
+          visibility: 'external',
+          stateMutability: 'nonpayable',
+        },
+      ],
+      sourceVerified: false,
+      sourceCode: null,
+      permissions: [],
+      proxy: {
+        isProxy: false,
+        kind: 'none',
+        implementationAddress: null,
+        adminAddress: null,
+      },
+      codeEmpty: {},
+    };
+    const findings = runAnalysis(input, permissionsRules);
+    const finding = findings.find((item) => item.ruleId === 'privileged-functions');
+    expect(finding?.confidence).toBe('LOW');
+    expect(finding?.detectionSource).toBe('BYTECODE_SELECTOR');
+    expect(finding?.severity).toBe('low');
   });
 });

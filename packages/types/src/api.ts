@@ -54,6 +54,9 @@ export interface RegistryStats {
   poolsTracked: number;
   findings: number;
   averageRisk: number | null;
+  contractsInspected: number;
+  verifiedSource: number;
+  byChain: Array<{ chainId: number; hooks: number; pools: number }>;
 }
 
 export interface ContractFunctionItem {
@@ -98,6 +101,10 @@ export interface FindingItem {
   title: string;
   category: string;
   severity: string;
+  confidence: string;
+  detectionSource: string;
+  validationStatus: string;
+  ruleTier: number;
   description: string;
   evidence: Record<string, unknown>;
   createdAt: string;

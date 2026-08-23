@@ -66,6 +66,9 @@ export async function runHookAnalysis(options: AnalyzeOptions): Promise<AnalyzeR
       }
     }
 
+    const namedUpgrade = contract.functions.some((fn) =>
+      fn.name.toLowerCase().includes('upgrade'),
+    );
     const input: AnalysisInput = {
       hookAddress: getAddress(hook.address),
       chainId: hook.chainId,
@@ -74,13 +77,17 @@ export async function runHookAnalysis(options: AnalyzeOptions): Promise<AnalyzeR
         : `0x${contract.bytecode}`) as `0x${string}`,
       functions: contract.functions,
       permissions: contract.permissions,
+      sourceVerified: contract.sourceVerified,
+      sourceCode: contract.sourceCode,
       proxy: {
         isProxy: contract.isProxy,
-        kind: contract.isProxy
-          ? contract.adminAddress
+        kind: !contract.isProxy
+          ? 'none'
+          : contract.adminAddress
             ? 'transparent'
-            : 'eip-1967'
-          : 'none',
+            : namedUpgrade
+              ? 'uups'
+              : 'eip-1967',
         implementationAddress: contract.implementationAddress,
         adminAddress: contract.adminAddress,
       },
@@ -99,6 +106,8 @@ export async function runHookAnalysis(options: AnalyzeOptions): Promise<AnalyzeR
         severity: finding.severity,
         description: finding.description,
         evidence: finding.evidence,
+        confidence: finding.confidence,
+        detectionSource: finding.detectionSource,
       })),
     );
     result.analyzed += 1;

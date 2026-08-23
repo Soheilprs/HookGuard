@@ -12,6 +12,7 @@ const forbidden = [
   /walletClient/,
   /privateKeyToAccount/,
   /mnemonicToAccount/,
+  /writeContract/,
 ];
 
 const skipDirs = new Set(['node_modules', 'dist', '.next', '.git', 'coverage']);

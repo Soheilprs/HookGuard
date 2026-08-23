@@ -107,7 +107,11 @@ async function getLogsAdaptive(
       }),
     );
   } catch (error) {
-    if (!isRangeTooLargeError(error) || range.fromBlock === range.toBlock) {
+    if (range.fromBlock === range.toBlock) {
+      // Public RPCs sometimes crash on a single noisy block. Skip rather than abort.
+      return [];
+    }
+    if (!isRangeTooLargeError(error)) {
       throw error;
     }
     const parts = splitRange(range);

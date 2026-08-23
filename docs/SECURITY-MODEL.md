@@ -2,7 +2,7 @@
 
 HookGuard reasons about **Uniswap v4 hooks**, not arbitrary contracts.
 
-This document is the product philosophy for analysis. Phase 0 does not run an analyzer; it defines how later phases must behave.
+This document is the product philosophy. See also [SECURITY-METHODOLOGY.md](./SECURITY-METHODOLOGY.md) and [VALIDATION.md](./VALIDATION.md).
 
 ## What HookGuard is
 
@@ -10,7 +10,7 @@ A security **intelligence** platform:
 
 - Discover hooks and the pools that use them.
 - Inspect hook contracts with v4-specific rules.
-- Publish structured findings and a reviewable score.
+- Publish structured findings with evidence, confidence, and detection source.
 
 Users are expected to make their own decisions. HookGuard is not a guarantee, insurance product, or audit firm.
 
@@ -41,7 +41,7 @@ Wallet user / LP
 | Fact | address, chainId, bytecode, pool fee, deployment block | Persist only what was observed |
 | Judgment | severity, riskScore, category | Produced by published rules; nullable until run |
 
-The UI must not invent judgments. Phase 0 therefore shows **No hooks indexed yet** and **Not scored**.
+The UI must not invent judgments. Unscored hooks must not display a fabricated number. Phase 2C does not fill `Hook.riskScore`.
 
 ## Uniswap v4 threat focus
 

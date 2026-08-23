@@ -1,7 +1,9 @@
 import type { FindingItem } from '@hookguard/types';
+import { ConfidenceBadge } from '@/components/confidence-badge';
 import { EmptyState } from '@/components/empty-state';
 import { SeverityBadge } from '@/components/severity-badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 export function SecurityFindings({ findings }: { findings: FindingItem[] }) {
   return (
@@ -16,23 +18,43 @@ export function SecurityFindings({ findings }: { findings: FindingItem[] }) {
             description="Run the analysis engine to produce evidence-based observations. HookGuard does not invent scores or unsubstantiated vulnerabilities."
           />
         ) : (
-          findings.map((finding) => (
-            <article
-              key={finding.ruleId}
-              className="rounded-xl border border-border p-4"
-            >
-              <div className="flex flex-wrap items-center gap-2">
-                <SeverityBadge severity={finding.severity} />
-                <span className="text-xs text-muted-foreground">{finding.category}</span>
-                <span className="font-mono text-[11px] text-muted-foreground">
-                  {finding.ruleId}
-                </span>
-              </div>
-              <h3 className="mt-2 text-sm font-semibold">{finding.title}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{finding.description}</p>
-              <Evidence evidence={finding.evidence} />
-            </article>
-          ))
+          findings.map((finding) => {
+            const heuristic = finding.confidence === 'LOW' || finding.ruleTier >= 3;
+            return (
+              <article
+                key={finding.ruleId}
+                className={cn(
+                  'rounded-xl border p-4',
+                  heuristic
+                    ? 'border-dashed border-zinc-300 bg-zinc-50/80 dark:border-zinc-700 dark:bg-zinc-900/40'
+                    : 'border-border bg-card',
+                )}
+              >
+                <div className="flex flex-wrap items-center gap-2">
+                  <SeverityBadge severity={finding.severity} />
+                  <ConfidenceBadge confidence={finding.confidence} />
+                  {heuristic ? (
+                    <span className="text-[11px] font-medium uppercase tracking-wide text-zinc-500">
+                      Bytecode heuristic
+                    </span>
+                  ) : null}
+                  <span className="text-xs text-muted-foreground">{finding.category}</span>
+                  <span className="font-mono text-[11px] text-muted-foreground">
+                    {finding.ruleId}
+                  </span>
+                </div>
+                <h3 className="mt-2 text-sm font-semibold leading-snug break-words">
+                  {finding.title}
+                </h3>
+                <p className="mt-1 text-sm text-muted-foreground">{finding.description}</p>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Evidence source:{' '}
+                  <span className="font-mono">{finding.detectionSource}</span>
+                </p>
+                <Evidence evidence={finding.evidence} />
+              </article>
+            );
+          })
         )}
       </CardContent>
     </Card>
@@ -49,9 +71,9 @@ function Evidence({ evidence }: { evidence: Record<string, unknown> }) {
         Evidence
       </div>
       {entries.map(([key, value]) => (
-        <div key={key} className="grid gap-1 sm:grid-cols-[8rem_1fr]">
+        <div key={key} className="grid gap-1 sm:grid-cols-[8rem_minmax(0,1fr)]">
           <dt className="text-muted-foreground">{key}</dt>
-          <dd className="break-all whitespace-pre-wrap">
+          <dd className="min-w-0 break-all whitespace-pre-wrap">
             {formatEvidenceValue(value)}
           </dd>
         </div>

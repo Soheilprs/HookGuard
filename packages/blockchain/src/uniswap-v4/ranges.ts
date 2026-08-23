@@ -61,7 +61,10 @@ export function isRangeTooLargeError(error: unknown): boolean {
     lower.includes('log response size') ||
     lower.includes('range is too large') ||
     lower.includes('too many results') ||
-    lower.includes('limit exceeded')
+    lower.includes('limit exceeded') ||
+    lower.includes('method handler crashed') ||
+    lower.includes('query timeout') ||
+    lower.includes('timed out')
   );
 }
 

@@ -15,6 +15,8 @@ function input(overrides: Partial<AnalysisInput> = {}): AnalysisInput {
     bytecode: '0x60806040',
     functions: [],
     permissions: [],
+    sourceVerified: false,
+    sourceCode: null,
     proxy: {
       isProxy: true,
       kind: 'transparent',
@@ -36,7 +38,12 @@ describe('proxy rules', () => {
     const used = findings.find((finding) => finding.ruleId === 'proxy-used');
     const admin = findings.find((finding) => finding.ruleId === 'proxy-admin');
     expect(used?.evidence.implementationAddress).toBe(IMPL);
-    expect(admin?.severity).toBe('medium');
+    expect(used?.confidence).toBe('HIGH');
+    expect(used?.detectionSource).toBe('EIP1967_STORAGE');
+    expect(used?.description).toMatch(/UUPS is not assumed/i);
+    expect(used?.evidence.implementationBytecodeEmpty).toBe(false);
+    expect(used?.evidence.adminBytecodeEmpty).toBe(true);
+    expect(admin?.severity).toBe('info');
     expect(admin?.evidence.adminAddress).toBe(ADMIN);
   });
 
@@ -44,7 +51,7 @@ describe('proxy rules', () => {
     const findings = runAnalysis(input(), proxyRules);
     const eoa = findings.find((finding) => finding.ruleId === 'proxy-admin-eoa');
     expect(eoa?.severity).toBe('high');
-    expect(eoa?.evidence.bytecodeEmpty).toBe(true);
+    expect(eoa?.evidence.adminBytecodeEmpty).toBe(true);
   });
 
   it('does not claim EOA admin without bytecode evidence', () => {

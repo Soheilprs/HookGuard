@@ -1,6 +1,6 @@
 'use client';
 
-import { LayoutDashboard, Search } from 'lucide-react';
+import { BookOpen, LayoutDashboard, Search } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 const items = [
   { href: '/dashboard', label: 'Overview', icon: LayoutDashboard },
   { href: '/hooks', label: 'Hook Explorer', icon: Search },
+  { href: '/methodology', label: 'Methodology', icon: BookOpen },
 ] as const;
 
 export function Sidebar() {

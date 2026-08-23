@@ -1,0 +1,1154 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-23T08:47:55.292370Z",
+  "hooks": [
+    {
+      "chainId": 1,
+      "address": "0x08382ab717d6a9f64d0d66e3c15e46c4ac790fc0",
+      "tags": [
+        "ethereum",
+        "proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=True"
+    },
+    {
+      "chainId": 1,
+      "address": "0x083b8e471227c65579d30fc6a923ea07eecbc080",
+      "tags": [
+        "ethereum",
+        "proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=True"
+    },
+    {
+      "chainId": 1,
+      "address": "0x12adb795cfeb2571d334715f9d087ce76fa98fc0",
+      "tags": [
+        "ethereum",
+        "proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=True"
+    },
+    {
+      "chainId": 1,
+      "address": "0x3a3a9a072ab438335a52e0cf064f7ec91d824080",
+      "tags": [
+        "ethereum",
+        "proxy",
+        "unverified",
+        "transparent-admin"
+      ],
+      "notes": "isProxy=True"
+    },
+    {
+      "chainId": 1,
+      "address": "0x46327a484fe21d039ba3f886d412b58208e10fc0",
+      "tags": [
+        "ethereum",
+        "proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=True"
+    },
+    {
+      "chainId": 1,
+      "address": "0x5355bba7c2bf0cd672d42a3b74c4a5ef9278dfc0",
+      "tags": [
+        "ethereum",
+        "non-proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=False"
+    },
+    {
+      "chainId": 1,
+      "address": "0x5a094c109ed867b071c91a431c7df89f09e040c0",
+      "tags": [
+        "ethereum",
+        "non-proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=False"
+    },
+    {
+      "chainId": 1,
+      "address": "0x5c16cb95399d941ff46e0c67224c67b395018080",
+      "tags": [
+        "ethereum",
+        "proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=True"
+    },
+    {
+      "chainId": 1,
+      "address": "0x65ac0d25ce0ca8bddfd7f58f66d1748623698fc0",
+      "tags": [
+        "ethereum",
+        "proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=True"
+    },
+    {
+      "chainId": 1,
+      "address": "0x6f7243ae6b4ccad256aa6fecd3081f51253b1acc",
+      "tags": [
+        "ethereum",
+        "non-proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=False"
+    },
+    {
+      "chainId": 1,
+      "address": "0xa69f9880763be70f4ecbbac26c78ccbe1bd95080",
+      "tags": [
+        "ethereum",
+        "non-proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=False"
+    },
+    {
+      "chainId": 1,
+      "address": "0xd10538020a7cff713604f96434ca9c70727cdacc",
+      "tags": [
+        "ethereum",
+        "non-proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=False"
+    },
+    {
+      "chainId": 130,
+      "address": "0x1673ce5f7f5e39c7f32657189db3c3cffebe0088",
+      "tags": [
+        "unichain",
+        "non-proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=False"
+    },
+    {
+      "chainId": 130,
+      "address": "0x3983130fcd18606afe659acdddb0018d21c254ce",
+      "tags": [
+        "unichain",
+        "non-proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=False"
+    },
+    {
+      "chainId": 130,
+      "address": "0x47186bc482c9a30fd68360fb3981f90ed8d510c8",
+      "tags": [
+        "unichain",
+        "non-proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=False"
+    },
+    {
+      "chainId": 130,
+      "address": "0x5753ced012155da10431564b9cfde7ca238250c8",
+      "tags": [
+        "unichain",
+        "non-proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=False"
+    },
+    {
+      "chainId": 130,
+      "address": "0x5f35c46ac75cb102ff092dbbd9934cd02b4050c8",
+      "tags": [
+        "unichain",
+        "non-proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=False"
+    },
+    {
+      "chainId": 130,
+      "address": "0x6337fca822066240064daff387e61653aeec90c8",
+      "tags": [
+        "unichain",
+        "non-proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=False"
+    },
+    {
+      "chainId": 130,
+      "address": "0xbc6e5abda425309c2534bc2bc92562f5419ce8cc",
+      "tags": [
+        "unichain",
+        "non-proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=False"
+    },
+    {
+      "chainId": 130,
+      "address": "0xcfd781e4c0e75c4137faa8299839cc765ca710c8",
+      "tags": [
+        "unichain",
+        "non-proxy",
+        "unverified"
+      ],
+      "notes": "isProxy=False"
+    }
+  ],
+  "reviews": [
+    {
+      "chainId": 1,
+      "address": "0x08382ab717d6a9f64d0d66e3c15e46c4ac790fc0",
+      "ruleId": "ext-delegatecall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "DELEGATECALL is expected in EIP-1967/minimal proxy dispatch; not proven as a hook-callback side effect."
+    },
+    {
+      "chainId": 1,
+      "address": "0x08382ab717d6a9f64d0d66e3c15e46c4ac790fc0",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 1,
+      "address": "0x08382ab717d6a9f64d0d66e3c15e46c4ac790fc0",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 1,
+      "address": "0x08382ab717d6a9f64d0d66e3c15e46c4ac790fc0",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 1,
+      "address": "0x08382ab717d6a9f64d0d66e3c15e46c4ac790fc0",
+      "ruleId": "proxy-used",
+      "status": "CONFIRMED",
+      "notes": "EIP-1967 implementation slot is non-zero; kind not assumed UUPS from the slot alone."
+    },
+    {
+      "chainId": 1,
+      "address": "0x083b8e471227c65579d30fc6a923ea07eecbc080",
+      "ruleId": "ext-delegatecall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "DELEGATECALL is expected in EIP-1967/minimal proxy dispatch; not proven as a hook-callback side effect."
+    },
+    {
+      "chainId": 1,
+      "address": "0x083b8e471227c65579d30fc6a923ea07eecbc080",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 1,
+      "address": "0x083b8e471227c65579d30fc6a923ea07eecbc080",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 1,
+      "address": "0x083b8e471227c65579d30fc6a923ea07eecbc080",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 1,
+      "address": "0x083b8e471227c65579d30fc6a923ea07eecbc080",
+      "ruleId": "ownership-owner-eoa",
+      "status": "CONFIRMED",
+      "notes": "Owner address has empty bytecode; severity stayed info because no named privileged mutators were discovered."
+    },
+    {
+      "chainId": 1,
+      "address": "0x083b8e471227c65579d30fc6a923ea07eecbc080",
+      "ruleId": "privileged-functions",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Known 4-byte selectors without ABI names; could be Ownable/UUPS or a dispatcher collision."
+    },
+    {
+      "chainId": 1,
+      "address": "0x083b8e471227c65579d30fc6a923ea07eecbc080",
+      "ruleId": "proxy-used",
+      "status": "CONFIRMED",
+      "notes": "EIP-1967 implementation slot is non-zero; kind not assumed UUPS from the slot alone."
+    },
+    {
+      "chainId": 1,
+      "address": "0x12adb795cfeb2571d334715f9d087ce76fa98fc0",
+      "ruleId": "ext-delegatecall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "DELEGATECALL is expected in EIP-1967/minimal proxy dispatch; not proven as a hook-callback side effect."
+    },
+    {
+      "chainId": 1,
+      "address": "0x12adb795cfeb2571d334715f9d087ce76fa98fc0",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 1,
+      "address": "0x12adb795cfeb2571d334715f9d087ce76fa98fc0",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 1,
+      "address": "0x12adb795cfeb2571d334715f9d087ce76fa98fc0",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 1,
+      "address": "0x12adb795cfeb2571d334715f9d087ce76fa98fc0",
+      "ruleId": "proxy-used",
+      "status": "CONFIRMED",
+      "notes": "EIP-1967 implementation slot is non-zero; kind not assumed UUPS from the slot alone."
+    },
+    {
+      "chainId": 1,
+      "address": "0x3a3a9a072ab438335a52e0cf064f7ec91d824080",
+      "ruleId": "ext-call",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 1,
+      "address": "0x3a3a9a072ab438335a52e0cf064f7ec91d824080",
+      "ruleId": "ext-delegatecall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "DELEGATECALL is expected in EIP-1967/minimal proxy dispatch; not proven as a hook-callback side effect."
+    },
+    {
+      "chainId": 1,
+      "address": "0x3a3a9a072ab438335a52e0cf064f7ec91d824080",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 1,
+      "address": "0x3a3a9a072ab438335a52e0cf064f7ec91d824080",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 1,
+      "address": "0x3a3a9a072ab438335a52e0cf064f7ec91d824080",
+      "ruleId": "ownership-access-control",
+      "status": "CONFIRMED",
+      "notes": "admin() or getRoleMember returned a holder."
+    },
+    {
+      "chainId": 1,
+      "address": "0x3a3a9a072ab438335a52e0cf064f7ec91d824080",
+      "ruleId": "proxy-admin",
+      "status": "CONFIRMED",
+      "notes": "EIP-1967 admin slot is non-zero."
+    },
+    {
+      "chainId": 1,
+      "address": "0x3a3a9a072ab438335a52e0cf064f7ec91d824080",
+      "ruleId": "proxy-used",
+      "status": "CONFIRMED",
+      "notes": "EIP-1967 implementation slot is non-zero; kind not assumed UUPS from the slot alone."
+    },
+    {
+      "chainId": 1,
+      "address": "0x46327a484fe21d039ba3f886d412b58208e10fc0",
+      "ruleId": "ext-delegatecall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "DELEGATECALL is expected in EIP-1967/minimal proxy dispatch; not proven as a hook-callback side effect."
+    },
+    {
+      "chainId": 1,
+      "address": "0x46327a484fe21d039ba3f886d412b58208e10fc0",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 1,
+      "address": "0x46327a484fe21d039ba3f886d412b58208e10fc0",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 1,
+      "address": "0x46327a484fe21d039ba3f886d412b58208e10fc0",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 1,
+      "address": "0x46327a484fe21d039ba3f886d412b58208e10fc0",
+      "ruleId": "proxy-used",
+      "status": "CONFIRMED",
+      "notes": "EIP-1967 implementation slot is non-zero; kind not assumed UUPS from the slot alone."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5355bba7c2bf0cd672d42a3b74c4a5ef9278dfc0",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5355bba7c2bf0cd672d42a3b74c4a5ef9278dfc0",
+      "ruleId": "hooks-lifecycle",
+      "status": "NEEDS_CONTEXT",
+      "notes": "IHooks selectors in unverified bytecode may be library/dispatcher matches, not proven implementations."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5355bba7c2bf0cd672d42a3b74c4a5ef9278dfc0",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5355bba7c2bf0cd672d42a3b74c4a5ef9278dfc0",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5355bba7c2bf0cd672d42a3b74c4a5ef9278dfc0",
+      "ruleId": "ownership-owner-eoa",
+      "status": "CONFIRMED",
+      "notes": "Owner address has empty bytecode; severity stayed info because no named privileged mutators were discovered."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5355bba7c2bf0cd672d42a3b74c4a5ef9278dfc0",
+      "ruleId": "privileged-functions",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Known 4-byte selectors without ABI names; could be Ownable/UUPS or a dispatcher collision."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5a094c109ed867b071c91a431c7df89f09e040c0",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5a094c109ed867b071c91a431c7df89f09e040c0",
+      "ruleId": "hooks-lifecycle",
+      "status": "NEEDS_CONTEXT",
+      "notes": "IHooks selectors in unverified bytecode may be library/dispatcher matches, not proven implementations."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5a094c109ed867b071c91a431c7df89f09e040c0",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5c16cb95399d941ff46e0c67224c67b395018080",
+      "ruleId": "ext-delegatecall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "DELEGATECALL is expected in EIP-1967/minimal proxy dispatch; not proven as a hook-callback side effect."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5c16cb95399d941ff46e0c67224c67b395018080",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5c16cb95399d941ff46e0c67224c67b395018080",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5c16cb95399d941ff46e0c67224c67b395018080",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5c16cb95399d941ff46e0c67224c67b395018080",
+      "ruleId": "ownership-owner-eoa",
+      "status": "CONFIRMED",
+      "notes": "Owner address has empty bytecode; severity stayed info because no named privileged mutators were discovered."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5c16cb95399d941ff46e0c67224c67b395018080",
+      "ruleId": "privileged-functions",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Known 4-byte selectors without ABI names; could be Ownable/UUPS or a dispatcher collision."
+    },
+    {
+      "chainId": 1,
+      "address": "0x5c16cb95399d941ff46e0c67224c67b395018080",
+      "ruleId": "proxy-used",
+      "status": "CONFIRMED",
+      "notes": "EIP-1967 implementation slot is non-zero; kind not assumed UUPS from the slot alone."
+    },
+    {
+      "chainId": 1,
+      "address": "0x65ac0d25ce0ca8bddfd7f58f66d1748623698fc0",
+      "ruleId": "ext-delegatecall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "DELEGATECALL is expected in EIP-1967/minimal proxy dispatch; not proven as a hook-callback side effect."
+    },
+    {
+      "chainId": 1,
+      "address": "0x65ac0d25ce0ca8bddfd7f58f66d1748623698fc0",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 1,
+      "address": "0x65ac0d25ce0ca8bddfd7f58f66d1748623698fc0",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 1,
+      "address": "0x65ac0d25ce0ca8bddfd7f58f66d1748623698fc0",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 1,
+      "address": "0x65ac0d25ce0ca8bddfd7f58f66d1748623698fc0",
+      "ruleId": "proxy-used",
+      "status": "CONFIRMED",
+      "notes": "EIP-1967 implementation slot is non-zero; kind not assumed UUPS from the slot alone."
+    },
+    {
+      "chainId": 1,
+      "address": "0x6f7243ae6b4ccad256aa6fecd3081f51253b1acc",
+      "ruleId": "ext-call",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 1,
+      "address": "0x6f7243ae6b4ccad256aa6fecd3081f51253b1acc",
+      "ruleId": "ext-staticcall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 1,
+      "address": "0x6f7243ae6b4ccad256aa6fecd3081f51253b1acc",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 1,
+      "address": "0x6f7243ae6b4ccad256aa6fecd3081f51253b1acc",
+      "ruleId": "hooks-lifecycle",
+      "status": "NEEDS_CONTEXT",
+      "notes": "IHooks selectors in unverified bytecode may be library/dispatcher matches, not proven implementations."
+    },
+    {
+      "chainId": 1,
+      "address": "0x6f7243ae6b4ccad256aa6fecd3081f51253b1acc",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 1,
+      "address": "0x6f7243ae6b4ccad256aa6fecd3081f51253b1acc",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 1,
+      "address": "0x6f7243ae6b4ccad256aa6fecd3081f51253b1acc",
+      "ruleId": "ownership-owner-eoa",
+      "status": "CONFIRMED",
+      "notes": "Owner address has empty bytecode; severity stayed info because no named privileged mutators were discovered."
+    },
+    {
+      "chainId": 1,
+      "address": "0x6f7243ae6b4ccad256aa6fecd3081f51253b1acc",
+      "ruleId": "privileged-functions",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Known 4-byte selectors without ABI names; could be Ownable/UUPS or a dispatcher collision."
+    },
+    {
+      "chainId": 1,
+      "address": "0xa69f9880763be70f4ecbbac26c78ccbe1bd95080",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 1,
+      "address": "0xa69f9880763be70f4ecbbac26c78ccbe1bd95080",
+      "ruleId": "hooks-lifecycle",
+      "status": "NEEDS_CONTEXT",
+      "notes": "IHooks selectors in unverified bytecode may be library/dispatcher matches, not proven implementations."
+    },
+    {
+      "chainId": 1,
+      "address": "0xa69f9880763be70f4ecbbac26c78ccbe1bd95080",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 1,
+      "address": "0xa69f9880763be70f4ecbbac26c78ccbe1bd95080",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 1,
+      "address": "0xa69f9880763be70f4ecbbac26c78ccbe1bd95080",
+      "ruleId": "ownership-owner-eoa",
+      "status": "CONFIRMED",
+      "notes": "Owner address has empty bytecode; severity stayed info because no named privileged mutators were discovered."
+    },
+    {
+      "chainId": 1,
+      "address": "0xa69f9880763be70f4ecbbac26c78ccbe1bd95080",
+      "ruleId": "privileged-functions",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Known 4-byte selectors without ABI names; could be Ownable/UUPS or a dispatcher collision."
+    },
+    {
+      "chainId": 1,
+      "address": "0xd10538020a7cff713604f96434ca9c70727cdacc",
+      "ruleId": "ext-call",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 1,
+      "address": "0xd10538020a7cff713604f96434ca9c70727cdacc",
+      "ruleId": "ext-staticcall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 1,
+      "address": "0xd10538020a7cff713604f96434ca9c70727cdacc",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 1,
+      "address": "0xd10538020a7cff713604f96434ca9c70727cdacc",
+      "ruleId": "hooks-lifecycle",
+      "status": "NEEDS_CONTEXT",
+      "notes": "IHooks selectors in unverified bytecode may be library/dispatcher matches, not proven implementations."
+    },
+    {
+      "chainId": 1,
+      "address": "0xd10538020a7cff713604f96434ca9c70727cdacc",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 1,
+      "address": "0xd10538020a7cff713604f96434ca9c70727cdacc",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 1,
+      "address": "0xd10538020a7cff713604f96434ca9c70727cdacc",
+      "ruleId": "ownership-owner-eoa",
+      "status": "CONFIRMED",
+      "notes": "Owner address has empty bytecode; severity stayed info because no named privileged mutators were discovered."
+    },
+    {
+      "chainId": 1,
+      "address": "0xd10538020a7cff713604f96434ca9c70727cdacc",
+      "ruleId": "privileged-functions",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Known 4-byte selectors without ABI names; could be Ownable/UUPS or a dispatcher collision."
+    },
+    {
+      "chainId": 130,
+      "address": "0x1673ce5f7f5e39c7f32657189db3c3cffebe0088",
+      "ruleId": "ext-call",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0x1673ce5f7f5e39c7f32657189db3c3cffebe0088",
+      "ruleId": "ext-staticcall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0x1673ce5f7f5e39c7f32657189db3c3cffebe0088",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 130,
+      "address": "0x1673ce5f7f5e39c7f32657189db3c3cffebe0088",
+      "ruleId": "hooks-lifecycle",
+      "status": "NEEDS_CONTEXT",
+      "notes": "IHooks selectors in unverified bytecode may be library/dispatcher matches, not proven implementations."
+    },
+    {
+      "chainId": 130,
+      "address": "0x1673ce5f7f5e39c7f32657189db3c3cffebe0088",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 130,
+      "address": "0x1673ce5f7f5e39c7f32657189db3c3cffebe0088",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 130,
+      "address": "0x1673ce5f7f5e39c7f32657189db3c3cffebe0088",
+      "ruleId": "ownership-owner-eoa",
+      "status": "CONFIRMED",
+      "notes": "Owner address has empty bytecode; severity stayed info because no named privileged mutators were discovered."
+    },
+    {
+      "chainId": 130,
+      "address": "0x1673ce5f7f5e39c7f32657189db3c3cffebe0088",
+      "ruleId": "privileged-functions",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Known 4-byte selectors without ABI names; could be Ownable/UUPS or a dispatcher collision."
+    },
+    {
+      "chainId": 130,
+      "address": "0x3983130fcd18606afe659acdddb0018d21c254ce",
+      "ruleId": "ext-call",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0x3983130fcd18606afe659acdddb0018d21c254ce",
+      "ruleId": "ext-staticcall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0x3983130fcd18606afe659acdddb0018d21c254ce",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 130,
+      "address": "0x3983130fcd18606afe659acdddb0018d21c254ce",
+      "ruleId": "hooks-lifecycle",
+      "status": "NEEDS_CONTEXT",
+      "notes": "IHooks selectors in unverified bytecode may be library/dispatcher matches, not proven implementations."
+    },
+    {
+      "chainId": 130,
+      "address": "0x3983130fcd18606afe659acdddb0018d21c254ce",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 130,
+      "address": "0x3983130fcd18606afe659acdddb0018d21c254ce",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 130,
+      "address": "0x3983130fcd18606afe659acdddb0018d21c254ce",
+      "ruleId": "ownership-owner-eoa",
+      "status": "CONFIRMED",
+      "notes": "Owner address has empty bytecode; severity stayed info because no named privileged mutators were discovered."
+    },
+    {
+      "chainId": 130,
+      "address": "0x3983130fcd18606afe659acdddb0018d21c254ce",
+      "ruleId": "privileged-functions",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Known 4-byte selectors without ABI names; could be Ownable/UUPS or a dispatcher collision."
+    },
+    {
+      "chainId": 130,
+      "address": "0x47186bc482c9a30fd68360fb3981f90ed8d510c8",
+      "ruleId": "ext-call",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0x47186bc482c9a30fd68360fb3981f90ed8d510c8",
+      "ruleId": "ext-delegatecall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "DELEGATECALL opcode present; not proven reachable from a v4 callback."
+    },
+    {
+      "chainId": 130,
+      "address": "0x47186bc482c9a30fd68360fb3981f90ed8d510c8",
+      "ruleId": "ext-staticcall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0x47186bc482c9a30fd68360fb3981f90ed8d510c8",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 130,
+      "address": "0x47186bc482c9a30fd68360fb3981f90ed8d510c8",
+      "ruleId": "hooks-lifecycle",
+      "status": "NEEDS_CONTEXT",
+      "notes": "IHooks selectors in unverified bytecode may be library/dispatcher matches, not proven implementations."
+    },
+    {
+      "chainId": 130,
+      "address": "0x47186bc482c9a30fd68360fb3981f90ed8d510c8",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 130,
+      "address": "0x47186bc482c9a30fd68360fb3981f90ed8d510c8",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 130,
+      "address": "0x47186bc482c9a30fd68360fb3981f90ed8d510c8",
+      "ruleId": "ownership-owner-eoa",
+      "status": "CONFIRMED",
+      "notes": "Owner address has empty bytecode; severity stayed info because no named privileged mutators were discovered."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5753ced012155da10431564b9cfde7ca238250c8",
+      "ruleId": "ext-call",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5753ced012155da10431564b9cfde7ca238250c8",
+      "ruleId": "ext-delegatecall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "DELEGATECALL opcode present; not proven reachable from a v4 callback."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5753ced012155da10431564b9cfde7ca238250c8",
+      "ruleId": "ext-staticcall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5753ced012155da10431564b9cfde7ca238250c8",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5753ced012155da10431564b9cfde7ca238250c8",
+      "ruleId": "hooks-lifecycle",
+      "status": "NEEDS_CONTEXT",
+      "notes": "IHooks selectors in unverified bytecode may be library/dispatcher matches, not proven implementations."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5753ced012155da10431564b9cfde7ca238250c8",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5753ced012155da10431564b9cfde7ca238250c8",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5753ced012155da10431564b9cfde7ca238250c8",
+      "ruleId": "ownership-owner-eoa",
+      "status": "CONFIRMED",
+      "notes": "Owner address has empty bytecode; severity stayed info because no named privileged mutators were discovered."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5f35c46ac75cb102ff092dbbd9934cd02b4050c8",
+      "ruleId": "ext-call",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5f35c46ac75cb102ff092dbbd9934cd02b4050c8",
+      "ruleId": "ext-delegatecall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "DELEGATECALL opcode present; not proven reachable from a v4 callback."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5f35c46ac75cb102ff092dbbd9934cd02b4050c8",
+      "ruleId": "ext-staticcall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5f35c46ac75cb102ff092dbbd9934cd02b4050c8",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5f35c46ac75cb102ff092dbbd9934cd02b4050c8",
+      "ruleId": "hooks-lifecycle",
+      "status": "NEEDS_CONTEXT",
+      "notes": "IHooks selectors in unverified bytecode may be library/dispatcher matches, not proven implementations."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5f35c46ac75cb102ff092dbbd9934cd02b4050c8",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5f35c46ac75cb102ff092dbbd9934cd02b4050c8",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 130,
+      "address": "0x5f35c46ac75cb102ff092dbbd9934cd02b4050c8",
+      "ruleId": "ownership-owner-eoa",
+      "status": "CONFIRMED",
+      "notes": "Owner address has empty bytecode; severity stayed info because no named privileged mutators were discovered."
+    },
+    {
+      "chainId": 130,
+      "address": "0x6337fca822066240064daff387e61653aeec90c8",
+      "ruleId": "ext-call",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0x6337fca822066240064daff387e61653aeec90c8",
+      "ruleId": "ext-delegatecall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "DELEGATECALL opcode present; not proven reachable from a v4 callback."
+    },
+    {
+      "chainId": 130,
+      "address": "0x6337fca822066240064daff387e61653aeec90c8",
+      "ruleId": "ext-staticcall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0x6337fca822066240064daff387e61653aeec90c8",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 130,
+      "address": "0x6337fca822066240064daff387e61653aeec90c8",
+      "ruleId": "hooks-lifecycle",
+      "status": "NEEDS_CONTEXT",
+      "notes": "IHooks selectors in unverified bytecode may be library/dispatcher matches, not proven implementations."
+    },
+    {
+      "chainId": 130,
+      "address": "0x6337fca822066240064daff387e61653aeec90c8",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 130,
+      "address": "0x6337fca822066240064daff387e61653aeec90c8",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 130,
+      "address": "0x6337fca822066240064daff387e61653aeec90c8",
+      "ruleId": "ownership-owner-eoa",
+      "status": "CONFIRMED",
+      "notes": "Owner address has empty bytecode; severity stayed info because no named privileged mutators were discovered."
+    },
+    {
+      "chainId": 130,
+      "address": "0xbc6e5abda425309c2534bc2bc92562f5419ce8cc",
+      "ruleId": "ext-call",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0xbc6e5abda425309c2534bc2bc92562f5419ce8cc",
+      "ruleId": "ext-staticcall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0xbc6e5abda425309c2534bc2bc92562f5419ce8cc",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 130,
+      "address": "0xbc6e5abda425309c2534bc2bc92562f5419ce8cc",
+      "ruleId": "hooks-lifecycle",
+      "status": "NEEDS_CONTEXT",
+      "notes": "IHooks selectors in unverified bytecode may be library/dispatcher matches, not proven implementations."
+    },
+    {
+      "chainId": 130,
+      "address": "0xbc6e5abda425309c2534bc2bc92562f5419ce8cc",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 130,
+      "address": "0xbc6e5abda425309c2534bc2bc92562f5419ce8cc",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 130,
+      "address": "0xbc6e5abda425309c2534bc2bc92562f5419ce8cc",
+      "ruleId": "privileged-functions",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Known 4-byte selectors without ABI names; could be Ownable/UUPS or a dispatcher collision."
+    },
+    {
+      "chainId": 130,
+      "address": "0xcfd781e4c0e75c4137faa8299839cc765ca710c8",
+      "ruleId": "ext-call",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0xcfd781e4c0e75c4137faa8299839cc765ca710c8",
+      "ruleId": "ext-delegatecall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "DELEGATECALL opcode present; not proven reachable from a v4 callback."
+    },
+    {
+      "chainId": 130,
+      "address": "0xcfd781e4c0e75c4137faa8299839cc765ca710c8",
+      "ruleId": "ext-staticcall",
+      "status": "NEEDS_CONTEXT",
+      "notes": "Opcode is present after skipping PUSH immediates, but reachability from hook callbacks is not proven without source."
+    },
+    {
+      "chainId": 130,
+      "address": "0xcfd781e4c0e75c4137faa8299839cc765ca710c8",
+      "ruleId": "hooks-address-flags",
+      "status": "CONFIRMED",
+      "notes": "Low 14 bits of a real v4 hook address encode permission flags."
+    },
+    {
+      "chainId": 130,
+      "address": "0xcfd781e4c0e75c4137faa8299839cc765ca710c8",
+      "ruleId": "hooks-lifecycle",
+      "status": "NEEDS_CONTEXT",
+      "notes": "IHooks selectors in unverified bytecode may be library/dispatcher matches, not proven implementations."
+    },
+    {
+      "chainId": 130,
+      "address": "0xcfd781e4c0e75c4137faa8299839cc765ca710c8",
+      "ruleId": "hooks-permission-compare",
+      "status": "CONFIRMED",
+      "notes": "No verified ABI; UNKNOWN_SOURCE classification is correct and is not a vulnerability."
+    },
+    {
+      "chainId": 130,
+      "address": "0xcfd781e4c0e75c4137faa8299839cc765ca710c8",
+      "ruleId": "ownership-owner",
+      "status": "CONFIRMED",
+      "notes": "eth_call owner() returned a non-zero address."
+    },
+    {
+      "chainId": 130,
+      "address": "0xcfd781e4c0e75c4137faa8299839cc765ca710c8",
+      "ruleId": "ownership-owner-eoa",
+      "status": "CONFIRMED",
+      "notes": "Owner address has empty bytecode; severity stayed info because no named privileged mutators were discovered."
+    }
+  ]
+}

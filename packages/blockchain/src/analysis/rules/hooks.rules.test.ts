@@ -31,6 +31,8 @@ function input(overrides: Partial<AnalysisInput> = {}): AnalysisInput {
       },
     ],
     permissions: [],
+    sourceVerified: true,
+    sourceCode: null,
     proxy: {
       isProxy: false,
       kind: 'none',
@@ -76,11 +78,61 @@ describe('hook lifecycle rules', () => {
       }),
       hooksRules,
     );
-    const mismatch = findings.find((finding) => finding.ruleId === 'hooks-flag-mismatch');
-    expect(mismatch?.severity).toBe('medium');
-    expect(mismatch?.evidence.flagWithoutFunction).toEqual(
+    const compared = findings.find(
+      (finding) => finding.ruleId === 'hooks-permission-compare',
+    );
+    expect(compared?.evidence.classification).toBe('MISSING_EXPECTED_CALLBACK');
+    expect(compared?.evidence.missingExpected).toEqual(
       expect.arrayContaining(['afterSwap']),
     );
+    expect(compared?.severity).toBe('info');
+  });
+
+  it('classifies extra implemented callbacks as info, not a vulnerability', () => {
+    const address = getAddress('0x1000000000000000000000000000000000000000');
+    const findings = runAnalysis(
+      input({
+        hookAddress: address,
+        sourceVerified: true,
+        functions: [
+          {
+            name: 'beforeSwap',
+            selector: '0xfeedbeef',
+            visibility: 'external',
+            stateMutability: 'nonpayable',
+          },
+        ],
+      }),
+      hooksRules,
+    );
+    const compared = findings.find(
+      (finding) => finding.ruleId === 'hooks-permission-compare',
+    );
+    expect(compared?.evidence.classification).toBe('EXTRA_IMPLEMENTED_CALLBACK');
+    expect(compared?.severity).toBe('info');
+    expect(compared?.description).toMatch(/not automatically a vulnerability/i);
+  });
+
+  it('marks permission comparison UNKNOWN_SOURCE without verified ABI', () => {
+    const findings = runAnalysis(
+      input({
+        sourceVerified: false,
+        functions: [
+          {
+            name: 'unknown',
+            selector: '0xdeadbeef',
+            visibility: 'external',
+            stateMutability: 'nonpayable',
+          },
+        ],
+      }),
+      hooksRules,
+    );
+    const compared = findings.find(
+      (finding) => finding.ruleId === 'hooks-permission-compare',
+    );
+    expect(compared?.evidence.classification).toBe('UNKNOWN_SOURCE');
+    expect(compared?.confidence).toBe('LOW');
   });
 
   it('knows the canonical IHooks callback set', () => {

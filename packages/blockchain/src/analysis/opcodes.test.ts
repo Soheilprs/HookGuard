@@ -27,6 +27,8 @@ describe('external call opcode scan', () => {
       bytecode: '0xf1f4fa',
       functions: [],
       permissions: [],
+      sourceVerified: false,
+      sourceCode: null,
       proxy: {
         isProxy: false,
         kind: 'none',
@@ -41,8 +43,37 @@ describe('external call opcode scan', () => {
       'ext-delegatecall',
       'ext-staticcall',
     ]);
+    const call = findings.find((finding) => finding.ruleId === 'ext-call');
+    expect(call?.title).toMatch(/opcode present in runtime bytecode/i);
+    expect(call?.confidence).toBe('LOW');
+    expect(call?.detectionSource).toBe('BYTECODE_OPCODE');
+    expect(call?.description).not.toMatch(/swap path/i);
     expect(findings.find((finding) => finding.ruleId === 'ext-delegatecall')?.severity).toBe(
-      'high',
+      'low',
     );
+  });
+
+  it('raises confidence when verified source binds CALL to afterSwap', () => {
+    const input: AnalysisInput = {
+      hookAddress: getAddress('0x1111111111111111111111111111111111111111'),
+      chainId: 1,
+      bytecode: '0xf1',
+      functions: [],
+      permissions: [],
+      sourceVerified: true,
+      sourceCode: `contract H { function afterSwap() external { token.call(data); } }`,
+      proxy: {
+        isProxy: false,
+        kind: 'none',
+        implementationAddress: null,
+        adminAddress: null,
+      },
+      codeEmpty: {},
+    };
+    const findings = runAnalysis(input, externalCallRules);
+    const call = findings.find((finding) => finding.ruleId === 'ext-call');
+    expect(call?.confidence).toBe('MEDIUM');
+    expect(call?.detectionSource).toBe('VERIFIED_SOURCE');
+    expect(call?.evidence.reachableFromHookCallback).toBe(true);
   });
 });

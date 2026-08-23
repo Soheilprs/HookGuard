@@ -8,6 +8,7 @@ import {
   createContractService,
   type ContractService,
 } from './modules/contracts/contract.service.js';
+import { statsController } from './modules/stats/stats.controller.js';
 import { findingController } from './modules/findings/finding.controller.js';
 import {
   createFindingService,
@@ -30,6 +31,7 @@ export async function buildApp(deps: AppDeps = {}): Promise<FastifyInstance> {
   });
 
   await app.register(healthRoutes);
+  await app.register(statsController);
 
   const hookService = deps.hookService ?? createHookService();
   await app.register(async (instance) => hookController(instance, { service: hookService }));
