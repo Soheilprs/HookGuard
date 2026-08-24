@@ -101,7 +101,7 @@ reports/          Generated security landscape (from `npm run report:risk`)
 ## Quick start
 
 ```bash
-git clone <repo>
+git clone git@github.com:Soheilprs/HookGuard.git
 cd uniswap-hook-guard
 chmod +x scripts/setup.sh
 ./scripts/setup.sh
