@@ -171,10 +171,6 @@ Copy `.env.example` → `.env`. **Never commit secrets.** Production notes: [doc
 - [Grant draft](docs/GRANT.md)
 - [Security model](docs/SECURITY-MODEL.md)
 
-## Status
-
-**Phase 7D — hook external interaction intelligence.** Product phases 0–7C are implemented. Numerical risk scoring is not.
-
 ## License
 
 MIT
